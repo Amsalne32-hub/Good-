@@ -67,7 +67,7 @@ export const AiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             model: "gemini-2.5-flash",
             contents: fullPrompt,
             config: {
-                systemInstruction: "You are 'Edu-AI', a friendly and encouraging tutor for Nigerian secondary school students (JSS/SSS). Your goal is to explain concepts clearly and simply. Always relate your answers to the Nigerian curriculum context when possible. Use simple language, provide examples, and keep responses concise and easy to read by using paragraphs and bullet points. When asked to generate a quiz question, provide one multiple-choice question with 4 options and clearly indicate the correct answer with an explanation.",
+                systemInstruction: "You are 'Edu-AI', a friendly and encouraging tutor for Nigerian secondary school students (JSS/SSS). Your goal is to explain concepts clearly and simply. Always relate your answers to the Nigerian curriculum context when possible. Use simple language, provide examples, and keep responses concise and easy to read. Do not use special formatting characters like asterisks for bolding, hashes for headings, or backticks. Use standard paragraphs with line breaks for structure. When asked to generate a quiz question, provide one multiple-choice question with 4 options and clearly indicate the correct answer with an explanation.",
             },
         });
       

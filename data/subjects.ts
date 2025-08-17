@@ -3,7 +3,8 @@ import type { Subject } from '../types';
 import { 
     BookOpen, Atom, Languages, FlaskConical, HardHat, Globe, Scale, 
     Briefcase, Leaf, Utensils, Palette, BookMarked, HeartPulse, Dna, 
-    LineChart, Landmark, BookHeart, Store, Calculator, Map, Sigma, Sparkles
+    LineChart, Landmark, BookHeart, Store, Calculator, Map, Sigma, Sparkles,
+    Computer
 } from 'lucide-react';
 import { Youtube } from 'lucide-react';
 
@@ -1387,6 +1388,246 @@ export const subjects: Subject[] = [
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
   },
+  {
+    id: 'jss-computer-studies',
+    title: 'JSS Computer Studies',
+    description: 'Foundations of computing, digital literacy, and basic applications.',
+    level: 'JSS',
+    icon: Computer,
+    units: [
+      {
+        id: 'jss-cs-u1',
+        title: 'JSS 1: Introduction to Computers',
+        description: 'Understanding the basics of computers, their history, and components.',
+        modules: [
+          {
+            id: 'jss-cs-u1-m1',
+            title: 'What is a Computer?',
+            description: 'Defining a computer and its characteristics.',
+            topics: [
+              { id: 't-jcs-1', title: 'History of Computers', description: 'From Abacus to modern computers.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-jcs-2', title: 'Hardware vs. Software', description: 'The physical parts vs. the programs.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'jss-cs-u2',
+        title: 'JSS 2: Basic Operations and Applications',
+        description: 'Learning to use the computer and common software.',
+        modules: [
+          {
+            id: 'jss-cs-u2-m1',
+            title: 'Word Processing',
+            description: 'Creating and editing documents.',
+            topics: [
+              { id: 't-jcs-3', title: 'Introduction to Microsoft Word', description: 'Exploring the interface and basic tools.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-jcs-4', title: 'Typing Skills', description: 'Practicing proper keyboarding techniques.', contentType: 'simulation', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'jss-cs-u3',
+        title: 'JSS 3: Data Processing and Information',
+        description: 'Understanding spreadsheets, presentations, and online ethics.',
+        modules: [
+          {
+            id: 'jss-cs-u3-m1',
+            title: 'Spreadsheets and Presentations',
+            description: 'Organizing data and creating slideshows.',
+            topics: [
+              { id: 't-jcs-5', title: 'Introduction to Microsoft Excel', description: 'Cells, rows, columns, and basic formulas.', contentType: 'simulation', duration: 30, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-jcs-6', title: 'Computer Ethics and Safety', description: 'Dos and Don\'ts of using the internet.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-jcs1', title: 'Computer Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/jss-cs/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'jss-phe',
+    title: 'JSS Physical & Health Education',
+    description: 'Promoting physical fitness, health, and well-being.',
+    level: 'JSS',
+    icon: HeartPulse,
+    units: [
+      {
+        id: 'jss-phe-u1',
+        title: 'JSS 1: Foundations of PHE',
+        description: 'Understanding the human body, hygiene, and basic movements.',
+        modules: [
+          {
+            id: 'jss-phe-u1-m1',
+            title: 'Personal Health and Hygiene',
+            description: 'Keeping the body clean and healthy.',
+            topics: [
+              { id: 't-jphe-1', title: 'Care of the Body', description: 'Bathing, dental care, and hand washing.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-jphe-2', title: 'Physical Fitness', description: 'The importance of exercise.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false, questPoints: 10 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'jss-phe-u2',
+        title: 'JSS 2: Safety, First Aid & Nutrition',
+        description: 'Learning about safety, providing basic care, and healthy eating.',
+        modules: [
+          {
+            id: 'jss-phe-u2-m1',
+            title: 'First Aid and Safety',
+            description: 'Responding to common injuries.',
+            topics: [
+              { id: 't-jphe-3', title: 'Introduction to First Aid', description: 'What to do in an emergency.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-jphe-4', title: 'Food and Nutrition', description: 'Understanding balanced diets.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+       {
+        id: 'jss-phe-u3',
+        title: 'JSS 3: Sports and Contemporary Issues',
+        description: 'Exploring various sports and health challenges.',
+        modules: [
+          {
+            id: 'jss-phe-u3-m1',
+            title: 'Athletics and Ball Games',
+            description: 'Learning the rules and skills of popular sports.',
+            topics: [
+              { id: 't-jphe-5', title: 'Football: Basic Skills', description: 'Dribbling, passing, and shooting.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-jphe-6', title: 'Drug Abuse', description: 'Dangers of substance abuse on health and sports.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-jphe1', title: 'Physical and Health Education for JSS', author: 'Evans Brothers', coverUrl: 'https://picsum.photos/seed/jss-phe/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'jss-arabic',
+    title: 'JSS Arabic Language',
+    description: 'Introduction to the Arabic alphabet, vocabulary, and basic grammar.',
+    level: 'JSS',
+    icon: BookHeart,
+    units: [
+      {
+        id: 'jss-ar-u1',
+        title: 'JSS 1: Arabic Alphabets and Greetings',
+        description: 'Learning the basics of reading, writing, and speaking Arabic.',
+        modules: [
+          {
+            id: 'jss-ar-u1-m1',
+            title: 'The Alphabet and Numbers',
+            description: 'Mastering the 28 letters and numbers 1-20.',
+            topics: [
+              { id: 't-jar-1', title: 'Al-Huruful-Hijaiyyah (The Alphabet)', description: 'Recognizing and writing the Arabic letters.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-jar-2', title: 'Common Greetings', description: 'Learning how to say hello, goodbye, and thank you.', contentType: 'audio', duration: 15, difficulty: 'beginner', completed: false, questPoints: 10 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'jss-ar-u2',
+        title: 'JSS 2: Simple Sentences and Vocabulary',
+        description: 'Building vocabulary and forming basic sentences.',
+        modules: [
+          {
+            id: 'jss-ar-u2-m1',
+            title: 'My Family and My School',
+            description: 'Learning vocabulary related to family and school.',
+            topics: [
+              { id: 't-jar-3', title: 'Members of the Family', description: 'Father, Mother, Brother, Sister in Arabic.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-jar-4', title: 'Objects in the Classroom', description: 'Book, Pen, Table, Chair in Arabic.', contentType: 'audio', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'jss-ar-u3',
+        title: 'JSS 3: Reading and Basic Grammar',
+        description: 'Reading short passages and understanding sentence structure.',
+        modules: [
+          {
+            id: 'jss-ar-u3-m1',
+            title: 'Reading Comprehension',
+            description: 'Reading and understanding short, simple texts.',
+            topics: [
+              { id: 't-jar-5', title: 'Reading a Short Story', description: 'Practice reading a simple story aloud.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-jar-6', title: 'Introduction to Pronouns', description: 'He, She, I, You in Arabic.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-jar1', title: 'Lughatul Arabiyyah for JSS', author: 'Dr. Abdulfattah El-Okene', coverUrl: 'https://picsum.photos/seed/jss-ar/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
   // SSS SUBJECTS
   {
     id: 'sss-math',
@@ -2415,5 +2656,393 @@ export const subjects: Subject[] = [
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+  },
+  {
+    id: 'sss-computer-studies',
+    title: 'SSS Computer Studies',
+    description: 'Advanced concepts in computing, programming, and networking.',
+    level: 'SSS',
+    icon: Computer,
+    units: [
+      {
+        id: 'sss-cs-u1',
+        title: 'SSS 1: Computer Systems & Programming',
+        description: 'Deep dive into computer architecture and programming logic.',
+        modules: [
+          {
+            id: 'sss-cs-u1-m1',
+            title: 'Number Systems',
+            description: 'Binary, octal, hexadecimal, and conversions.',
+            topics: [
+              { id: 't-scs-1', title: 'Binary Arithmetic', description: 'Addition and subtraction of binary numbers.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-scs-2', title: 'Introduction to BASIC Programming', description: 'Writing your first simple programs.', contentType: 'video', duration: 30, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+       {
+        id: 'sss-cs-u2',
+        title: 'SSS 2: Data Handling and Networking',
+        description: 'Managing data and connecting computers.',
+        modules: [
+          {
+            id: 'sss-cs-u2-m1',
+            title: 'Databases',
+            description: 'Introduction to database management systems.',
+            topics: [
+              { id: 't-scs-3', title: 'Computer Networks', description: 'Types of networks (LAN, WAN) and topologies.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-scs-4', title: 'Introduction to Databases', description: 'Concepts of tables, records, and fields.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+       {
+        id: 'sss-cs-u3',
+        title: 'SSS 3: Web and Information Security',
+        description: 'Building for the web and understanding digital security.',
+        modules: [
+          {
+            id: 'sss-cs-u3-m1',
+            title: 'Web Design',
+            description: 'Fundamentals of creating web pages.',
+            topics: [
+              { id: 't-scs-5', title: 'Introduction to HTML', description: 'Structure of a web page using tags.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false, questPoints: 30 },
+              { id: 't-scs-6', title: 'Computer Viruses and Security', description: 'Protecting your computer from malware.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-scs1', title: 'Computer Studies for SSS', author: 'IT Publishers', coverUrl: 'https://picsum.photos/seed/sss-cs/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-civic-edu',
+    title: 'SSS Civic Education',
+    description: 'In-depth study of citizenship, governance, and societal values.',
+    level: 'SSS',
+    icon: Scale,
+    units: [
+       {
+        id: 'sss-ce-u1',
+        title: 'SSS 1: Citizenship and Human Rights',
+        description: 'Exploring the constitution, rights, and duties of a citizen.',
+        modules: [
+          {
+            id: 'sss-ce-u1-m1',
+            title: 'The Constitution',
+            description: 'The supreme law of the land.',
+            topics: [
+              { id: 't-sce-1', title: 'Types and Features of Constitutions', description: 'Written, unwritten, rigid, and flexible.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sce-2', title: 'Fundamental Human Rights', description: 'Understanding the rights enshrined in the constitution.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'sss-ce-u2',
+        title: 'SSS 2: Governance and Democracy',
+        description: 'Principles of democracy and the electoral process.',
+        modules: [
+          {
+            id: 'sss-ce-u2-m1',
+            title: 'Democracy',
+            description: 'Its principles and challenges.',
+            topics: [
+              { id: 't-sce-3', title: 'The Rule of Law', description: 'Supremacy of the law and equality before the law.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sce-4', title: 'Electoral Malpractices', description: 'Identifying and preventing election rigging.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false, questPoints: 30 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'sss-ce-u3',
+        title: 'SSS 3: Public Service and Global Issues',
+        description: 'The civil service and Nigeria\'s role in international organizations.',
+        modules: [
+          {
+            id: 'sss-ce-u3-m1',
+            title: 'The Fight Against Corruption',
+            description: 'Understanding corruption and the roles of EFCC, ICPC.',
+            topics: [
+              { id: 't-sce-5', title: 'Public Service in Nigeria', description: 'Structure and functions of the civil service.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sce-6', title: 'International Organizations', description: 'Nigeria\'s membership in AU, ECOWAS, and UN.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sce1', title: 'Civic Education for SSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/sss-ce/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-hausa',
+    title: 'SSS Hausa Language',
+    description: 'Advanced study of Hausa grammar, literature, and culture.',
+    level: 'SSS',
+    icon: BookHeart,
+    units: [
+      {
+        id: 'sss-hausa-u1',
+        title: 'SSS 1: Grammar and Composition (Nahawu da Insha\'i)',
+        description: 'Mastering sentence structure and essay writing in Hausa.',
+        modules: [
+          {
+            id: 'sss-hausa-u1-m1',
+            title: 'Advanced Grammar',
+            description: 'Diving deep into Hausa syntax.',
+            topics: [
+              { id: 't-sha-1', title: 'Types of Sentences (Rabe-raben Jimla)', description: 'Simple, compound and complex sentences.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sha-2', title: 'Essay Writing (Rubutun Insha\'i)', description: 'Techniques for writing narrative and descriptive essays.', contentType: 'video', duration: 30, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sha1', title: 'Zaman Hausa: Littafin Karatu', author: 'NNPC', coverUrl: 'https://picsum.photos/seed/sss-hausa/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-geography',
+    title: 'SSS Geography',
+    description: 'Study of the earth\'s landscapes, environments, and ecosystems.',
+    level: 'SSS',
+    icon: Map,
+    units: [
+      {
+        id: 'sss-geo-u1',
+        title: 'SSS 1: Physical Geography',
+        description: 'Understanding the natural processes that shape the Earth.',
+        modules: [
+          {
+            id: 'sss-geo-u1-m1',
+            title: 'The Earth and Solar System',
+            description: 'Earth\'s rotation, revolution, and climate systems.',
+            topics: [
+              { id: 't-sgo-1', title: 'Weather and Climate', description: 'Elements of weather and factors affecting climate.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sgo-2', title: 'Rocks and Landforms', description: 'Types of rocks and processes of weathering.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sgo1', title: 'Essential Geography for SSS', author: 'O. A. Iwena', coverUrl: 'https://picsum.photos/seed/sss-geo/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-animal-husbandry',
+    title: 'SSS Animal Husbandry',
+    description: 'The science and art of breeding and caring for farm animals.',
+    level: 'SSS',
+    icon: Leaf,
+    units: [
+      {
+        id: 'sss-ah-u1',
+        title: 'SSS 1: Introduction to Animal Husbandry',
+        description: 'Basic concepts, anatomy, and physiology of farm animals.',
+        modules: [
+          {
+            id: 'sss-ah-u1-m1',
+            title: 'Breeds and Classification',
+            description: 'Identifying different breeds of livestock.',
+            topics: [
+              { id: 't-sah-1', title: 'Major Breeds of Cattle and Poultry', description: 'Characteristics of common breeds in Nigeria.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-sah-2', title: 'Animal Anatomy', description: 'Basic digestive systems of ruminants and non-ruminants.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sah1', title: 'Animal Husbandry for SSS', author: 'F. C. Obioha', coverUrl: 'https://picsum.photos/seed/sss-ah/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-commerce',
+    title: 'SSS Commerce',
+    description: 'The study of trade and aids to trade.',
+    level: 'SSS',
+    icon: Store,
+    units: [
+      {
+        id: 'sss-com-u1',
+        title: 'SSS 1: Foundations of Commerce',
+        description: 'Understanding production, trade, and business organizations.',
+        modules: [
+          {
+            id: 'sss-com-u1-m1',
+            title: 'Production and Trade',
+            description: 'The creation of utility and exchange of goods.',
+            topics: [
+              { id: 't-scm-1', title: 'Factors of Production', description: 'Land, Labour, Capital, and Entrepreneur.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-scm-2', title: 'Aids to Trade', description: 'Banking, insurance, transport, and advertising.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-scm1', title: 'Comprehensive Commerce for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/sss-com/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-data-processing',
+    title: 'SSS Data Processing',
+    description: 'Practical skills in using application software to process data.',
+    level: 'SSS',
+    icon: Computer,
+    units: [
+      {
+        id: 'sss-dp-u1',
+        title: 'SSS 1: Fundamentals of Data Processing',
+        description: 'Understanding data, information, and the processing cycle.',
+        modules: [
+          {
+            id: 'sss-dp-u1-m1',
+            title: 'Data and Information',
+            description: 'The building blocks of computing.',
+            topics: [
+              { id: 't-sdp-1', title: 'Data Processing Cycle', description: 'Input, Processing, Output, and Storage.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
+              { id: 't-sdp-2', title: 'Word Processing II', description: 'Advanced features like tables and mail merge.', contentType: 'simulation', duration: 30, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sdp1', title: 'Data Processing for SSS', author: 'Ufot Edet', coverUrl: 'https://picsum.photos/seed/sss-dp/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
+  {
+    id: 'sss-food-nutrition',
+    title: 'SSS Food and Nutrition',
+    description: 'The science of food, diet, and their effects on health.',
+    level: 'SSS',
+    icon: Utensils,
+    units: [
+      {
+        id: 'sss-fn-u1',
+        title: 'SSS 1: Nutrients and Food Science',
+        description: 'Understanding the composition of food and its functions in the body.',
+        modules: [
+          {
+            id: 'sss-fn-u1-m1',
+            title: 'Macronutrients and Micronutrients',
+            description: 'Carbohydrates, proteins, fats, vitamins, and minerals.',
+            topics: [
+              { id: 't-sfn-1', title: 'Functions of Protein', description: 'Building and repairing body tissues.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
+              { id: 't-sfn-2', title: 'Food Preparation Methods', description: 'Boiling, frying, baking, and their effects on nutrients.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      }
+    ],
+    resources: {
+      textbooks: [{ id: 'tb-sfn1', title: 'Food and Nutrition for SSS', author: 'Anyakoha E.U.', coverUrl: 'https://picsum.photos/seed/sss-fn/300/400', downloadUrl: '#' }],
+      ebooks: [],
+      journals: []
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
   },
 ];

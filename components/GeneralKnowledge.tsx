@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import type { Subject, Unit, Module, Topic } from '../types';
+import type { Subject, Unit, Module, Topic, StudentProfile } from '../types';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import ProgressBar from './ui/ProgressBar';
@@ -20,9 +20,8 @@ const contentTypeIcons: Record<Topic['contentType'], React.ReactNode> = {
 const GKTopicCard: React.FC<{ 
     topic: Topic;
     context: Record<string, string | undefined>;
-    onComplete: (points: number) => void;
-    isCompleted: boolean;
-}> = ({ topic, context, onComplete, isCompleted }) => {
+    handleTopicComplete: (topicId: string) => void;
+}> = ({ topic, context, handleTopicComplete }) => {
   const { sendMessage } = useAi();
 
   const handleAiAction = (action: 'explain' | 'example' | 'quiz') => {
@@ -42,14 +41,14 @@ const GKTopicCard: React.FC<{
   };
 
   return (
-    <Card className={cn("overflow-hidden transition-all hover:shadow-md", isCompleted ? 'bg-green-50 border-green-200' : 'bg-white')}>
+    <Card className={cn("overflow-hidden transition-all hover:shadow-md", topic.completed ? 'bg-green-50 border-green-200' : 'bg-white')}>
         <div className="p-4">
             <div className="flex justify-between items-start">
                  <div className="flex-1">
                     <h4 className="font-semibold text-gray-800">{topic.title}</h4>
                     <p className="text-sm text-muted-foreground mt-1">{topic.description}</p>
                  </div>
-                 <div className={cn("flex items-center gap-1 font-bold text-sm ml-4 px-2 py-1 rounded-full", isCompleted ? "text-green-700 bg-green-200" : "text-amber-700 bg-amber-100" )}>
+                 <div className={cn("flex items-center gap-1 font-bold text-sm ml-4 px-2 py-1 rounded-full", topic.completed ? "text-green-700 bg-green-200" : "text-amber-700 bg-amber-100" )}>
                     <Star className="w-4 h-4 fill-current" />
                     <span>{topic.questPoints || 0} QP</span>
                  </div>
@@ -74,8 +73,8 @@ const GKTopicCard: React.FC<{
                     <HelpCircle className="w-4 h-4" />
                 </Button>
             </div>
-            <Button onClick={() => onComplete(topic.questPoints || 0)} variant={isCompleted ? "outline" : "default"} size="sm" disabled={isCompleted}>
-                {isCompleted ? <><Check className="w-4 h-4 mr-2"/>Completed</> : 'Complete'}
+            <Button onClick={() => handleTopicComplete(topic.id)} variant={topic.completed ? "outline" : "default"} size="sm" disabled={topic.completed}>
+                {topic.completed ? <><Check className="w-4 h-4 mr-2"/>Completed</> : 'Complete'}
             </Button>
         </div>
     </Card>
@@ -85,10 +84,9 @@ const GKTopicCard: React.FC<{
 interface QuestCardProps {
     unit: Unit;
     onStart: () => void;
-    completedTopics: number;
 }
-const QuestCard: React.FC<QuestCardProps> = ({ unit, onStart, completedTopics }) => {
-    const progress = unit.totalTopics > 0 ? Math.round((completedTopics / unit.totalTopics) * 100) : 0;
+const QuestCard: React.FC<QuestCardProps> = ({ unit, onStart }) => {
+    const progress = unit.totalTopics > 0 ? Math.round((unit.completedTopics / unit.totalTopics) * 100) : 0;
     
     return (
         <Card className="overflow-hidden flex flex-col group">
@@ -116,12 +114,12 @@ const QuestCard: React.FC<QuestCardProps> = ({ unit, onStart, completedTopics })
 
 interface GeneralKnowledgeProps {
   subject: Subject;
+  studentProfile: StudentProfile;
+  handleTopicComplete: (topicId: string) => void;
 }
 
-const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject }) => {
+const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject, studentProfile, handleTopicComplete }) => {
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
-  const [completedTopics, setCompletedTopics] = useState<Set<string>>(new Set());
-  const [questPoints, setQuestPoints] = useState<number>(0);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
 
   const { setAiContext } = useAi();
@@ -132,25 +130,6 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject }) => {
         topic: selectedUnit?.title || 'Dashboard',
     });
   }, [selectedUnit, setAiContext]);
-
-  const handleTopicComplete = (topicId: string, points: number) => {
-    if (completedTopics.has(topicId)) return;
-    
-    const newCompleted = new Set(completedTopics);
-    newCompleted.add(topicId);
-    setCompletedTopics(newCompleted);
-    setQuestPoints(prev => prev + points);
-  };
-  
-  const getQuestProgress = (unit: Unit) => {
-      const unitTopics = unit.modules.flatMap(m => m.topics);
-      const completedCount = unitTopics.filter(t => completedTopics.has(t.id)).length;
-      return {
-          completed: completedCount,
-          total: unit.totalTopics,
-          percentage: unit.totalTopics > 0 ? Math.round((completedCount / unit.totalTopics) * 100) : 0,
-      }
-  };
 
   if (!selectedUnit) {
     return (
@@ -173,7 +152,6 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject }) => {
                     key={unit.id} 
                     unit={unit} 
                     onStart={() => setSelectedUnit(unit)}
-                    completedTopics={getQuestProgress(unit).completed}
                 />
             ))}
         </div>
@@ -194,7 +172,7 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject }) => {
             </div>
             <div className="flex items-center gap-2 font-bold text-lg px-4 py-2 rounded-lg bg-amber-100 text-amber-800 border border-amber-200">
                 <Star className="w-6 h-6 fill-current" />
-                <span>{questPoints} QP</span>
+                <span>{studentProfile.questPoints} QP</span>
             </div>
         </header>
 
@@ -225,8 +203,7 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject }) => {
                                                 unit: selectedUnit.title,
                                                 module: module.title,
                                             }}
-                                            isCompleted={completedTopics.has(topic.id)}
-                                            onComplete={(points) => handleTopicComplete(topic.id, points)}
+                                            handleTopicComplete={handleTopicComplete}
                                         />
                                     ))}
                                 </div>

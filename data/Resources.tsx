@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo } from 'react';
 import type { SubjectResources } from '../types';
 import { dictionary } from './dictionary';
@@ -48,7 +49,7 @@ const Resources: React.FC<ResourcesProps> = ({ resources, subjectTitle }) => {
         setSearchTerm(termToDefine);
 
         try {
-            const prompt = `Define the term "${termToDefine}" within the context of ${subjectTitle} for a Nigerian secondary school student. Keep the definition clear, concise, and easy to understand. Start the definition directly, without any introductory phrases like "Here is the definition...".`;
+            const prompt = `Define the term "${termToDefine}" within the context of ${subjectTitle} for a Nigerian secondary school student. Keep the definition clear, concise, and easy to understand. Start the definition directly, without any introductory phrases like "Here is the definition...". Do not use any special formatting characters like asterisks or quotes.`;
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
                 contents: prompt,

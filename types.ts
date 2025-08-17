@@ -164,3 +164,62 @@ export interface GeneratedQuestion {
   correctAnswer: string;
   explanation: string;
 }
+
+export interface StudyPlanStep {
+  type: 'summary' | 'quiz' | 'task';
+  title: string;
+  content: string;
+  questions?: GeneratedQuestion[];
+}
+
+export interface StudyPlan {
+  plan: StudyPlanStep[];
+}
+
+// For Student Store and Profile
+export type StoreItemType = 'theme' | 'avatar_frame' | 'map_style';
+
+export interface StoreItem {
+  id: string;
+  name: string;
+  description: string;
+  type: StoreItemType;
+  price: number;
+  asset: string; // e.g., a CSS class name for a theme, or an image URL for a frame
+  preview: string; // e.g., a color swatch or a small image for the store card
+}
+
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ElementType;
+}
+
+export interface StudentProfile {
+  name: string;
+  level: number;
+  xp: number;
+  questPoints: number;
+  inventory: string[]; // array of StoreItem IDs
+  equippedTheme: string | null; // StoreItem ID for the theme
+  equippedAvatarFrame: string | null; // StoreItem ID for the avatar frame
+  achievements: string[]; // array of Achievement IDs
+}
+
+// For Study Arena
+export interface Player {
+  id: string;
+  name: string;
+  score: number;
+  isUser?: boolean;
+}
+
+export interface QuizGame {
+  id: string;
+  title: string;
+  subjectId: string;
+  topic: string;
+  questionIds: string[];
+  players: Player[];
+}
