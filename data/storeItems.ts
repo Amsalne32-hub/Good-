@@ -4,7 +4,7 @@ export const storeItems: StoreItem[] = [
   // Themes
   {
     id: 'theme-default',
-    name: 'EduNigeria Classic',
+    name: 'Synapse Classic',
     description: 'The standard, clean look for focused learning.',
     type: 'theme',
     price: 0,

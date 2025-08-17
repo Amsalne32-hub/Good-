@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Subject, Topic, StudentProfile } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
@@ -11,6 +12,7 @@ interface SubjectsDashboardProps {
   onSubjectSelect: (subject: Subject) => void;
   studentProfile: StudentProfile;
   subjects: Subject[];
+  onNavigate: (view: 'careerCompass') => void;
 }
 
 const findNextTopic = (allSubjects: Subject[], currentClass: string): { subject: Subject, topic: Topic } | null => {
@@ -124,7 +126,7 @@ const SubjectNode: React.FC<{ subject: Subject; onSelect: () => void; }> = ({ su
     );
 };
 
-const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect, studentProfile, subjects }) => {
+const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect, studentProfile, subjects, onNavigate }) => {
   const [selectedLevel, setSelectedLevel] = useState<'JSS' | 'SSS'>('JSS');
   const [selectedClass, setSelectedClass] = useState<string>('JSS 1');
   const { setAiContext } = useAi();
@@ -182,6 +184,17 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect, 
                 </CardContent>
             </Card>
             <LeaderboardCard />
+             <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><Compass className="text-blue-500"/> Career Compass</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">Discover career paths related to your favorite subjects.</p>
+                    <Button variant="outline" className="w-full" onClick={() => onNavigate('careerCompass')}>
+                        Explore Careers
+                    </Button>
+                </CardContent>
+            </Card>
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2"><Award className="text-green-500" /> Achievements</CardTitle>

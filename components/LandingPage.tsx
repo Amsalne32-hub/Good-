@@ -18,7 +18,7 @@ const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeac
             <div className="sm:text-center lg:text-left">
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Unlock Your Potential with</span>{' '}
-                <span className="block text-primary xl:inline">EduNigeria</span>
+                <span className="block text-primary xl:inline">Synapse</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
                 A comprehensive learning platform aligned with the Nigerian curriculum. Master subjects from JSS to SSS with interactive lessons, quizzes, and progress tracking.
@@ -77,7 +77,7 @@ const FeatureSection: React.FC = () => {
   return (
     <section className="bg-slate-50 py-20">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Why Choose EduNigeria?</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Why Choose Synapse?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
                 <Card key={index} className="text-center">
@@ -105,7 +105,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeac
           <div className="container mx-auto px-6">
             <h2 className="text-4xl font-bold mb-4">Ready to Begin Your Learning Journey?</h2>
             <p className="text-lg mb-8 max-w-3xl mx-auto">
-              Join thousands of Nigerian students mastering their curriculum with EduNigeria's comprehensive platform.
+              Join thousands of Nigerian students mastering their curriculum with Synapse's comprehensive platform.
             </p>
             <Button
               onClick={onEnterDashboard}

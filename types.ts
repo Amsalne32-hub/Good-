@@ -223,3 +223,73 @@ export interface QuizGame {
   questionIds: string[];
   players: Player[];
 }
+
+// For Teacher Dashboard Student Insights
+export interface StudentProgress {
+  [subjectId: string]: {
+    completedTopics: string[]; // array of topic IDs
+  };
+}
+
+export interface ClassStudent {
+  id: string;
+  name: string;
+  progress: StudentProgress;
+}
+
+// For Google Search Grounding
+export interface GroundingChunk {
+  web: {
+    uri: string;
+    title: string;
+  };
+}
+
+// For Career Compass
+export interface CareerInfo {
+  field: string;
+  description: string;
+}
+export interface UniversityCourse {
+  courseName: string;
+  institutions: string[]; // List of Nigerian universities
+}
+export interface InspirationalProfile {
+    name: string;
+    title: string;
+    story: string;
+}
+export interface CareerPathway {
+  relatedCareers: CareerInfo[];
+  keySkills: string[];
+  universityPathways: UniversityCourse[];
+  inspirationalProfile: InspirationalProfile;
+}
+
+// For Parent Dashboard
+export interface ParentData {
+    overallProgress: number;
+    weeklyStudyTime: number; // in hours
+    totalQuestPoints: number;
+    topSubjects: { subject: string; progress: number }[];
+    focusAreas: { subject: string; topic: string }[];
+    recentActivities: { description: string; timestamp: string }[];
+    aiCoachTip: string;
+}
+
+// For Study Groups
+export interface GroupMessage {
+    id: string;
+    sender: string;
+    text: string;
+    timestamp: string;
+}
+
+export interface StudyGroup {
+    id: string;
+    name: string;
+    subject: string;
+    description: string;
+    members: string[]; // array of student names
+    messages: GroupMessage[];
+}

@@ -13,12 +13,13 @@ import GeneralKnowledge from './components/GeneralKnowledge';
 import Store from './components/Store';
 import Profile from './components/Profile';
 import StudyArena from './components/StudyArena';
+import CareerCompass from './components/CareerCompass';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
 import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
@@ -192,7 +193,7 @@ const App: React.FC = () => {
     setView('subject');
   };
   
-  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena') => {
+  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass') => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
@@ -249,6 +250,8 @@ const App: React.FC = () => {
     const gkSubject = subjects.find(s => s.level === 'General');
 
     switch (view) {
+      case 'careerCompass':
+        return <CareerCompass subjects={subjects.filter(s => s.level !== 'General')} />;
       case 'studyArena':
         return <StudyArena onGameComplete={handleGameComplete} studentProfile={studentProfile} />;
       case 'profile':
@@ -276,23 +279,24 @@ const App: React.FC = () => {
         }
         return null;
       case 'studentDashboard':
-        return <SubjectsDashboard onSubjectSelect={handleSubjectSelect} studentProfile={studentProfile} subjects={subjects} />;
+        return <SubjectsDashboard onSubjectSelect={handleSubjectSelect} studentProfile={studentProfile} subjects={subjects} onNavigate={handleNavigate} />;
       case 'teacherDashboard':
-          return <TeacherDashboard />;
+          return <TeacherDashboard subjects={subjects} />;
       case 'landing':
       default:
         return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} />;
     }
   };
 
-  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena'].includes(view);
+  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass'].includes(view);
   
-  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' = 'student';
+  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' = 'student';
   if (view === 'teacherDashboard') navType = 'teacher';
   if (view === 'generalKnowledge') navType = 'general';
   if (view === 'store') navType = 'store';
   if (view === 'profile') navType = 'profile';
   if (view === 'studyArena') navType = 'arena';
+  if (view === 'careerCompass') navType = 'compass';
 
   return (
     <div className="font-sans bg-background text-foreground">

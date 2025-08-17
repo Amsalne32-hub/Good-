@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import type { Subject, Unit, Module, Topic, StudentProfile } from '../types';
+import type { Subject, Unit, Module, Topic, StudentProfile, GroundingChunk } from '../types';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import ProgressBar from './ui/ProgressBar';
-import { Beaker, BookOpen, Film, Music, Video, Lightbulb, HelpCircle, Star, Check, ChevronLeft } from 'lucide-react';
+import { Beaker, BookOpen, Film, Music, Video, Lightbulb, HelpCircle, Star, Check, ChevronLeft, Newspaper, Wand2, Loader, Link as LinkIcon } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';
+import { GoogleGenAI } from '@google/genai';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
@@ -122,8 +123,43 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject, studentPro
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
 
+  const [isGeneratingBriefing, setIsGeneratingBriefing] = useState(false);
+  const [briefing, setBriefing] = useState<string | null>(null);
+  const [briefingSources, setBriefingSources] = useState<GroundingChunk[]>([]);
+  const [briefingError, setBriefingError] = useState<string | null>(null);
+
+  const ai = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY as string }), []);
   const { setAiContext } = useAi();
   
+  const handleGenerateBriefing = async () => {
+    setIsGeneratingBriefing(true);
+    setBriefing(null);
+    setBriefingSources([]);
+    setBriefingError(null);
+
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: "Generate a concise summary of the top 3 news headlines relevant to Nigeria today. The summary should be suitable for a secondary school student.",
+            config: {
+                tools: [{ googleSearch: {} }],
+            },
+        });
+
+        setBriefing(response.text);
+        const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
+        const sources = groundingMetadata?.groundingChunks || [];
+        // The type from the API is any, so we cast it here.
+        setBriefingSources(sources as GroundingChunk[]);
+
+    } catch (error) {
+        console.error("Briefing Generation Error:", error);
+        setBriefingError("Could not generate today's briefing. Please try again later.");
+    } finally {
+        setIsGeneratingBriefing(false);
+    }
+  };
+
   useEffect(() => {
     setAiContext({
         section: 'KnowQuest',
@@ -131,20 +167,58 @@ const GeneralKnowledge: React.FC<GeneralKnowledgeProps> = ({ subject, studentPro
     });
   }, [selectedUnit, setAiContext]);
 
+  const TodaysBriefingCard = () => (
+    <Card className="my-6 bg-blue-50 border-blue-200 col-span-1 md:col-span-2 lg:col-span-3">
+        <CardHeader>
+            <CardTitle className="text-blue-800 flex items-center gap-2"><Newspaper /> Today's AI News Briefing</CardTitle>
+            <CardDescription>Get up-to-the-minute summaries of what's happening in Nigeria and the world, powered by Google Search.</CardDescription>
+        </CardHeader>
+        <CardContent>
+            {isGeneratingBriefing ? (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader className="w-5 h-5 animate-spin" />
+                    <span>Generating your briefing... this may take a moment.</span>
+                </div>
+            ) : briefing ? (
+                <div>
+                    <div className="whitespace-pre-wrap p-4 bg-white rounded-md border text-sm">{briefing}</div>
+                    {briefingSources.length > 0 && (
+                        <div className="mt-4">
+                            <h4 className="text-sm font-semibold mb-2 text-slate-600">Sources:</h4>
+                            <ul className="space-y-1">
+                                {briefingSources.map((source, index) => (
+                                    <li key={index} className="text-xs">
+                                        <a href={source.web.uri} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-blue-600 hover:underline">
+                                            <LinkIcon className="w-3 h-3 flex-shrink-0"/>
+                                            <span className="truncate">{source.web.title || new URL(source.web.uri).hostname}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            ) : briefingError ? (
+                <p className="text-destructive">{briefingError}</p>
+            ) : (
+                 <p className="text-sm text-muted-foreground">Click the button to get the latest headlines.</p>
+            )}
+        </CardContent>
+        <div className="p-4 pt-0">
+            <Button onClick={handleGenerateBriefing} disabled={isGeneratingBriefing}>
+                <Wand2 className="w-4 h-4 mr-2" /> {briefing ? "Regenerate Briefing" : "Generate Today's Briefing"}
+            </Button>
+        </div>
+    </Card>
+);
+
   if (!selectedUnit) {
     return (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h2 className="text-3xl font-bold text-gray-800">Welcome back, Explorer!</h2>
         <p className="text-muted-foreground mt-1">Ready for today's quest?</p>
         
-        <Card className="my-6 bg-primary/5 border-primary/20">
-            <CardHeader>
-                <CardTitle className="text-primary flex items-center gap-2"><Lightbulb /> Daily Knowledge Nugget</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-lg">Did you know? The Great Wall of China is not a single continuous wall but a system of walls, fortifications, and natural barriers built over centuries.</p>
-            </CardContent>
-        </Card>
+        <TodaysBriefingCard />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {subject.units.map(unit => (

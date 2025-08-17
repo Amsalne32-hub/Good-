@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { Subject } from '../types';
 import { 
@@ -422,7 +423,7 @@ export const subjects: Subject[] = [
       ],
       ebooks: [
         { id: 'eb1', title: 'Understanding Fractions: A Visual Guide', author: 'Jane Doe', description: 'A deep dive into fractions, decimals, and percentages with helpful illustrations.', coverUrl: 'https://picsum.photos/seed/ef1/300/400', downloadUrl: '#' },
-        { id: 'eb-math-jss', title: 'JSS Mathematics Practice Questions (PDF)', author: 'EduNigeria Press', description: 'Over 200 practice questions covering the JSS curriculum.', coverUrl: 'https://picsum.photos/seed/eb-math1/300/400', downloadUrl: '#' },
+        { id: 'eb-math-jss', title: 'JSS Mathematics Practice Questions (PDF)', author: 'Synapse Press', description: 'Over 200 practice questions covering the JSS curriculum.', coverUrl: 'https://picsum.photos/seed/eb-math1/300/400', downloadUrl: '#' },
       ],
       journals: [
         { id: 'j1', title: 'Nigerian Journal of Mathematical Education', publisher: 'NJME', issue: 'Vol. 15, No. 2', link: '#' },
@@ -2873,7 +2874,6 @@ export const subjects: Subject[] = [
             description: 'Earth\'s rotation, revolution, and climate systems.',
             topics: [
               { id: 't-sgo-1', title: 'Weather and Climate', description: 'Elements of weather and factors affecting climate.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
-              { id: 't-sgo-2', title: 'Rocks and Landforms', description: 'Types of rocks and processes of weathering.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -2885,159 +2885,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-sgo1', title: 'Essential Geography for SSS', author: 'O. A. Iwena', coverUrl: 'https://picsum.photos/seed/sss-geo/300/400', downloadUrl: '#' }],
-      ebooks: [],
-      journals: []
-    },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return 0; }
-  },
-  {
-    id: 'sss-animal-husbandry',
-    title: 'SSS Animal Husbandry',
-    description: 'The science and art of breeding and caring for farm animals.',
-    level: 'SSS',
-    icon: Leaf,
-    units: [
-      {
-        id: 'sss-ah-u1',
-        title: 'SSS 1: Introduction to Animal Husbandry',
-        description: 'Basic concepts, anatomy, and physiology of farm animals.',
-        modules: [
-          {
-            id: 'sss-ah-u1-m1',
-            title: 'Breeds and Classification',
-            description: 'Identifying different breeds of livestock.',
-            topics: [
-              { id: 't-sah-1', title: 'Major Breeds of Cattle and Poultry', description: 'Characteristics of common breeds in Nigeria.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
-              { id: 't-sah-2', title: 'Animal Anatomy', description: 'Basic digestive systems of ruminants and non-ruminants.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          },
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return 0; }
-      }
-    ],
-    resources: {
-      textbooks: [{ id: 'tb-sah1', title: 'Animal Husbandry for SSS', author: 'F. C. Obioha', coverUrl: 'https://picsum.photos/seed/sss-ah/300/400', downloadUrl: '#' }],
-      ebooks: [],
-      journals: []
-    },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return 0; }
-  },
-  {
-    id: 'sss-commerce',
-    title: 'SSS Commerce',
-    description: 'The study of trade and aids to trade.',
-    level: 'SSS',
-    icon: Store,
-    units: [
-      {
-        id: 'sss-com-u1',
-        title: 'SSS 1: Foundations of Commerce',
-        description: 'Understanding production, trade, and business organizations.',
-        modules: [
-          {
-            id: 'sss-com-u1-m1',
-            title: 'Production and Trade',
-            description: 'The creation of utility and exchange of goods.',
-            topics: [
-              { id: 't-scm-1', title: 'Factors of Production', description: 'Land, Labour, Capital, and Entrepreneur.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
-              { id: 't-scm-2', title: 'Aids to Trade', description: 'Banking, insurance, transport, and advertising.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          },
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return 0; }
-      }
-    ],
-    resources: {
-      textbooks: [{ id: 'tb-scm1', title: 'Comprehensive Commerce for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/sss-com/300/400', downloadUrl: '#' }],
-      ebooks: [],
-      journals: []
-    },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return 0; }
-  },
-  {
-    id: 'sss-data-processing',
-    title: 'SSS Data Processing',
-    description: 'Practical skills in using application software to process data.',
-    level: 'SSS',
-    icon: Computer,
-    units: [
-      {
-        id: 'sss-dp-u1',
-        title: 'SSS 1: Fundamentals of Data Processing',
-        description: 'Understanding data, information, and the processing cycle.',
-        modules: [
-          {
-            id: 'sss-dp-u1-m1',
-            title: 'Data and Information',
-            description: 'The building blocks of computing.',
-            topics: [
-              { id: 't-sdp-1', title: 'Data Processing Cycle', description: 'Input, Processing, Output, and Storage.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false, questPoints: 10 },
-              { id: 't-sdp-2', title: 'Word Processing II', description: 'Advanced features like tables and mail merge.', contentType: 'simulation', duration: 30, difficulty: 'intermediate', completed: false, questPoints: 20 },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          },
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return 0; }
-      }
-    ],
-    resources: {
-      textbooks: [{ id: 'tb-sdp1', title: 'Data Processing for SSS', author: 'Ufot Edet', coverUrl: 'https://picsum.photos/seed/sss-dp/300/400', downloadUrl: '#' }],
-      ebooks: [],
-      journals: []
-    },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return 0; }
-  },
-  {
-    id: 'sss-food-nutrition',
-    title: 'SSS Food and Nutrition',
-    description: 'The science of food, diet, and their effects on health.',
-    level: 'SSS',
-    icon: Utensils,
-    units: [
-      {
-        id: 'sss-fn-u1',
-        title: 'SSS 1: Nutrients and Food Science',
-        description: 'Understanding the composition of food and its functions in the body.',
-        modules: [
-          {
-            id: 'sss-fn-u1-m1',
-            title: 'Macronutrients and Micronutrients',
-            description: 'Carbohydrates, proteins, fats, vitamins, and minerals.',
-            topics: [
-              { id: 't-sfn-1', title: 'Functions of Protein', description: 'Building and repairing body tissues.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false, questPoints: 20 },
-              { id: 't-sfn-2', title: 'Food Preparation Methods', description: 'Boiling, frying, baking, and their effects on nutrients.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false, questPoints: 20 },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          },
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return 0; }
-      }
-    ],
-    resources: {
-      textbooks: [{ id: 'tb-sfn1', title: 'Food and Nutrition for SSS', author: 'Anyakoha E.U.', coverUrl: 'https://picsum.photos/seed/sss-fn/300/400', downloadUrl: '#' }],
+      textbooks: [],
       ebooks: [],
       journals: []
     },
@@ -3046,3 +2894,5 @@ export const subjects: Subject[] = [
     get progress() { return 0; }
   },
 ];
+
+export const getSubjectById = (id: string) => subjects.find(s => s.id === id);

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { subjects } from '../data/subjects';
+import { subjects as initialSubjects } from '../data/subjects';
+import { classData } from '../data/classData';
 import type { Subject, GeneratedQuestion } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
 import { Button } from './ui/Button';
@@ -14,7 +15,11 @@ interface GeneratedActivity {
     description: string;
 }
 
-const TeacherDashboard: React.FC = () => {
+interface TeacherDashboardProps {
+    subjects: Subject[];
+}
+
+const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ subjects }) => {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>('jss-math');
   const [selectedUnitId, setSelectedUnitId] = useState<string>('');
   const [selectedModuleId, setSelectedModuleId] = useState<string>('');
@@ -41,11 +46,73 @@ const TeacherDashboard: React.FC = () => {
 
   const ai = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY as string }), []);
 
-  const selectedSubject = useMemo(() => subjects.find(s => s.id === selectedSubjectId), [selectedSubjectId]);
+  const selectedSubject = useMemo(() => subjects.find(s => s.id === selectedSubjectId), [selectedSubjectId, subjects]);
   const availableUnits = useMemo(() => selectedSubject?.units || [], [selectedSubject]);
   const selectedUnit = useMemo(() => availableUnits.find(u => u.id === selectedUnitId), [selectedUnitId, availableUnits]);
   const availableModules = useMemo(() => selectedUnit?.modules || [], [selectedUnit]);
   const selectedModule = useMemo(() => availableModules.find(m => m.id === selectedModuleId), [selectedModuleId, availableModules]);
+
+  const studentInsights = useMemo(() => {
+    if (!selectedSubject) return null;
+
+    const allSubjectTopics = selectedSubject.units.flatMap(u => u.modules.flatMap(m => m.topics));
+    const totalTopicCount = allSubjectTopics.length;
+    if (totalTopicCount === 0) return { averageProgress: 0, struggleSpots: [], topPerformers: [] };
+    
+    // Calculate overall class progress for the subject
+    let totalCompletedByClass = 0;
+    classData.forEach(student => {
+        const studentProgress = student.progress[selectedSubject.id];
+        if (studentProgress) {
+            // Filter to only count topics relevant to the current subject structure
+            const validCompleted = studentProgress.completedTopics.filter(tid => allSubjectTopics.some(t => t.id === tid));
+            totalCompletedByClass += validCompleted.length;
+        }
+    });
+    const averageProgress = totalTopicCount > 0 ? Math.round((totalCompletedByClass / (totalTopicCount * classData.length)) * 100) : 0;
+
+    // Identify struggle spots (topics completed by the fewest students)
+    const topicCompletionCounts = new Map<string, number>();
+    allSubjectTopics.forEach(topic => topicCompletionCounts.set(topic.id, 0));
+
+    classData.forEach(student => {
+        const studentProgress = student.progress[selectedSubject.id];
+        if (studentProgress) {
+            studentProgress.completedTopics.forEach(topicId => {
+                if (topicCompletionCounts.has(topicId)) {
+                    topicCompletionCounts.set(topicId, topicCompletionCounts.get(topicId)! + 1);
+                }
+            });
+        }
+    });
+
+    const sortedTopics = [...topicCompletionCounts.entries()].sort((a, b) => a[1] - b[1]);
+    const struggleSpots = sortedTopics.slice(0, 3).map(([topicId]) => {
+        const topic = allSubjectTopics.find(t => t.id === topicId);
+        const completionPercentage = Math.round((topicCompletionCounts.get(topicId)! / classData.length) * 100);
+        return {
+            title: topic?.title || 'Unknown Topic',
+            completion: completionPercentage
+        };
+    });
+    
+    // Identify top performers
+    const topPerformers = classData.map(student => {
+        const studentProgress = student.progress[selectedSubject.id];
+        const completedCount = studentProgress ? studentProgress.completedTopics.filter(tid => allSubjectTopics.some(t => t.id === tid)).length : 0;
+        return {
+            name: student.name,
+            progress: totalTopicCount > 0 ? Math.round((completedCount / totalTopicCount) * 100) : 0
+        };
+    }).sort((a, b) => b.progress - a.progress).slice(0, 3);
+
+    return {
+        averageProgress,
+        struggleSpots,
+        topPerformers
+    };
+
+  }, [selectedSubject]);
 
   const resetCrafter = () => {
     setCrafterStep(1);
@@ -273,6 +340,7 @@ const TeacherDashboard: React.FC = () => {
 
   const renderStudentInsights = () => (
     <div>
+        {!studentInsights ? <p>Select a subject to see insights.</p> :
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
                 <CardHeader>
@@ -280,32 +348,35 @@ const TeacherDashboard: React.FC = () => {
                     <CardDescription>Overall completion for {selectedSubject?.title || 'this subject'}.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-4xl font-bold text-primary">72%</div>
+                    <div className="text-4xl font-bold text-primary">{studentInsights.averageProgress}%</div>
                     <p className="text-sm text-muted-foreground">Average completion rate</p>
-                    <ProgressBar value={72} className="mt-2 h-2.5"/>
+                    <ProgressBar value={studentInsights.averageProgress} className="mt-2 h-2.5"/>
                 </CardContent>
             </Card>
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-amber-600"><AlertTriangle/> AI-Identified Struggle Spots</CardTitle>
-                    <CardDescription>Topics with the lowest average quiz scores.</CardDescription>
+                    <CardDescription>Topics with the lowest completion rates.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ul className="list-disc list-inside text-sm space-y-1">
-                        <li>Quadratic Equations (Avg. Score: 45%)</li>
-                        <li>Sine and Cosine Rules (Avg. Score: 51%)</li>
-                        <li>Measures of Dispersion (Avg. Score: 55%)</li>
+                    <ul className="text-sm space-y-2">
+                        {studentInsights.struggleSpots.map((spot, i) => (
+                            <li key={i} className="flex justify-between items-center">
+                                <span>{spot.title}</span>
+                                <span className="font-semibold text-amber-700">{spot.completion}% done</span>
+                            </li>
+                        ))}
                     </ul>
                 </CardContent>
             </Card>
              <Card className="lg:col-span-2">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2"><Trophy/> Top Performing Students</CardTitle>
-                    <CardDescription>Students with the highest overall progress.</CardDescription>
+                    <CardDescription>Students with the highest overall progress in this subject.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <ul className="space-y-2">
-                        {[{name: 'Adebayo Johnson', progress: 98}, {name: 'Chiamaka Nwosu', progress: 95}, {name: 'Musa Bello', progress: 92}].map(student => (
+                        {studentInsights.topPerformers.map(student => (
                             <li key={student.name} className="flex items-center justify-between p-2 rounded-md bg-slate-100/50">
                                 <span className="font-semibold text-sm">{student.name}</span>
                                 <span className="font-bold text-sm text-primary">{student.progress}%</span>
@@ -315,6 +386,7 @@ const TeacherDashboard: React.FC = () => {
                 </CardContent>
             </Card>
         </div>
+        }
     </div>
   );
 
@@ -401,10 +473,13 @@ const TeacherDashboard: React.FC = () => {
                   </div>
             </CardHeader>
             <CardContent>
-              {!selectedModuleId ? (
+              {!selectedSubjectId ? (
                 <div className="text-center py-16 text-muted-foreground bg-slate-50 rounded-lg">
-                    <p className="font-semibold">Please select a subject, unit, and module above.</p>
-                    <p className="text-sm">Once a module is selected, the tools will appear here.</p>
+                    <p className="font-semibold">Please select a subject to see the tools.</p>
+                </div>
+              ) : activeMainTab === 'lessonCrafter' && !selectedModuleId ? (
+                <div className="text-center py-16 text-muted-foreground bg-slate-50 rounded-lg">
+                    <p className="font-semibold">Please select a unit and module to use the Lesson Crafter.</p>
                 </div>
               ) : (
                 activeMainTab === 'lessonCrafter' ? renderLessonCrafter() : renderStudentInsights()
