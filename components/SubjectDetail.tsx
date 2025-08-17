@@ -1,0 +1,225 @@
+
+import React, { useState } from 'react';
+import type { Subject, Unit, Module, Topic } from '../types';
+import { Button } from './ui/Button';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/Card';
+import ProgressBar from './ui/ProgressBar';
+import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText } from 'lucide-react';
+import Resources from '../data/Resources';
+import AiAssistant from './AiAssistant';
+
+const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
+
+interface SubjectDetailProps {
+  subject: Subject;
+  onBack: () => void;
+  onStartAssessment: (assessmentId: string) => void;
+  onStartCoursework: (courseworkId: string) => void;
+}
+
+const difficultyColors: Record<Topic['difficulty'], string> = {
+  beginner: "bg-green-100 text-green-800 border-green-200",
+  intermediate: "bg-yellow-100 text-yellow-800 border-yellow-200",
+  advanced: "bg-red-100 text-red-800 border-red-200"
+};
+
+const contentTypeIcons: Record<Topic['contentType'], React.ReactNode> = {
+  video: <Video className="w-5 h-5" />,
+  audio: <Music className="w-5 h-5" />,
+  animation: <Film className="w-5 h-5" />,
+  simulation: <Beaker className="w-5 h-5" />,
+  reading: <BookOpen className="w-5 h-5" />,
+  quiz: <ClipboardCheck className="w-5 h-5" />,
+  test: <ClipboardList className="w-5 h-5" />,
+  classwork: <PenSquare className="w-5 h-5" />,
+  assignment: <FileText className="w-5 h-5" />,
+};
+
+const TopicCard: React.FC<{ topic: Topic; index: number; onStartAssessment: (assessmentId: string) => void; onStartCoursework: (courseworkId: string) => void; }> = ({ topic, index, onStartAssessment, onStartCoursework }) => {
+  const handleStart = () => {
+    if (topic.assessmentId) {
+      onStartAssessment(topic.assessmentId);
+    } else if (topic.courseworkId) {
+      onStartCoursework(topic.courseworkId);
+    }
+  };
+
+  return (
+    <Card className="flex items-center p-4 transition-all hover:shadow-md">
+        <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${topic.completed ? 'bg-green-500 text-white' : 'bg-slate-200 text-slate-600'}`}>
+            {topic.completed ? <Check className="w-6 h-6" /> : index + 1}
+        </div>
+        <div className="ml-4 flex-grow">
+            <h4 className="font-semibold text-lg">{topic.title}</h4>
+            <p className="text-sm text-muted-foreground">{topic.description}</p>
+             <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                <span className={`px-2 py-0.5 text-xs font-medium rounded-full border ${difficultyColors[topic.difficulty]}`}>
+                    {topic.difficulty}
+                </span>
+                <span className="flex items-center gap-1.5">
+                    {contentTypeIcons[topic.contentType]}
+                    <span className="capitalize">{topic.contentType}</span>
+                </span>
+                 <span className="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    {topic.duration} min
+                </span>
+                {topic.completed && topic.score && (
+                  <span className="flex items-center gap-1 font-semibold text-yellow-600">
+                    <Star className="w-4 h-4 fill-current"/>
+                    {topic.score}%
+                  </span>
+                )}
+            </div>
+        </div>
+        <Button onClick={handleStart} variant={topic.completed ? 'outline' : 'default'} size="sm">
+            {topic.completed ? 'Review' : 'Start'} <Play className="w-4 h-4 ml-2"/>
+        </Button>
+    </Card>
+  );
+};
+
+
+const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartAssessment, onStartCoursework }) => {
+  const [openUnitId, setOpenUnitId] = useState<string | null>(subject.units[0]?.id || null);
+  const [openModuleId, setOpenModuleId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'curriculum' | 'resources'>('curriculum');
+  const Icon = subject.icon;
+  
+  const toggleUnit = (unitId: string) => {
+    setOpenUnitId(prevId => (prevId === unitId ? null : unitId));
+    setOpenModuleId(null); // Close module when unit changes
+  };
+
+  const toggleModule = (moduleId: string) => {
+    setOpenModuleId(prevId => (prevId === moduleId ? null : moduleId));
+  };
+  
+  const renderCurriculum = () => {
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-4">
+                <Card>
+                    <CardHeader><CardTitle>Overall Progress</CardTitle></CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="flex justify-between items-baseline">
+                            <span className="text-5xl font-bold text-primary">{subject.progress}%</span>
+                            <span className="font-medium text-muted-foreground">{subject.completedTopics} of {subject.totalTopics} topics completed</span>
+                        </div>
+                        <ProgressBar value={subject.progress} className="h-3" />
+                    </CardContent>
+                </Card>
+
+                <div>
+                    <h3 className="text-2xl font-bold mb-4">Curriculum Units</h3>
+                    <div className="space-y-3">
+                    {subject.units.map((unit) => (
+                        <Card key={unit.id} className="overflow-hidden">
+                           <button onClick={() => toggleUnit(unit.id)} className="w-full text-left">
+                             <CardHeader className="flex flex-row items-center justify-between cursor-pointer hover:bg-slate-50">
+                                <div>
+                                    <CardTitle>{unit.title}</CardTitle>
+                                    <p className="text-sm text-muted-foreground pt-1">{unit.description}</p>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="text-right">
+                                        <p className="font-bold text-primary">{unit.progress}%</p>
+                                        <p className="text-xs text-muted-foreground">{unit.completedTopics}/{unit.totalTopics} topics</p>
+                                    </div>
+                                    <ChevronDown className={cn("w-6 h-6 text-muted-foreground transition-transform", openUnitId === unit.id && "rotate-180")} />
+                                </div>
+                             </CardHeader>
+                           </button>
+                           {openUnitId === unit.id && (
+                             <CardContent className="border-t pt-4 space-y-3">
+                                {unit.modules.map(module => (
+                                   <div key={module.id} className="border rounded-lg overflow-hidden">
+                                        <button onClick={() => toggleModule(module.id)} className="w-full text-left p-4 flex items-center justify-between hover:bg-slate-50">
+                                            <div>
+                                               <h4 className="font-semibold">{module.title}</h4>
+                                               <p className="text-xs text-muted-foreground">{module.completedTopics}/{module.topics.length} topics done</p>
+                                            </div>
+                                            <ChevronDown className={cn("w-5 h-5 text-muted-foreground transition-transform", openModuleId === module.id && "rotate-180")} />
+                                        </button>
+                                        {openModuleId === module.id && (
+                                            <div className="p-4 border-t space-y-3 bg-slate-50/50">
+                                                 {module.topics.map((topic, index) => (
+                                                    <TopicCard key={topic.id} topic={topic} index={index} onStartAssessment={onStartAssessment} onStartCoursework={onStartCoursework} />
+                                                ))}
+                                            </div>
+                                        )}
+                                   </div>
+                                ))}
+                             </CardContent>
+                           )}
+                        </Card>
+                    ))}
+                    </div>
+                </div>
+            </div>
+            <div className="space-y-8">
+                <Card>
+                    <CardHeader><CardTitle>Subject Stats</CardTitle></CardHeader>
+                    <CardContent className="divide-y">
+                        <div className="py-3 flex justify-between"><span>Units Available</span> <span className="font-bold">{subject.units.length}</span></div>
+                        <div className="py-3 flex justify-between"><span>Total Modules</span> <span className="font-bold">{subject.units.reduce((acc, unit) => acc + unit.modules.length, 0)}</span></div>
+                        <div className="py-3 flex justify-between"><span>Total Topics</span> <span className="font-bold">{subject.totalTopics}</span></div>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+      );
+  };
+
+
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <header className="mb-8">
+        <div className="flex items-center gap-6">
+            <div className="p-4 rounded-xl bg-primary/10 text-primary">
+                <Icon className="w-12 h-12" />
+            </div>
+            <div>
+                <h1 className="text-5xl font-bold">{subject.title}</h1>
+                <p className="text-xl text-muted-foreground mt-2">{subject.description}</p>
+            </div>
+        </div>
+      </header>
+      
+      <div className="border-b border-gray-200 mb-6">
+        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+          <button
+            onClick={() => setActiveTab('curriculum')}
+            className={cn(
+                'py-4 px-1 border-b-2 font-medium text-lg flex items-center gap-2',
+                activeTab === 'curriculum' 
+                    ? 'border-primary text-primary' 
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+            )}
+          >
+            <LayoutDashboard className="w-5 h-5" /> Curriculum
+          </button>
+          <button
+            onClick={() => setActiveTab('resources')}
+             className={cn(
+                'py-4 px-1 border-b-2 font-medium text-lg flex items-center gap-2',
+                activeTab === 'resources' 
+                    ? 'border-primary text-primary' 
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+            )}
+          >
+           <Library className="w-5 h-5" /> Resources
+          </button>
+        </nav>
+      </div>
+      
+      <div>
+        {activeTab === 'curriculum' && renderCurriculum()}
+        {activeTab === 'resources' && <Resources resources={subject.resources} subjectTitle={subject.title} />}
+      </div>
+      <AiAssistant context={{ subject: subject.title, unit: subject.units.find(u => u.id === openUnitId)?.title, module: subject.units.flatMap(u => u.modules).find(m => m.id === openModuleId)?.title }} />
+    </div>
+  );
+};
+
+export default SubjectDetail;
