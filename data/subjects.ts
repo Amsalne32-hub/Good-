@@ -18,7 +18,7 @@ export const subjects: Subject[] = [
     units: [
       {
         id: 'jss-math-u1',
-        title: 'Numbers and Numeration',
+        title: 'JSS 1: Numbers and Numeration',
         description: 'Understanding number systems, fractions, decimals, and basic arithmetic.',
         modules: [
           {
@@ -36,11 +36,13 @@ export const subjects: Subject[] = [
           },
           {
             id: 'jss-math-u1-m2',
-            title: 'Fractions and Decimals',
+            title: 'Fractions, Decimals, and Percentages',
             description: 'Explore equivalent fractions, conversions, and operations.',
             topics: [
               { id: 't4', title: 'Equivalent Fractions', description: 'Finding and simplifying fractions.', contentType: 'animation', duration: 12, difficulty: 'intermediate', completed: true, score: 100 },
               { id: 't5', title: 'Converting Fractions to Decimals', description: 'Learn the division method.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+              { id: 't-jm-1', title: 'Introduction to Percentages', description: 'Understanding the concept of "per hundred".', contentType: 'video', duration: 15, difficulty: 'intermediate', completed: false },
+              { id: 't-jm-2', title: 'Ratios and Proportions', description: 'Comparing quantities and understanding direct/indirect proportions.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
               { id: 't6', title: 'Module Quiz', description: 'Test your knowledge on Numbers and Numeration.', contentType: 'quiz', duration: 15, difficulty: 'intermediate', completed: false, assessmentId: "math-jss-numbers-quiz" },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
@@ -53,22 +55,166 @@ export const subjects: Subject[] = [
       },
       {
         id: 'jss-math-u2',
-        title: 'Basic Algebra',
-        description: 'Introduction to algebraic expressions, equations, and variables.',
+        title: 'JSS 1: Basic Algebra & Geometry',
+        description: 'Introduction to algebraic expressions, equations, and basic shapes.',
         modules: [
           {
             id: 'jss-math-u2-m1',
-            title: 'Introduction to Variables',
-            description: 'Understanding symbols that represent numbers.',
+            title: 'Algebraic Expressions',
+            description: 'Understanding symbols that represent numbers and simplifying expressions.',
             topics: [
               { id: 't7', title: 'What is a Variable?', description: 'Using letters in math.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
               { id: 't8', title: 'Simple Expressions', description: 'Writing basic algebraic expressions.', contentType: 'reading', duration: 10, difficulty: 'beginner', completed: false },
+              { id: 't-jm-3', title: 'Collecting Like Terms', description: 'Simplifying expressions by grouping similar terms.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
               { id: 't-as1', title: 'Real-World Algebra', description: 'Write expressions for real-world scenarios.', contentType: 'assignment', duration: 45, difficulty: 'intermediate', completed: false, courseworkId: 'as-real-world-algebra' },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'jss-math-u2-m2',
+            title: 'Simple Equations & Geometry',
+            description: 'Solving linear equations and exploring plane shapes.',
+            topics: [
+              { id: 't-jm-4', title: 'Solving Equations (Addition/Subtraction)', description: 'Finding the unknown by balancing equations.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+              { id: 't-jm-5', title: 'Solving Equations (Multiplication/Division)', description: 'Isolating the variable using inverse operations.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+              { id: 't-jm-6', title: 'Angles and Lines', description: 'Types of angles and relationships between lines.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false },
+              { id: 't-jm-7', title: 'Triangles and Quadrilaterals', description: 'Properties and classification of these basic shapes.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-jm-8', title: 'Perimeter and Area of Shapes', description: 'Calculating the boundary and surface of squares, rectangles, and triangles.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
               { id: 't-test1', title: 'End of Unit Test', description: 'Comprehensive test on Basic Algebra.', contentType: 'test', duration: 45, difficulty: 'advanced', completed: false, assessmentId: "math-jss-algebra-test" },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
           },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-math-u3',
+        title: 'JSS 2: Algebraic Processes and Geometry',
+        description: 'Factorization, linear inequalities, and properties of polygons.',
+        modules: [
+            {
+                id: 'jss-math-u3-m1',
+                title: 'Algebraic Factorization',
+                description: 'Finding common factors and simplifying expressions.',
+                topics: [
+                    { id: 't-jm-9', title: 'Factorization of Simple Expressions', description: 'Finding the HCF of terms.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-10', title: 'Linear Inequalities', description: 'Solving and representing inequalities on a number line.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-math-u3-m2',
+                title: 'Geometry of Polygons',
+                description: 'Angles, constructions, and properties.',
+                topics: [
+                    { id: 't-jm-11', title: 'Angles of Polygons', description: 'Calculating the sum of interior and exterior angles.', contentType: 'video', duration: 22, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-12', title: 'Construction of Triangles and Quadrilaterals', description: 'Using a ruler and compass for geometric constructions.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-math-u4',
+        title: 'JSS 2: Statistics and Mensuration',
+        description: 'Data representation and calculating area and volume of 3D shapes.',
+        modules: [
+            {
+                id: 'jss-math-u4-m1',
+                title: 'Data Handling',
+                description: 'Collecting, presenting, and interpreting data.',
+                topics: [
+                    { id: 't-jm-13', title: 'Data Collection and Presentation', description: 'Using frequency tables to organize data.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+                    { id: 't-jm-14', title: 'Pie Charts and Bar Charts', description: 'Visual representation of statistical data.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-15', title: 'Mean, Median, and Mode', description: 'Calculating measures of central tendency for ungrouped data.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-math-u4-m2',
+                title: 'Mensuration',
+                description: 'Area of circles and volume of simple solids.',
+                topics: [
+                    { id: 't-jm-16', title: 'Circumference and Area of a Circle', description: 'Using the formula πr² and 2πr.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-17', title: 'Volume of Cubes and Cuboids', description: 'Calculating space occupied by 3D shapes.', contentType: 'reading', duration: 15, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-math-u5',
+        title: 'JSS 3: Advanced Algebra and Geometry',
+        description: 'Simultaneous equations, quadratic expressions, and Pythagoras\' theorem.',
+        modules: [
+            {
+                id: 'jss-math-u5-m1',
+                title: 'Simultaneous and Quadratic Equations',
+                description: 'Solving more complex equations.',
+                topics: [
+                    { id: 't-jm-18', title: 'Solving Simultaneous Linear Equations', description: 'Using substitution and elimination methods.', contentType: 'video', duration: 30, difficulty: 'advanced', completed: false },
+                    { id: 't-jm-19', title: 'Factorization of Quadratic Expressions', description: 'Factoring expressions in the form ax² + bx + c.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-math-u5-m2',
+                title: 'Trigonometry and Pythagoras',
+                description: 'Right-angled triangles and their properties.',
+                topics: [
+                    { id: 't-jm-20', title: 'Pythagoras\' Theorem', description: 'Understanding and applying a² + b² = c².', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-21', title: 'Introduction to Trigonometric Ratios', description: 'Sine, Cosine, and Tangent (SOH CAH TOA).', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-math-u6',
+        title: 'JSS 3: Number Systems and Mensuration',
+        description: 'Binary numbers and calculating volume of cylinders and cones.',
+        modules: [
+            {
+                id: 'jss-math-u6-m1',
+                title: 'Number Systems',
+                description: 'Working with binary numbers and standard form.',
+                topics: [
+                    { id: 't-jm-22', title: 'Binary Numbers', description: 'Conversion between base 10 and base 2.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-23', title: 'Standard Form (Scientific Notation)', description: 'Expressing very large or small numbers.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-math-u6-m2',
+                title: 'Advanced Mensuration',
+                description: 'Volume of curved solids.',
+                topics: [
+                    { id: 't-jm-24', title: 'Volume of a Cylinder', description: 'Calculating the volume using V = πr²h.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jm-25', title: 'Volume of a Cone and Sphere', description: 'Applying formulas for cones and spheres.', contentType: 'video', duration: 25, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -100,16 +246,33 @@ export const subjects: Subject[] = [
     units: [
       {
         id: 'jss-english-u1',
-        title: 'Grammar and Syntax',
-        description: 'Mastering the parts of speech and sentence construction.',
+        title: 'JSS 1: Grammar and Composition',
+        description: 'Mastering parts of speech, sentence construction, and basic writing.',
         modules: [
           {
             id: 'jss-english-u1-m1',
-            title: 'Parts of Speech',
-            description: 'Identifying nouns, verbs, adjectives, and adverbs.',
+            title: 'Parts of Speech & Tenses',
+            description: 'Identifying word classes and understanding time in language.',
             topics: [
               { id: 't9', title: 'Nouns and Pronouns', description: 'People, places, things, and ideas.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: true, score: 95 },
               { id: 't10', title: 'Verbs: Action and Linking', description: 'The engine of the sentence.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-je-1', title: 'Adjectives and Adverbs', description: 'Describing words and modifying words.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+              { id: 't-je-2', title: 'Prepositions and Conjunctions', description: 'Showing relationships and connecting ideas.', contentType: 'reading', duration: 15, difficulty: 'intermediate', completed: false },
+              { id: 't-je-3', title: 'Simple Present, Past, and Future Tenses', description: 'Expressing actions at different times.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-je-4', title: 'Subject-Verb Agreement (Concord)', description: 'Making subjects and verbs agree in number.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'jss-english-u1-m2',
+            title: 'Writing Skills',
+            description: 'Learn to write different types of essays and letters.',
+            topics: [
+                { id: 't-eng1', title: 'Elements of a Story', description: 'Learn about plot, characters, setting, and theme.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+                { id: 't-eng2', title: 'Writing a Narrative Essay', description: 'Put your story ideas on paper and structure your narrative.', contentType: 'assignment', duration: 60, difficulty: 'intermediate', completed: false },
+                { id: 't-je-5', title: 'Formal and Informal Letter Writing', description: 'Learn the formats for different types of letters.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                { id: 't-je-6', title: 'Descriptive Essay Writing', description: 'How to paint a picture with words.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -121,16 +284,59 @@ export const subjects: Subject[] = [
       },
       {
         id: 'jss-english-u2',
-        title: 'Comprehension and Composition',
-        description: 'Reading for meaning and expressing ideas effectively in writing.',
+        title: 'JSS 2: Advanced Grammar and Comprehension',
+        description: 'Exploring phrases, clauses, and developing deeper reading skills.',
         modules: [
             {
                 id: 'jss-english-u2-m1',
-                title: 'Writing a Narrative Essay',
-                description: 'Learn to tell a compelling story.',
+                title: 'Sentence Structure',
+                description: 'Understanding the building blocks of sentences.',
                 topics: [
-                    { id: 't-eng1', title: 'Elements of a Story', description: 'Learn about plot, characters, setting, and theme.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
-                    { id: 't-eng2', title: 'Writing Your First Draft', description: 'Put your story ideas on paper and structure your narrative.', contentType: 'assignment', duration: 60, difficulty: 'intermediate', completed: false },
+                    { id: 't-je-9', title: 'Phrases and Clauses', description: 'Identifying different types of phrases and clauses.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-je-10', title: 'Types of Sentences', description: 'Simple, compound, and complex sentences.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-english-u2-m2',
+                title: 'Comprehension and Summary',
+                description: 'Reading for meaning and extracting key information.',
+                topics: [
+                    { id: 't-je-11', title: 'Reading for Main Idea and Details', description: 'Techniques for effective comprehension.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-je-12', title: 'Introduction to Summary Writing', description: 'How to shorten a passage without losing meaning.', contentType: 'assignment', duration: 45, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-english-u3',
+        title: 'JSS 3: Literature and Formal Writing',
+        description: 'Introduction to literary genres and preparing for certificate examinations.',
+        modules: [
+            {
+                id: 'jss-english-u3-m1',
+                title: 'Introduction to Literature',
+                description: 'Exploring drama, prose, and poetry.',
+                topics: [
+                    { id: 't-je-13', title: 'Elements of Drama', description: 'Character, plot, setting, and theme in plays.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-je-14', title: 'Literary Devices', description: 'Identifying figures of speech like metaphor, simile, and personification.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-english-u3-m2',
+                title: 'Advanced Composition',
+                description: 'Writing for specific purposes.',
+                topics: [
+                    { id: 't-je-15', title: 'Argumentative and Expository Essays', description: 'Developing and defending a point of view.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+                    { id: 't-je-16', title: 'Article and Report Writing', description: 'Structuring formal articles for newspapers and reports.', contentType: 'assignment', duration: 60, difficulty: 'advanced', completed: false },
                 ],
                 get completedTopics() { return this.topics.filter(t => t.completed).length; },
                 get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -166,25 +372,106 @@ export const subjects: Subject[] = [
     units: [
       {
         id: 'jss-bsc-u1',
-        title: 'Living and Non-Living Things',
-        description: 'Understanding the characteristics of life and the environment.',
+        title: 'JSS 1: Living Things and Our Environment',
+        description: 'Understanding the characteristics of life, cells, matter, energy, and safety.',
         modules: [
           {
             id: 'jss-bsc-u1-m1',
-            title: 'Characteristics of Living Things',
-            description: 'Learn about the seven life processes (MR. NIGER D).',
+            title: 'The Cell and Classification',
+            description: 'The basic unit of life and classifying organisms.',
             topics: [
-              { id: 't-bs1', title: 'Introduction to Life', description: 'Explore the basic concepts of what it means to be a living organism.', contentType: 'video', duration: 12, difficulty: 'beginner', completed: true, score: 88 },
-              { id: 't-bs2', title: 'Movement and Respiration', description: 'Understand two key life processes: how living things move and breathe.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+              { id: 't-bs1', title: 'Characteristics of Life (MR. NIGER D)', description: 'Explore the seven life processes.', contentType: 'video', duration: 12, difficulty: 'beginner', completed: true, score: 88 },
+              { id: 't-jbs-3', title: 'Introduction to the Cell', description: 'Discovering the building blocks of life.', contentType: 'animation', duration: 18, difficulty: 'intermediate', completed: false },
+              { id: 't-jbs-4', title: 'Plant vs. Animal Cells', description: 'Comparing the structures of plant and animal cells.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
           },
+          {
+            id: 'jss-bsc-u1-m2',
+            title: 'Matter, Energy, and Safety',
+            description: 'Exploring the physical world and how to be safe in it.',
+            topics: [
+                { id: 't-jbs-5', title: 'States of Matter', description: 'Solids, Liquids, and Gases.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                { id: 't-jbs-7', title: 'Forms of Energy', description: 'Exploring heat, light, sound, and electrical energy.', contentType: 'reading', duration: 18, difficulty: 'intermediate', completed: false },
+                { id: 't-jbs-10', title: 'Environmental Pollution', description: 'Causes and effects of air, water, and land pollution.', contentType: 'reading', duration: 22, difficulty: 'intermediate', completed: false },
+                { id: 't-jbs-11', title: 'Safety and First Aid', description: 'Basic safety measures at home and school.', contentType: 'simulation', duration: 25, difficulty: 'beginner', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       },
+      {
+        id: 'jss-bsc-u2',
+        title: 'JSS 2: Human Body Systems and Energy',
+        description: 'Exploring the digestive, respiratory, circulatory systems, and simple machines.',
+        modules: [
+            {
+                id: 'jss-bsc-u2-m1',
+                title: 'Human Body Systems',
+                description: 'Understanding how our major organ systems work.',
+                topics: [
+                    { id: 't-jbs-12', title: 'The Digestive System', description: 'The journey of food through the body.', contentType: 'animation', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-13', title: 'The Respiratory System', description: 'How we breathe and use oxygen.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-14', title: 'The Circulatory System', description: 'The heart, blood, and blood vessels.', contentType: 'video', duration: 22, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-bsc-u2-m2',
+                title: 'Energy and Machines',
+                description: 'Transformation of energy and the use of simple machines.',
+                topics: [
+                    { id: 't-jbs-15', title: 'Energy Transformation', description: 'Changing energy from one form to another.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-16', title: 'Simple Machines', description: 'Levers, pulleys, inclined planes, and their uses.', contentType: 'simulation', duration: 25, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'jss-bsc-u3',
+        title: 'JSS 3: Introductory Chemistry, Physics and Health',
+        description: 'Fundamentals of elements, compounds, light, sound, electricity, and human reproduction.',
+        modules: [
+            {
+                id: 'jss-bsc-u3-m1',
+                title: 'Basic Chemistry and Physics',
+                description: 'Exploring the building blocks of matter and fundamental physical phenomena.',
+                topics: [
+                    { id: 't-jbs-17', title: 'Elements, Compounds, and Mixtures', description: 'The classification of substances.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-18', title: 'Light and Sound', description: 'Properties of light (reflection, refraction) and sound.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-19', title: 'Introduction to Electricity', description: 'Simple circuits and electrical safety.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-bsc-u3-m2',
+                title: 'Health and Human Reproduction',
+                description: 'Understanding puberty, reproduction, and sexually transmitted infections.',
+                topics: [
+                    { id: 't-jbs-20', title: 'Puberty and Adolescence', description: 'Physical and emotional changes during teenage years.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false },
+                    { id: 't-jbs-21', title: 'The Human Reproductive System', description: 'Male and female reproductive organs and their functions.', contentType: 'animation', duration: 25, difficulty: 'advanced', completed: false },
+                    { id: 't-jbs-22', title: 'Sexually Transmitted Infections (STIs)', description: 'Awareness and prevention of common STIs including HIV/AIDS.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      }
     ],
     resources: {
       textbooks: [
@@ -206,20 +493,97 @@ export const subjects: Subject[] = [
     units: [
         {
             id: 'jss-btech-u1',
-            title: 'Introduction to Technology',
-            description: 'Understanding the meaning and importance of technology.',
+            title: 'JSS 1: Introduction to Technology and Drawing',
+            description: 'Understanding safety, basic tools, and the language of technology.',
             modules: [
                 {
                     id: 'jss-btech-u1-m1',
-                    title: 'Safety in the Workshop',
-                    description: 'Learn about workshop safety rules and regulations.',
+                    title: 'Safety and Workshop Practice',
+                    description: 'Learn about workshop safety rules and tools.',
                     topics: [
                         { id: 't-bt1', title: 'Workshop Hazards', description: 'Identify common dangers in a technology workshop and how to avoid them.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
-                        { id: 't-bt2', title: 'First Aid in the Workshop', description: 'Learn basic first aid for common workshop accidents.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+                        { id: 't-jbt-1', title: 'Identifying Workshop Hand Tools', description: 'Recognizing and naming common hand tools.', contentType: 'simulation', duration: 25, difficulty: 'beginner', completed: false },
                     ],
                     get completedTopics() { return this.topics.filter(t => t.completed).length; },
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 },
+                {
+                    id: 'jss-btech-u1-m2',
+                    title: 'Technical Drawing Instruments',
+                    description: 'Learning to use the tools for technical drawing.',
+                    topics: [
+                        { id: 't-jbt-2', title: 'The Drawing Board and T-Square', description: 'Setting up your drawing paper.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jbt-3', title: 'Using Set Squares and Protractors', description: 'Drawing lines, angles, and basic shapes.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jbt-4', title: 'Types of Lines', description: 'Understanding object lines, construction lines, and hidden lines.', contentType: 'reading', duration: 15, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-btech-u2',
+            title: 'JSS 2: Materials Processing and Drawing Techniques',
+            description: 'Working with wood and metal, and learning advanced drawing methods.',
+            modules: [
+                {
+                    id: 'jss-btech-u2-m1',
+                    title: 'Woodwork and Metalwork',
+                    description: 'Basic processes for shaping wood and metal.',
+                    topics: [
+                        { id: 't-jbt-6', title: 'Types of Wood', description: 'Differentiating between hardwood and softwood.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jbt-7', title: 'Basic Woodworking Joints', description: 'An introduction to butt joints, lap joints, etc.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-jbt-8', title: 'Ferrous and Non-ferrous Metals', description: 'Identifying common metals and their properties.', contentType: 'reading', duration: 15, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                 {
+                    id: 'jss-btech-u2-m2',
+                    title: 'Pictorial and Orthographic Drawing',
+                    description: 'Representing 3D objects on a 2D plane.',
+                    topics: [
+                        { id: 't-jbt-10', title: 'Isometric Drawing', description: 'Drawing 3D objects on isometric axes.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                        { id: 't-jbt-11', title: 'Orthographic Projection', description: 'First and third angle projections.', contentType: 'video', duration: 25, difficulty: 'advanced', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-btech-u3',
+            title: 'JSS 3: Applied Technology',
+            description: 'Introduction to building, electrical systems, and auto mechanics.',
+            modules: [
+                {
+                    id: 'jss-btech-u3-m1',
+                    title: 'Building and Electrical Technology',
+                    description: 'Basics of construction and simple electrical circuits.',
+                    topics: [
+                        { id: 't-jbt-12', title: 'Simple Building Plans', description: 'Reading and interpreting basic floor plans.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jbt-13', title: 'Electrical Symbols and Simple Circuits', description: 'Understanding components and drawing circuit diagrams.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                {
+                    id: 'jss-btech-u3-m2',
+                    title: 'Introduction to Auto Mechanics',
+                    description: 'Understanding the basic principles of a car engine.',
+                    topics: [
+                        { id: 't-jbt-14', title: 'The Internal Combustion Engine', description: 'The four-stroke engine cycle.', contentType: 'animation', duration: 30, difficulty: 'advanced', completed: false },
+                        { id: 't-jbt-15', title: 'Basic Car Maintenance', description: 'Checking oil, water, and tire pressure.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
             ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -244,20 +608,98 @@ export const subjects: Subject[] = [
     units: [
         {
             id: 'jss-ss-u1',
-            title: 'The Family',
-            description: 'Understanding the basic unit of society, its types, and functions.',
+            title: 'JSS 1: Family and Environment',
+            description: 'Understanding the family, culture, and our physical surroundings.',
             modules: [
                 {
                     id: 'jss-ss-u1-m1',
-                    title: 'The Family and its Types',
-                    description: 'Learn about the different family structures.',
+                    title: 'The Family and Culture',
+                    description: 'The basic unit of society and cultural diversity.',
                     topics: [
-                        { id: 't-ss1', title: 'The Nuclear Family', description: 'Explore the concept of a nuclear family (parents and children).', contentType: 'video', duration: 10, difficulty: 'beginner', completed: false },
-                        { id: 't-ss2', title: 'The Extended Family', description: 'Learn about the extended family structure common in Nigeria.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jss-1', title: 'Roles and Responsibilities in the Family', description: 'Understanding the duties of parents and children.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jss-4', title: 'Meaning of Culture', description: 'What makes up a people\'s way of life?', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jss-5', title: 'Major Ethnic Groups in Nigeria', description: 'An overview of the Hausa, Igbo, and Yoruba cultures.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
                     ],
                     get completedTopics() { return this.topics.filter(t => t.completed).length; },
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 },
+                {
+                    id: 'jss-ss-u1-m2',
+                    title: 'Our Physical Environment & Social Issues',
+                    description: 'Learning about the natural world and societal problems.',
+                    topics: [
+                        { id: 't-jss-2', title: 'Landforms and Water Bodies', description: 'Identifying mountains, rivers, lakes in Nigeria.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
+                        { id: 't-jss-7', title: 'Drug Abuse', description: 'The dangers of substance abuse.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-jss-8', title: 'Cultism', description: 'Understanding the risks and consequences of joining cults.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-ss-u2',
+            title: 'JSS 2: Governance and National Economy',
+            description: 'Exploring government structures, social issues, and economic resources.',
+            modules: [
+                {
+                    id: 'jss-ss-u2-m1',
+                    title: 'Government and Social Order',
+                    description: 'Understanding the arms of government and addressing social problems.',
+                    topics: [
+                        { id: 't-jss-10', title: 'The Arms of Government', description: 'Legislature, Executive, and Judiciary.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-jss-11', title: 'Human Trafficking', description: 'Causes, consequences, and prevention.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jss-12', title: 'Corruption', description: 'Understanding the impact of corruption on national development.', contentType: 'video', duration: 22, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                {
+                    id: 'jss-ss-u2-m2',
+                    title: 'Nigeria\'s Economy',
+                    description: 'Learning about our national resources and industries.',
+                    topics: [
+                        { id: 't-jss-13', title: 'Natural Resources in Nigeria', description: 'Crude oil, coal, tin, and agricultural resources.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jss-14', title: 'Major Industries in Nigeria', description: 'The role of manufacturing and service industries.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-ss-u3',
+            title: 'JSS 3: Citizenship and International Relations',
+            description: 'Understanding the Nigerian constitution and our place in the world.',
+            modules: [
+                {
+                    id: 'jss-ss-u3-m1',
+                    title: 'The Nigerian Citizen',
+                    description: 'Rights, duties, and the constitution.',
+                    topics: [
+                        { id: 't-jss-15', title: 'The Nigerian Constitution', description: 'The supreme law of the land.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+                        { id: 't-jss-16', title: 'Fundamental Human Rights', description: 'Know your rights as a citizen.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                {
+                    id: 'jss-ss-u3-m2',
+                    title: 'Nigeria and the World',
+                    description: 'Nigeria\'s relationship with other countries and organizations.',
+                    topics: [
+                        { id: 't-jss-17', title: 'ECOWAS, AU, and the UN', description: 'Nigeria\'s role in international organizations.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+                        { id: 't-jss-18', title: 'Science, Technology, and Society', description: 'The impact of technology on our lives.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
             ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -282,20 +724,87 @@ export const subjects: Subject[] = [
     units: [
         {
             id: 'jss-ce-u1',
-            title: 'Citizenship',
-            description: 'Learning about the concept of citizenship and its importance.',
+            title: 'JSS 1: Citizenship and National Values',
+            description: 'Learning about citizenship, rights, duties, and core national values.',
             modules: [
                 {
                     id: 'jss-ce-u1-m1',
-                    title: 'Rights and Duties of a Citizen',
-                    description: 'Understanding the privileges and obligations of being a Nigerian citizen.',
+                    title: 'Citizenship and Values',
+                    description: 'Understanding what it means to be a citizen and the values we share.',
                     topics: [
-                        { id: 't-ce1', title: 'Your Rights as a Citizen', description: 'Learn about fundamental human rights as enshrined in the constitution.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
-                        { id: 't-ce2', title: 'Your Duties as a Citizen', description: 'Explore the responsibilities like paying taxes and obeying laws.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jce-1', title: 'Who is a Citizen?', description: 'Defining citizenship and ways of becoming a citizen.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-ce1', title: 'Your Rights as a Citizen', description: 'Learn about fundamental human rights.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+                        { id: 't-ce2', title: 'Your Duties as a Citizen', description: 'Explore responsibilities like paying taxes and obeying laws.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+                        { id: 't-jce-3', title: 'Patriotism and Nationalism', description: 'Loving and serving your country.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+                        { id: 't-jce-4', title: 'National Symbols', description: 'Understanding the Nigerian flag, coat of arms, and anthem.', contentType: 'animation', duration: 20, difficulty: 'beginner', completed: false },
                     ],
                     get completedTopics() { return this.topics.filter(t => t.completed).length; },
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-ce-u2',
+            title: 'JSS 2: Governance and Democracy',
+            description: 'Understanding the constitution, rule of law, and democratic principles.',
+            modules: [
+                {
+                    id: 'jss-ce-u2-m1',
+                    title: 'The Constitution and Rule of Law',
+                    description: 'The supreme law and the principle of equality before the law.',
+                    topics: [
+                        { id: 't-jce-5', title: 'What is a Constitution?', description: 'The importance and functions of a constitution.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-jce-6', title: 'The Rule of Law', description: 'The principle that everyone is equal before the law.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                {
+                    id: 'jss-ce-u2-m2',
+                    title: 'Democracy and Elections',
+                    description: 'Government of the people, by the people, for the people.',
+                    topics: [
+                        { id: 't-jce-7', title: 'Pillars of Democracy', description: 'Free press, independent judiciary, and the role of citizens.', contentType: 'reading', duration: 22, difficulty: 'advanced', completed: false },
+                        { id: 't-jce-8', title: 'The Importance of Voting', description: 'Understanding the electoral process.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'jss-ce-u3',
+            title: 'JSS 3: Public Service and Corruption',
+            description: 'Understanding the civil service and the fight against corruption.',
+            modules: [
+                {
+                    id: 'jss-ce-u3-m1',
+                    title: 'The Public Service',
+                    description: 'The machinery of government.',
+                    topics: [
+                        { id: 't-jce-9', title: 'The Civil Service', description: 'Structure and functions of the civil service.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jce-10', title: 'Accountability and Transparency', description: 'Holding public officials responsible.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+                {
+                    id: 'jss-ce-u3-m2',
+                    title: 'Fighting Corruption',
+                    description: 'The roles of individuals and agencies.',
+                    topics: [
+                        { id: 't-jce-11', title: 'Causes and Effects of Corruption', description: 'Understanding the roots and impact of corruption.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-jce-12', title: 'Agencies Fighting Corruption', description: 'The role of EFCC and ICPC.', contentType: 'video', duration: 22, difficulty: 'advanced', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
             ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -311,7 +820,7 @@ export const subjects: Subject[] = [
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
   },
-  {
+   {
     id: 'jss-agric-science',
     title: 'JSS Agricultural Science',
     description: 'Fundamentals of farming, crops, and animal husbandry.',
@@ -319,52 +828,102 @@ export const subjects: Subject[] = [
     icon: Leaf,
     units: [{
         id: 'jss-ag-u1',
-        title: 'Introduction to Agriculture',
-        description: 'Understanding the meaning and importance of Agriculture.',
-        modules: [{
+        title: 'JSS 1: Introduction to Agriculture',
+        description: 'Understanding the meaning, importance, branches, and basics of crop and animal production.',
+        modules: [
+          {
             id: 'jss-ag-u1-m1',
-            title: 'Meaning and Branches',
-            description: 'Explore the scope of agricultural science.',
+            title: 'Foundations of Agriculture',
+            description: 'Explore the scope of agricultural science and soil properties.',
             topics: [
                 { id: 't-ag1', title: 'What is Agriculture?', description: 'A video explaining the importance of agriculture to Nigeria.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
-                { id: 't-ag2', title: 'Branches of Agriculture', description: 'Learn about agronomy, horticulture, animal husbandry, and more.', contentType: 'reading', duration: 18, difficulty: 'beginner', completed: false }
+                { id: 't-ag2', title: 'Branches of Agriculture', description: 'Learn about agronomy, horticulture, animal husbandry, and more.', contentType: 'reading', duration: 18, difficulty: 'beginner', completed: false },
+                { id: 't-jag-2', title: 'What is Soil?', description: 'Composition and types of soil.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-        }],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-    }],
-    resources: { textbooks: [], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
-    id: 'jss-crs',
-    title: 'JSS Christian Religious Studies',
-    description: 'Study of Christian beliefs, history, and moral teachings.',
-    level: 'JSS',
-    icon: BookMarked,
-    units: [{
-        id: 'jss-crs-u1',
-        title: 'The Creation',
-        description: 'Understanding the biblical account of creation.',
-        modules: [{
-            id: 'jss-crs-u1-m1',
-            title: 'The Genesis Account',
-            description: 'Studying the first book of the Bible.',
+          },
+          {
+            id: 'jss-ag-u1-m2',
+            title: 'Introduction to Crop and Animal Rearing',
+            description: 'The very basics of planting and raising animals.',
             topics: [
-                { id: 't-crs1', title: 'The Story of Creation (Day 1-3)', description: 'An animated video on the first three days of creation.', contentType: 'animation', duration: 12, difficulty: 'beginner', completed: false },
-                { id: 't-crs2', title: 'Man in the Image of God', description: 'A reading on the creation of man and woman.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false }
+              { id: 't-jag-4', title: 'Classification of Crops', description: 'Cereal, legume, root, and tuber crops.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-jag-6', title: 'Classification of Farm Animals', description: 'Poultry, cattle, goats, pigs, etc.', contentType: 'reading', duration: 18, difficulty: 'beginner', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-        }],
+          },
+        ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+    },
+    {
+      id: 'jss-ag-u2',
+      title: 'JSS 2: Crop and Animal Production Practices',
+      description: 'Learning about planting methods, livestock management, and soil science.',
+      modules: [
+        {
+          id: 'jss-ag-u2-m1',
+          title: 'Crop Production Techniques',
+          description: 'From planting to harvesting and storage.',
+          topics: [
+            { id: 't-jag-10', title: 'Planting Methods', description: 'Broadcasting, drilling, and transplanting.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+            { id: 't-jag-11', title: 'Harvesting and Storage of Crops', description: 'Proper techniques to reduce post-harvest losses.', contentType: 'reading', duration: 22, difficulty: 'intermediate', completed: false },
+          ],
+          get completedTopics() { return this.topics.filter(t => t.completed).length; },
+          get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+        },
+        {
+          id: 'jss-ag-u2-m2',
+          title: 'Livestock Management',
+          description: 'Feeding, housing, and health of farm animals.',
+          topics: [
+            { id: 't-jag-7', title: 'Animal Feeds and Feeding', description: 'What farm animals eat.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+            { id: 't-jag-8', title: 'Basic Animal Health', description: 'Common diseases and parasites.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+            { id: 't-jag-12', title: 'Soil Conservation and Irrigation', description: 'Protecting soil from erosion and supplying water to crops.', contentType: 'video', duration: 25, difficulty: 'advanced', completed: false },
+          ],
+          get completedTopics() { return this.topics.filter(t => t.completed).length; },
+          get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+        },
+      ],
+      get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+      get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+      get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+    },
+    {
+      id: 'jss-ag-u3',
+      title: 'JSS 3: Farm Mechanization and Agribusiness',
+      description: 'Using simple farm tools and understanding the business of agriculture.',
+      modules: [
+        {
+          id: 'jss-ag-u3-m1',
+          title: 'Farm Tools and Mechanization',
+          description: 'Tools and implements used in farming.',
+          topics: [
+            { id: 't-jag-13', title: 'Simple Farm Tools', description: 'Cutlass, hoe, rake, and their uses.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+            { id: 't-jag-14', title: 'Farm Implements', description: 'Ploughs, harrows, and planters.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+          ],
+          get completedTopics() { return this.topics.filter(t => t.completed).length; },
+          get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+        },
+        {
+          id: 'jss-ag-u3-m2',
+          title: 'Agricultural Economics',
+          description: 'The business side of farming.',
+          topics: [
+            { id: 't-jag-15', title: 'Introduction to Agribusiness', description: 'Viewing farming as a business.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+            { id: 't-jag-16', title: 'Marketing of Agricultural Produce', description: 'From farm to consumer.', contentType: 'video', duration: 22, difficulty: 'advanced', completed: false },
+            { id: 't-jag-9', title: 'Introduction to Fishery and Forestry', description: 'The basics of fish farming and forest management.', contentType: 'video', duration: 15, difficulty: 'intermediate', completed: false },
+          ],
+          get completedTopics() { return this.topics.filter(t => t.completed).length; },
+          get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+        }
+      ],
+      get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+      get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+      get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
     }],
     resources: { textbooks: [], ebooks: [], journals: [] },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -379,19 +938,95 @@ export const subjects: Subject[] = [
     icon: Briefcase,
     units: [{
         id: 'jss-bs-u1',
-        title: 'Introduction to Business',
-        description: 'Learning the basics of business and office environment.',
-        modules: [{
+        title: 'JSS 1: Introduction to Business',
+        description: 'Learning the basics of the office environment, commerce, and bookkeeping.',
+        modules: [
+          {
             id: 'jss-bs-u1-m1',
-            title: 'Office Practice',
-            description: 'Understanding the functions and personnel of a modern office.',
+            title: 'Office Practice and Commerce',
+            description: 'Understanding the office and the exchange of goods.',
             topics: [
                 { id: 't-bsn1', title: 'The Office and its Functions', description: 'Learn what an office is and its importance.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
-                { id: 't-bsn2', title: 'The Receptionist', description: 'Understanding the role and duties of a receptionist.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false }
+                { id: 't-jbs-1', title: 'Office Documents', description: 'Introduction to memos, letters, and reports.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+                { id: 't-jbs-3', title: 'Trade', description: 'The exchange of goods and services.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-        }],
+          },
+          {
+            id: 'jss-bs-u1-m2',
+            title: 'Introduction to Bookkeeping',
+            description: 'The starting point of accounting.',
+            topics: [
+              { id: 't-jbs-5', title: 'Source Documents', description: 'Invoices, receipts, and debit/credit notes.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-jbs-6', title: 'The Cash Book', description: 'Recording cash and bank transactions.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+    }, {
+        id: 'jss-bs-u2',
+        title: 'JSS 2: Aids to Trade and Office Procedures',
+        description: 'Exploring distribution, insurance, and the role of office equipment.',
+        modules: [
+            {
+                id: 'jss-bs-u2-m1',
+                title: 'Commerce: Aids to Trade',
+                description: 'The services that facilitate trade.',
+                topics: [
+                    { id: 't-jbs-8', title: 'Channels of Distribution', description: 'From producer to consumer.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-9', title: 'Insurance', description: 'The principle of pooling risks.', contentType: 'reading', duration: 22, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-bs-u2-m2',
+                title: 'Office Practice and Bookkeeping',
+                description: 'Office machines and the trial balance.',
+                topics: [
+                    { id: 't-jbs-10', title: 'Office Equipment', description: 'Computers, printers, and photocopiers.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+                    { id: 't-jbs-11', title: 'The Trial Balance', description: 'Checking the arithmetic accuracy of the ledger.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+    }, {
+        id: 'jss-bs-u3',
+        title: 'JSS 3: Finance and Business Environment',
+        description: 'Understanding banking, business organizations, and keyboarding skills.',
+        modules: [
+            {
+                id: 'jss-bs-u3-m1',
+                title: 'Introduction to Finance',
+                description: 'The role of banks and the capital market.',
+                topics: [
+                    { id: 't-jbs-12', title: 'Banking Services', description: 'Savings accounts, current accounts, and loans.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-13', title: 'The Capital Market', description: 'Introduction to stocks and shares.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+            {
+                id: 'jss-bs-u3-m2',
+                title: 'Business Organizations and Keyboarding',
+                description: 'Types of businesses and developing typing skills.',
+                topics: [
+                    { id: 't-jbs-14', title: 'Types of Business Organizations', description: 'Sole proprietorship, partnership, and limited companies.', contentType: 'reading', duration: 30, difficulty: 'intermediate', completed: false },
+                    { id: 't-jbs-15', title: 'Keyboarding: Speed and Accuracy', description: 'Practice drills for improving typing speed.', contentType: 'simulation', duration: 30, difficulty: 'beginner', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            }
+        ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -409,49 +1044,94 @@ export const subjects: Subject[] = [
     icon: Utensils,
     units: [{
         id: 'jss-he-u1',
-        title: 'The Home',
-        description: 'Understanding home management and family needs.',
-        modules: [{
+        title: 'JSS 1: Foundations of Home Economics',
+        description: 'Understanding home management, food groups, and basic sewing.',
+        modules: [
+          {
             id: 'jss-he-u1-m1',
-            title: 'Food and Nutrition',
-            description: 'Learning the basics of healthy eating.',
+            title: 'The Home and Food',
+            description: 'Managing a healthy home and understanding nutrition.',
             topics: [
-                { id: 't-he1', title: 'Food and its Classes', description: 'Introduction to the basic classes of food.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
-                { id: 't-he2', title: 'A Balanced Diet', description: 'Learn how to plan a balanced meal.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false }
+                { id: 't-he1', title: 'The Healthy Home Environment', description: 'Cleanliness and safety in the home.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
+                { id: 't-he2', title: 'Food and its Classes', description: 'Introduction to the basic classes of food.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
+                { id: 't-jhe-3', title: 'Functions of Food', description: 'Why our bodies need different types of food.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-        }],
+          },
+          {
+            id: 'jss-he-u1-m2',
+            title: 'Basic Clothing and Textiles',
+            description: 'Introduction to sewing tools and stitches.',
+            topics: [
+              { id: 't-jhe-5', title: 'Basic Sewing Tools', description: 'Needles, thread, scissors, and measuring tape.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
+              { id: 't-jhe-6', title: 'Simple Stitches', description: 'Learning how to do running stitch and back stitch.', contentType: 'simulation', duration: 25, difficulty: 'beginner', completed: false },
+              { id: 't-jhe-7', 'title': 'Care of Clothes', description: 'Washing, ironing, and storing clothes properly.', 'contentType': 'reading', duration: 18, difficulty: 'beginner', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-    }],
-    resources: { textbooks: [], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
-    id: 'jss-cca',
-    title: 'JSS Cultural & Creative Arts',
-    description: 'Exploring creativity through fine arts, drama, and music.',
-    level: 'JSS',
-    icon: Palette,
-    units: [{
-        id: 'jss-cca-u1',
-        title: 'Fundamentals of Art',
-        description: 'Learning the basic principles and elements of art.',
+    }, {
+        id: 'jss-he-u2',
+        title: 'JSS 2: Food Preparation and Resource Management',
+        description: 'Learning about meal planning, food preservation, and managing family resources.',
         modules: [{
-            id: 'jss-cca-u1-m1',
-            title: 'Elements of Design',
-            description: 'The building blocks of all art.',
+            id: 'jss-he-u2-m1',
+            title: 'Food and Nutrition',
+            description: 'Planning healthy meals and preserving food.',
             topics: [
-                { id: 't-cca1', title: 'Line, Shape, and Form', description: 'Understanding the most basic elements of art.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
-                { id: 't-cca2', title: 'Introduction to Colour', description: 'Learn about the colour wheel and basic colour theory.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false }
+                { id: 't-jhe-2', title: 'A Balanced Diet', description: 'Learn how to plan a balanced meal.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+                { id: 't-jhe-9', title: 'Food Preservation', description: 'Methods like drying, smoking, and refrigeration.', contentType: 'video', duration: 22, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-        }],
+          },
+          {
+            id: 'jss-he-u2-m2',
+            title: 'Home and Resource Management',
+            description: 'Making wise decisions for the family.',
+            topics: [
+              { id: 't-jhe-1', title: 'Family Resources', description: 'Managing time, energy, and money.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-jhe-10', title: 'Decision Making', description: 'Steps in making good family decisions.', contentType: 'reading', duration: 18, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+    }, {
+        id: 'jss-he-u3',
+        title: 'JSS 3: Family Living and Entrepreneurship',
+        description: 'Understanding child development, consumer education, and entrepreneurial skills.',
+        modules: [{
+            id: 'jss-he-u3-m1',
+            title: 'Family Living and Child Development',
+            description: 'Marriage and the stages of child development.',
+            topics: [
+                { id: 't-jhe-11', title: 'Marriage and Family', description: 'Types of marriage and roles in the family.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                { id: 't-jhe-12', title: 'Child Development', description: 'From infancy to adolescence.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+          {
+            id: 'jss-he-u3-m2',
+            title: 'Consumer Education and Entrepreneurship',
+            description: 'Becoming a smart shopper and exploring business opportunities.',
+            topics: [
+              { id: 't-jhe-13', title: 'Consumer Education', description: 'Budgeting and making wise shopping choices.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-jhe-14', title: 'Entrepreneurship in Home Economics', description: 'Opportunities in catering, event planning, and fashion.', contentType: 'video', duration: 22, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -461,7 +1141,6 @@ export const subjects: Subject[] = [
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
   },
-
   // SSS SUBJECTS
   {
     id: 'sss-math',
@@ -482,10 +1161,67 @@ export const subjects: Subject[] = [
                     topics: [
                         { id: 't-ssm1', title: 'Factorization Method', description: 'Learn how to solve quadratic equations by finding factors.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
                         { id: 't-ssm2', title: 'Completing the Square', description: 'A powerful technique for solving any quadratic equation.', contentType: 'simulation', duration: 25, difficulty: 'advanced', completed: false },
+                        { id: 't-ssm3', title: 'The Quadratic Formula', description: 'Applying the "almighty" formula.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
                     ],
                     get completedTopics() { return this.topics.filter(t => t.completed).length; },
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 },
+                {
+                    id: 'sss-math-u1-m2',
+                    title: 'Sequences and Series',
+                    description: 'Understanding arithmetic and geometric progressions.',
+                    topics: [
+                        { id: 't-ssm4', title: 'Arithmetic Progressions (AP)', description: 'Finding the nth term and sum of an AP.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-ssm5', title: 'Geometric Progressions (GP)', description: 'Finding the nth term and sum of a GP.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'sss-math-u2',
+            title: 'Trigonometry',
+            description: 'The study of relationships between side lengths and angles of triangles.',
+            modules: [
+                {
+                    id: 'sss-math-u2-m1',
+                    title: 'Trigonometric Ratios',
+                    description: 'SOH CAH TOA and its applications.',
+                    topics: [
+                        { id: 't-ssm6', title: 'Sine, Cosine, and Tangent', description: 'Defining the basic trig ratios in right-angled triangles.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-ssm7', title: 'The Sine and Cosine Rules', description: 'Solving non-right-angled triangles.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+                        { id: 't-ssm8', title: 'Graphs of Trigonometric Functions', description: 'Visualizing sin(x), cos(x), and tan(x).', contentType: 'animation', duration: 25, difficulty: 'advanced', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                },
+            ],
+            get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+            get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+            get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+        },
+        {
+            id: 'sss-math-u3',
+            title: 'Statistics and Probability',
+            description: 'Collecting, analyzing, interpreting, and presenting data.',
+            modules: [
+                {
+                    id: 'sss-math-u3-m1',
+                    title: 'Data Representation and Analysis',
+                    description: 'Making sense of data sets.',
+                    topics: [
+                        { id: 't-ssm9', title: 'Measures of Central Tendency', description: 'Calculating mean, median, and mode for grouped data.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+                        { id: 't-ssm10', title: 'Measures of Dispersion', description: 'Understanding range, variance, and standard deviation.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+                        { id: 't-ssm11', title: 'Histograms and Frequency Polygons', description: 'Visual representation of data.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+                        { id: 't-ssm12', title: 'Introduction to Probability', description: 'Calculating the likelihood of events.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                    ],
+                    get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                    get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+                }
             ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -520,6 +1256,63 @@ export const subjects: Subject[] = [
             topics: [
               { id: 't-sse1', title: 'Rules of Concord', description: 'Explore the 16 rules of subject-verb agreement.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
               { id: 't-sse2', title: 'Complex Sentences', description: 'Learn to use clauses to build sophisticated sentences.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sse3', title: 'Question Tags', description: 'Forming and answering question tags correctly.', contentType: 'simulation', duration: 15, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-eng-u2',
+        title: 'Oral English',
+        description: 'Mastering the sounds and rhythms of English.',
+        modules: [
+          {
+            id: 'sss-eng-u2-m1',
+            title: 'Vowels and Consonants',
+            description: 'The building blocks of spoken English.',
+            topics: [
+              { id: 't-sse4', title: 'Pure Vowels (Monophthongs)', description: 'Identifying and producing the 12 pure vowel sounds.', contentType: 'audio', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sse5', title: 'Diphthongs', description: 'Understanding vowel glides.', contentType: 'audio', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sse6', title: 'Consonant Sounds', description: 'Voiced and voiceless consonants.', contentType: 'audio', duration: 25, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'sss-eng-u2-m2',
+            title: 'Stress, Rhythm and Intonation',
+            description: 'The music of the English language.',
+            topics: [
+              { id: 't-sse7', title: 'Word Stress', description: 'Identifying stressed syllables in words.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sse8', title: 'Intonation Patterns', description: 'Rising and falling tones in sentences.', contentType: 'audio', duration: 18, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+       {
+        id: 'sss-eng-u3',
+        title: 'Writing for a Purpose',
+        description: 'Developing advanced writing skills.',
+        modules: [
+          {
+            id: 'sss-eng-u3-m1',
+            title: 'Advanced Essay Writing',
+            description: 'Mastering different forms of composition.',
+            topics: [
+              { id: 't-sse9', title: 'Argumentative and Persuasive Essays', description: 'Techniques for building a strong argument.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sse10', title: 'Expository Essays', description: 'How to explain a topic clearly and logically.', contentType: 'reading', duration: 30, difficulty: 'intermediate', completed: false },
+              { id: 't-sse11', title: 'Report Writing', description: 'Structure and language of formal reports.', contentType: 'classwork', duration: 45, difficulty: 'advanced', completed: false },
+              { id: 't-sse12', title: 'Creative Writing', description: 'Techniques for writing compelling short stories.', contentType: 'assignment', duration: 60, difficulty: 'advanced', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -549,11 +1342,13 @@ export const subjects: Subject[] = [
         modules: [
           {
             id: 'sss-physics-u1-m1',
-            title: 'Kinematics',
-            description: 'Describing motion with graphs and equations.',
+            title: 'Kinematics and Dynamics',
+            description: 'Describing motion and its causes.',
             topics: [
               { id: 't11', title: 'Distance vs. Displacement', description: 'Understanding scalar and vector quantities.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
               { id: 't12', title: 'Speed and Velocity', description: 'Calculating rates of motion.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-sphy1', title: 'Newton\'s Laws of Motion', description: 'Inertia, F=ma, and action-reaction.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-sphy2', title: 'Work, Energy, and Power', description: 'Understanding the relationship between these concepts.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -565,15 +1360,41 @@ export const subjects: Subject[] = [
       },
       {
         id: 'sss-physics-u2',
-        title: 'Waves and Optics',
+        title: 'Waves, Sound and Optics',
         description: 'Study of light, sound, and other wave phenomena.',
         modules: [
             {
                 id: 'sss-physics-u2-m1',
-                title: 'Reflection of Light',
+                title: 'Properties of Waves and Light',
                 description: 'Understanding mirrors and image formation.',
                 topics: [
                     { id: 't-phy1', title: 'Laws of Reflection', description: 'Understand how light bounces off surfaces like mirrors.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
+                    { id: 't-sphy3', title: 'Refraction of Light', description: 'Snell\'s law and the bending of light.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-sphy4', title: 'Lenses and Optical Instruments', description: 'How cameras, telescopes, and the human eye work.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+                    { id: 't-sphy5', title: 'Sound Waves', description: 'Production and propagation of sound.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+                ],
+                get completedTopics() { return this.topics.filter(t => t.completed).length; },
+                get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+            },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-physics-u3',
+        title: 'Electricity and Magnetism',
+        description: 'Exploring electric circuits, fields, and magnetic effects.',
+        modules: [
+            {
+                id: 'sss-physics-u3-m1',
+                title: 'Electric Circuits',
+                description: 'Understanding current, voltage, and resistance.',
+                topics: [
+                    { id: 't-sphy6', title: 'Ohm\'s Law', description: 'The relationship V=IR.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+                    { id: 't-sphy7', title: 'Resistors in Series and Parallel', description: 'Calculating equivalent resistance.', contentType: 'video', duration: 22, difficulty: 'intermediate', completed: false },
+                    { id: 't-sphy8', title: 'Electric Power and Energy', description: 'Calculating energy consumption.', contentType: 'reading', duration: 20, difficulty: 'advanced', completed: false },
+                    { id: 't-sphy9', title: 'Electromagnetism', description: 'The relationship between electricity and magnetism.', contentType: 'animation', duration: 25, difficulty: 'advanced', completed: false },
                 ],
                 get completedTopics() { return this.topics.filter(t => t.completed).length; },
                 get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -608,7 +1429,7 @@ export const subjects: Subject[] = [
     units: [
       {
         id: 'sss-chem-u1',
-        title: 'The Particulate Nature of Matter',
+        title: 'Fundamentals of Chemistry',
         description: 'Understanding the building blocks of all substances.',
         modules: [
           {
@@ -618,6 +1439,53 @@ export const subjects: Subject[] = [
             topics: [
               { id: 't-chem1', title: 'Introduction to Atomic Theory', description: 'From Dalton to the modern model of the atom.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false },
               { id: 't-chem2', title: 'States of Matter', description: 'Explore the properties of solids, liquids, and gases.', contentType: 'simulation', duration: 18, difficulty: 'beginner', completed: false },
+              { id: 't-schem1', title: 'The Periodic Table', description: 'Arrangement of elements and periodic trends.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-schem2', title: 'Chemical Bonding', description: 'Ionic, covalent, and metallic bonds.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-chem-u2',
+        title: 'Stoichiometry and Chemical Reactions',
+        description: 'The quantitative aspect of chemistry.',
+        modules: [
+          {
+            id: 'sss-chem-u2-m1',
+            title: 'The Mole Concept and Equations',
+            description: 'Measuring substances and balancing equations.',
+            topics: [
+              { id: 't-schem3', title: 'The Mole Concept', description: 'Understanding Avogadro\'s number and molar mass.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-schem4', title: 'Balancing Chemical Equations', description: 'The law of conservation of mass.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-schem5', title: 'Gas Laws', description: 'Boyle\'s Law, Charles\' Law, and the Ideal Gas Equation.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-chem-u3',
+        title: 'Organic Chemistry',
+        description: 'The chemistry of carbon compounds.',
+        modules: [
+          {
+            id: 'sss-chem-u3-m1',
+            title: 'Hydrocarbons',
+            description: 'Alkanes, Alkenes, and Alkynes.',
+            topics: [
+              { id: 't-schem6', title: 'Introduction to Organic Chemistry', description: 'What makes carbon so special?', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-schem7', title: 'Alkanes and IUPAC Nomenclature', description: 'Naming simple organic compounds.', contentType: 'reading', duration: 30, difficulty: 'intermediate', completed: false },
+              { id: 't-schem8', title: 'Alkenes and Alkynes', description: 'Unsaturated hydrocarbons and their reactions.', contentType: 'video', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-schem9', title: 'Benzene and Aromatic Compounds', description: 'The structure and properties of benzene.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -647,11 +1515,58 @@ export const subjects: Subject[] = [
         modules: [
           {
             id: 'sss-bio-u1-m1',
-            title: 'Cells as the Basic Unit of Life',
+            title: 'Cells and Tissues',
             description: 'Exploring the structure and function of plant and animal cells.',
             topics: [
               { id: 't-bio1', title: 'The Animal Cell', description: 'An interactive diagram of an animal cell.', contentType: 'simulation', duration: 20, difficulty: 'beginner', completed: false },
               { id: 't-bio2', title: 'The Plant Cell', description: 'Learn the unique structures of a plant cell.', contentType: 'video', duration: 18, difficulty: 'beginner', completed: false },
+              { id: 't-sbio1', title: 'Cell Division: Mitosis and Meiosis', description: 'How cells multiply and create gametes.', contentType: 'animation', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-sbio2', title: 'Levels of Organization', description: 'From cells to tissues, organs, and systems.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+       {
+        id: 'sss-bio-u2',
+        title: 'Ecology',
+        description: 'The study of organisms and their environment.',
+        modules: [
+          {
+            id: 'sss-bio-u2-m1',
+            title: 'Ecosystems and Nutrient Cycling',
+            description: 'Interactions in nature.',
+            topics: [
+              { id: 't-sbio3', title: 'Food Chains and Food Webs', description: 'The flow of energy in an ecosystem.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sbio4', title: 'Population Studies', description: 'Factors affecting population size.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-sbio5', title: 'Carbon and Water Cycles', description: 'How essential elements are recycled in nature.', contentType: 'animation', duration: 22, difficulty: 'advanced', completed: false },
+              { id: 't-sbio6', title: 'Pollution and Conservation', description: 'Human impact on the environment.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-bio-u3',
+        title: 'Genetics and Evolution',
+        description: 'Heredity and the mechanisms of evolutionary change.',
+        modules: [
+          {
+            id: 'sss-bio-u3-m1',
+            title: 'Mendelian Genetics and Variation',
+            description: 'The laws of inheritance.',
+            topics: [
+              { id: 't-sbio7', title: 'Mendel\'s Laws of Inheritance', description: 'Dominance, segregation, and independent assortment.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sbio8', title: 'DNA, RNA, and Protein Synthesis', description: 'The central dogma of molecular biology.', contentType: 'animation', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sbio9', title: 'Theories of Evolution', description: 'Lamarck, Darwin, and modern evolutionary synthesis.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -668,40 +1583,6 @@ export const subjects: Subject[] = [
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
   },
    {
-    id: 'sss-agric-science',
-    title: 'SSS Agricultural Science',
-    description: 'Advanced study of crop production, animal science, and agribusiness.',
-    level: 'SSS',
-    icon: Leaf,
-    units: [
-      {
-        id: 'sss-agric-u1',
-        title: 'Soil Science',
-        description: 'In-depth study of soil composition, properties, and management.',
-        modules: [
-          {
-            id: 'sss-agric-u1-m1',
-            title: 'Soil Formation and Profile',
-            description: 'Understanding how soil is formed and its different layers.',
-            topics: [
-              { id: 't-ssag1', title: 'Factors of Soil Formation', description: 'Learn about weathering and other factors.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
-              { id: 't-ssag2', title: 'The Soil Profile', description: 'A video explaining the different horizons of soil.', contentType: 'video', duration: 15, difficulty: 'intermediate', completed: false },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          }
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-      }
-    ],
-    resources: { textbooks: [{ id: 'tb-agric1', title: 'Agricultural Science for SSS', author: 'E. A. Akinsanmi', coverUrl: 'https://picsum.photos/seed/agric-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
     id: 'sss-economics',
     title: 'SSS Economics',
     description: 'Principles of production, distribution, and consumption of goods and services.',
@@ -715,11 +1596,58 @@ export const subjects: Subject[] = [
         modules: [
           {
             id: 'sss-econ-u1-m1',
-            title: 'Scarcity, Choice and Opportunity Cost',
-            description: 'Understanding the fundamental economic problem.',
+            title: 'The Economic Problem',
+            description: 'Understanding scarcity, choice and opportunity cost.',
             topics: [
               { id: 't-econ1', title: 'Wants vs. Needs', description: 'Differentiating between human wants and basic needs.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
               { id: 't-econ2', title: 'Opportunity Cost', description: 'Learn about the true cost of a decision.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-secon1', title: 'Production Possibility Curve (PPC)', description: 'Visualizing scarcity and opportunity cost.', contentType: 'simulation', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-econ-u2',
+        title: 'Demand and Supply',
+        description: 'The forces that drive market economies.',
+        modules: [
+          {
+            id: 'sss-econ-u2-m1',
+            title: 'Theory of Demand and Supply',
+            description: 'Understanding consumer and producer behavior.',
+            topics: [
+              { id: 't-secon2', title: 'The Law of Demand', description: 'How price affects the quantity demanded.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-secon3', title: 'The Law of Supply', description: 'How price affects the quantity supplied.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-secon4', title: 'Market Equilibrium', description: 'Where demand and supply meet.', contentType: 'simulation', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-secon5', title: 'Elasticity of Demand and Supply', description: 'Measuring responsiveness to price changes.', contentType: 'reading', duration: 30, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-econ-u3',
+        title: 'Money, Banking, and Public Finance',
+        description: 'The role of money and government in the economy.',
+        modules: [
+          {
+            id: 'sss-econ-u3-m1',
+            title: 'Macroeconomic Concepts',
+            description: 'Understanding the broader economy.',
+            topics: [
+              { id: 't-secon6', title: 'Money and its Functions', description: 'What is money and what does it do?', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-secon7', title: 'Inflation', description: 'Causes, effects, and control of rising prices.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-secon8', title: 'Taxation', description: 'The role of taxes in public finance.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-secon9', title: 'International Trade', description: 'Why countries trade with each other.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -749,11 +1677,57 @@ export const subjects: Subject[] = [
         modules: [
           {
             id: 'sss-gov-u1-m1',
-            title: 'Power, Authority, Legitimacy',
+            title: 'State, Nation, and Government',
             description: 'Differentiating between key political concepts.',
             topics: [
               { id: 't-gov1', title: 'What is Government?', description: 'Defining government as an institution of the state.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
               { id: 't-gov2', title: 'Sources of Authority', description: 'Explore charismatic, traditional, and legal-rational authority.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 't-sgov1', title: 'The Constitution', description: 'Types and functions of a constitution.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-gov-u2',
+        title: 'Forms and Structures of Government',
+        description: 'Exploring different political systems.',
+        modules: [
+          {
+            id: 'sss-gov-u2-m1',
+            title: 'Political Systems',
+            description: 'Unitary, Federal, and Confederal systems.',
+            topics: [
+              { id: 't-sgov2', title: 'Federalism in Nigeria', description: 'The structure of the Nigerian federal system.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-sgov3', title: 'Presidential vs. Parliamentary Systems', description: 'Comparing the two major forms of democratic government.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-sgov4', title: 'The Arms of Government', description: 'The Legislature, Executive, and Judiciary.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-gov-u3',
+        title: 'Nigerian Politics and Governance',
+        description: 'The political history and current structure of Nigeria.',
+        modules: [
+          {
+            id: 'sss-gov-u3-m1',
+            title: 'From Colonialism to Independence',
+            description: 'Nigeria\'s political journey.',
+            topics: [
+              { id: 't-sgov5', title: 'Pre-Colonial Administration', description: 'Systems of government in Hausa, Igbo, and Yoruba lands.', contentType: 'reading', duration: 30, difficulty: 'intermediate', completed: false },
+              { id: 't-sgov6', title: 'Colonial Rule and Nationalism', description: 'The struggle for independence.', contentType: 'video', duration: 28, difficulty: 'intermediate', completed: false },
+              { id: 't-sgov7', title: 'Military Rule in Nigeria', description: 'An overview of military coups and governance.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+              { id: 't-sgov8', title: 'Electoral Process in Nigeria', description: 'The role of INEC and political parties.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
@@ -765,142 +1739,6 @@ export const subjects: Subject[] = [
       }
     ],
     resources: { textbooks: [{ id: 'tb-gov1', title: 'Essential Government for SSS', author: 'C.C. Dibie', coverUrl: 'https://picsum.photos/seed/gov-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
-    id: 'sss-literature',
-    title: 'SSS Literature-in-English',
-    description: 'Analysis of prose, drama, and poetry from Africa and beyond.',
-    level: 'SSS',
-    icon: BookHeart,
-    units: [
-      {
-        id: 'sss-lit-u1',
-        title: 'Introduction to Literary Appreciation',
-        description: 'Learning the tools to analyze and appreciate literary works.',
-        modules: [
-          {
-            id: 'sss-lit-u1-m1',
-            title: 'The Genres of Literature',
-            description: 'Understanding the characteristics of prose, poetry, and drama.',
-            topics: [
-              { id: 't-lit1', title: 'Figures of Speech', description: 'Learn to identify simile, metaphor, personification, etc.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
-              { id: 't-lit2', title: 'Plot and Characterization', description: 'Analyzing the structure of a story and its characters.', contentType: 'video', duration: 18, difficulty: 'intermediate', completed: false },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          }
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-      }
-    ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
-    id: 'sss-commerce',
-    title: 'SSS Commerce',
-    description: 'Study of trade, business activities, and aids to trade.',
-    level: 'SSS',
-    icon: Store,
-    units: [
-       {
-        id: 'sss-com-u1',
-        title: 'Introduction to Commerce',
-        description: 'Understanding the fundamentals of trade and business.',
-        modules: [
-          {
-            id: 'sss-com-u1-m1',
-            title: 'Production and Division of Labour',
-            description: 'Learning how goods are created and the benefits of specialization.',
-            topics: [
-              { id: 't-com1', title: 'What is Production?', description: 'Explore the types and factors of production.', contentType: 'video', duration: 15, difficulty: 'beginner', completed: false },
-              { id: 't-com2', title: 'Advantages of Division of Labour', description: 'How specialization increases efficiency.', contentType: 'reading', duration: 18, difficulty: 'intermediate', completed: false },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          }
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-      }
-    ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-  {
-    id: 'sss-accounting',
-    title: 'SSS Financial Accounting',
-    description: 'The principles and practice of recording and reporting financial transactions.',
-    level: 'SSS',
-    icon: Calculator,
-    units: [
-      {
-        id: 'sss-acc-u1',
-        title: 'Introduction to Bookkeeping',
-        description: 'Learning the foundational principles of accounting.',
-        modules: [
-          {
-            id: 'sss-acc-u1-m1',
-            title: 'The Accounting Equation',
-            description: 'Understanding the relationship between Assets, Liabilities, and Equity.',
-            topics: [
-              { id: 't-acc1', title: 'Assets, Liabilities, and Equity', description: 'Defining the core components of the accounting equation.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
-              { id: 't-acc2', title: 'Double Entry Principle', description: 'Learn the concept of debit and credit.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          }
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-      }
-    ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
-    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
-    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
-    get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-  },
-   {
-    id: 'sss-geography',
-    title: 'SSS Geography',
-    description: 'The study of the earth\'s landscapes, peoples, places, and environments.',
-    level: 'SSS',
-    icon: Map,
-    units: [
-       {
-        id: 'sss-geo-u1',
-        title: 'Physical Geography',
-        description: 'Understanding the natural features and processes of the Earth.',
-        modules: [
-          {
-            id: 'sss-geo-u1-m1',
-            title: 'The Earth and the Solar System',
-            description: 'Learning about our planet\'s place in the solar system.',
-            topics: [
-              { id: 't-geo1', title: 'Earth\'s Rotation and Revolution', description: 'The causes of day/night and the seasons.', contentType: 'animation', duration: 15, difficulty: 'beginner', completed: false },
-              { id: 't-geo2', title: 'Latitude and Longitude', description: 'Understanding the grid system used to locate places on Earth.', contentType: 'simulation', duration: 20, difficulty: 'intermediate', completed: false },
-            ],
-            get completedTopics() { return this.topics.filter(t => t.completed).length; },
-            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
-          }
-        ],
-        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
-        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
-        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
-      }
-    ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -919,11 +1757,76 @@ export const subjects: Subject[] = [
         modules: [
           {
             id: 'sss-fm-u1-m1',
-            title: 'Set Theory',
-            description: 'The mathematical study of sets.',
+            title: 'Set Theory and Binary Operations',
+            description: 'The mathematical study of sets and operations.',
             topics: [
               { id: 't-fm1', title: 'Set Notation and Operations', description: 'Union, intersection, complement, and Venn diagrams.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
               { id: 't-fm2', title: 'Binary Operations', description: 'Properties like closure, associativity, and commutativity.', contentType: 'reading', duration: 20, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+          {
+            id: 'sss-fm-u1-m2',
+            title: 'Vectors and Matrices',
+            description: 'Working with quantities that have magnitude and direction.',
+            topics: [
+              { id: 't-sfm1', title: 'Introduction to Vectors', description: 'Vector addition, subtraction, and scalar multiplication.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 't-sfm2', title: 'Matrix Algebra', description: 'Addition, subtraction, and multiplication of matrices.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sfm3', title: 'Determinants and Inverses', description: 'Finding the determinant and inverse of a 2x2 matrix.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+      {
+        id: 'sss-fm-u2',
+        title: 'Calculus',
+        description: 'The mathematics of change.',
+        modules: [
+          {
+            id: 'sss-fm-u2-m1',
+            title: 'Differentiation',
+            description: 'Finding rates of change.',
+            topics: [
+              { id: 't-sfm4', title: 'Limits and First Principles', description: 'The foundation of differentiation.', contentType: 'video', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sfm5', title: 'Differentiation Techniques', description: 'Product rule, quotient rule, and chain rule.', contentType: 'reading', duration: 35, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'sss-fm-u2-m2',
+            title: 'Integration',
+            description: 'Finding the area under a curve.',
+            topics: [
+              { id: 't-sfm6', title: 'Indefinite Integrals', description: 'The reverse of differentiation.', contentType: 'video', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sfm7', title: 'Definite Integrals', description: 'Calculating the area between two points.', contentType: 'reading', duration: 35, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
+      },
+       {
+        id: 'sss-fm-u3',
+        title: 'Mechanics',
+        description: 'The study of forces and motion.',
+        modules: [
+          {
+            id: 'sss-fm-u3-m1',
+            title: 'Kinematics and Statics',
+            description: 'Analyzing motion and forces in equilibrium.',
+            topics: [
+              { id: 't-sfm8', title: 'Motion under Gravity', description: 'Equations of motion for objects in free fall.', contentType: 'simulation', duration: 30, difficulty: 'advanced', completed: false },
+              { id: 't-sfm9', title: 'Forces and Equilibrium', description: 'Resolving forces and Lami\'s theorem.', contentType: 'video', duration: 35, difficulty: 'advanced', completed: false },
             ],
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
