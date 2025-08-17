@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import type { Subject } from '../types';
 import { subjects } from '../data/subjects';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
@@ -43,14 +43,42 @@ const SubjectListItem: React.FC<{ subject: Subject; onSelect: () => void }> = ({
 
 const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }) => {
   const [selectedLevel, setSelectedLevel] = useState<'JSS' | 'SSS'>('JSS');
+  const [selectedClass, setSelectedClass] = useState<string>('JSS 1');
 
-  const currentSubjects = useMemo(() => {
+  useEffect(() => {
+    if (selectedLevel === 'JSS') {
+      setSelectedClass('JSS 1');
+    } else {
+      setSelectedClass('SSS 1');
+    }
+  }, [selectedLevel]);
+
+  // Subjects for the entire level (JSS/SSS) - used for top-level stats
+  const levelSubjects = useMemo(() => {
     return subjects.filter((subject) => subject.level === selectedLevel);
   }, [selectedLevel]);
 
-  const totalTopics = useMemo(() => currentSubjects.reduce((sum, subject) => sum + subject.totalTopics, 0), [currentSubjects]);
-  const completedTopics = useMemo(() => currentSubjects.reduce((sum, subject) => sum + subject.completedTopics, 0), [currentSubjects]);
+  // Subjects filtered by the specific class tab (JSS1, SSS2, etc.) - used for the list
+  const classSubjects = useMemo(() => {
+    return subjects.filter((subject) => {
+      // Must match the overall level (JSS/SSS)
+      if (subject.level !== selectedLevel) {
+        return false;
+      }
+      // Must have at least one unit relevant to the selected class
+      // We check if the unit title starts with the formatted class name
+      return subject.units.some(unit => unit.title.startsWith(selectedClass));
+    });
+  }, [selectedLevel, selectedClass]);
+
+
+  const totalTopics = useMemo(() => levelSubjects.reduce((sum, subject) => sum + subject.totalTopics, 0), [levelSubjects]);
+  const completedTopics = useMemo(() => levelSubjects.reduce((sum, subject) => sum + subject.completedTopics, 0), [levelSubjects]);
   const overallProgress = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+
+  const classTabs = selectedLevel === 'JSS' 
+    ? [{ key: 'JSS 1', label: 'JSS 1' }, { key: 'JSS 2', label: 'JSS 2' }, { key: 'JSS 3', label: 'JSS 3' }]
+    : [{ key: 'SSS 1', label: 'SSS 1' }, { key: 'SSS 2', label: 'SSS 2' }, { key: 'SSS 3', label: 'SSS 3' }];
 
   return (
     <div>
@@ -74,7 +102,7 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">{completedTopics} / {totalTopics}</div>
-                        <p className="text-sm text-muted-foreground">Across {currentSubjects.length} subjects</p>
+                        <p className="text-sm text-muted-foreground">Across {levelSubjects.length} subjects</p>
                     </CardContent>
                 </Card>
                  <Card>
@@ -94,7 +122,7 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <CardTitle className="text-2xl">Your Subjects</CardTitle>
-                        <CardDescription>Select a subject to start or continue learning.</CardDescription>
+                        <CardDescription>Select your curriculum level to view subjects.</CardDescription>
                     </div>
                     <div className="mt-4 sm:mt-0 flex border-b sm:border-b-0 border-gray-200">
                         <button
@@ -113,20 +141,39 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }
                 </div>
             </CardHeader>
             <CardContent>
+                <div className="border-b border-gray-200 mb-6">
+                  <nav className="-mb-px flex space-x-8" aria-label="Class Tabs">
+                    {classTabs.map((tab) => (
+                      <button
+                        key={tab.key}
+                        onClick={() => setSelectedClass(tab.key)}
+                        className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-md ${
+                          selectedClass === tab.key
+                            ? 'border-primary text-primary'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        }`}
+                        aria-current={selectedClass === tab.key ? 'page' : undefined}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+
                 <ul className="divide-y divide-gray-200">
-                    {currentSubjects.map((subject) => (
+                    {classSubjects.map((subject) => (
                       <SubjectListItem key={subject.id} subject={subject} onSelect={() => onSubjectSelect(subject)} />
                     ))}
-                    {currentSubjects.length === 0 && (
+                    {classSubjects.length === 0 && (
                         <li className="text-center py-10 text-muted-foreground">
-                            No subjects found for this level.
+                            No subjects found for this class level.
                         </li>
                     )}
                 </ul>
             </CardContent>
         </Card>
       </div>
-      <AiAssistant context={{ level: selectedLevel }} />
+      <AiAssistant context={{ level: selectedLevel, class: selectedClass }} />
     </div>
   );
 };
