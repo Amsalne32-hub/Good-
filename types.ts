@@ -14,6 +14,7 @@ export interface Topic {
   contentUrl?: string; // for video, audio, etc.
   assessmentId?: string; // link to a quiz or test
   courseworkId?: string; // link to classwork or assignment
+  questPoints?: number; // for General Knowledge gamification
 }
 
 export interface Module {
@@ -30,6 +31,7 @@ export interface Unit {
   title: string;
   description: string;
   modules: Module[];
+  questImage?: string; // for General Knowledge dashboard cards
   suggestedChannels?: { name: string; link: string; description: string; icon?: React.ElementType; }[];
   get totalTopics(): number;
   get completedTopics(): number;

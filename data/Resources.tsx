@@ -1,15 +1,15 @@
 
 import React, { useState, useMemo } from 'react';
-import type { SubjectResources, DictionaryEntry } from '../types';
+import type { SubjectResources } from '../types';
 import { dictionary } from './dictionary';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { buttonVariants } from '../components/ui/Button';
-import { Book, Download, Search, Library, FileText, BookMarked } from 'lucide-react';
+import { Button, buttonVariants } from '../components/ui/Button';
+import { Book, Download, Search, Library, FileText, BookMarked, Wand2, Loader } from 'lucide-react';
+import { GoogleGenAI } from '@google/genai';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
 const baseButtonClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
-
 
 interface ResourcesProps {
     resources: SubjectResources;
@@ -21,6 +21,12 @@ type ActiveTab = 'textbooks' | 'ebooks' | 'journals' | 'dictionary';
 const Resources: React.FC<ResourcesProps> = ({ resources, subjectTitle }) => {
     const [activeTab, setActiveTab] = useState<ActiveTab>('textbooks');
     const [searchTerm, setSearchTerm] = useState('');
+    const [isDefining, setIsDefining] = useState(false);
+    const [definition, setDefinition] = useState<{ term: string; definition: string } | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    
+    // This assumes the API_KEY is set in the environment
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
     const subjectArea = useMemo(() => {
         const lowerTitle = subjectTitle.toLowerCase();
@@ -30,18 +36,37 @@ const Resources: React.FC<ResourcesProps> = ({ resources, subjectTitle }) => {
         return 'General';
     }, [subjectTitle]);
 
-    const filteredDictionary = useMemo(() => {
-        if (!searchTerm) {
-            return dictionary.filter(entry => entry.subject === 'General' || entry.subject === subjectArea);
-        }
-        return dictionary
-            .filter(entry => entry.subject === 'General' || entry.subject === subjectArea)
-            .filter(entry => 
-                entry.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                entry.definition.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-    }, [searchTerm, subjectArea]);
+    const suggestedTerms = useMemo(() => {
+        return dictionary.filter(entry => entry.subject === 'General' || entry.subject === subjectArea).slice(0, 5);
+    }, [subjectArea]);
     
+    const handleDefineTerm = async (termToDefine: string) => {
+        if (!termToDefine.trim()) return;
+        setIsDefining(true);
+        setDefinition(null);
+        setError(null);
+        setSearchTerm(termToDefine);
+
+        try {
+            const prompt = `Define the term "${termToDefine}" within the context of ${subjectTitle} for a Nigerian secondary school student. Keep the definition clear, concise, and easy to understand. Start the definition directly, without any introductory phrases like "Here is the definition...".`;
+            const response = await ai.models.generateContent({
+                model: "gemini-2.5-flash",
+                contents: prompt,
+            });
+            setDefinition({ term: termToDefine, definition: response.text });
+        } catch (err) {
+            console.error("AI Dictionary Error:", err);
+            setError("Sorry, I couldn't fetch a definition for that term. Please try again.");
+        } finally {
+            setIsDefining(false);
+        }
+    };
+
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleDefineTerm(searchTerm);
+    };
+
     const renderContent = () => {
         switch (activeTab) {
             case 'textbooks':
@@ -104,25 +129,66 @@ const Resources: React.FC<ResourcesProps> = ({ resources, subjectTitle }) => {
             case 'dictionary':
                 return (
                     <div>
-                        <div className="relative mb-6">
-                            <Search className="absolute left-3 top-[50%] -translate-y-[50%] h-5 w-5 text-muted-foreground" />
-                            <input
-                                type="text"
-                                placeholder="Search for a term..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 border rounded-lg"
-                            />
-                        </div>
-                        <div className="space-y-4">
-                            {filteredDictionary.map(entry => (
-                                <Card key={entry.term}>
+                        <form onSubmit={handleSearchSubmit} className="flex gap-2 mb-6">
+                            <div className="relative flex-grow">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                                <input
+                                    type="text"
+                                    placeholder="Look up any term..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2 border rounded-lg h-10"
+                                />
+                            </div>
+                            <Button type="submit" disabled={isDefining || !searchTerm.trim()}>
+                                {isDefining ? <Loader className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4 mr-2" />}
+                                Define
+                            </Button>
+                        </form>
+
+                        <div className="min-h-[20rem]">
+                            {isDefining && (
+                                <div className="flex flex-col items-center justify-center text-center h-full">
+                                    <Loader className="w-8 h-8 animate-spin text-primary" />
+                                    <p className="mt-2 text-sm text-muted-foreground">Defining "{searchTerm}"...</p>
+                                </div>
+                            )}
+                            {error && (
+                                <div className="p-4 bg-destructive/10 text-destructive border border-destructive/20 rounded-lg text-center">
+                                    <p className="font-semibold">An Error Occurred</p>
+                                    <p className="text-sm">{error}</p>
+                                </div>
+                            )}
+                            {definition && (
+                                <Card>
                                     <CardHeader>
-                                        <CardTitle className="text-lg">{entry.term}</CardTitle>
-                                        <CardDescription>{entry.definition}</CardDescription>
+                                        <CardTitle className="text-2xl">{definition.term}</CardTitle>
                                     </CardHeader>
+                                    <CardContent>
+                                        <p className="text-base leading-relaxed" style={{ whiteSpace: 'pre-wrap' }}>{definition.definition}</p>
+                                    </CardContent>
                                 </Card>
-                            ))}
+                            )}
+                            {!isDefining && !definition && !error && (
+                                <div className="p-4 text-center text-muted-foreground bg-slate-50 rounded-lg h-full flex flex-col justify-center">
+                                    <h3 className="font-semibold text-slate-700">AI-Powered Dictionary</h3>
+                                    <p className="text-sm">Enter a term above to get a clear, simple definition.</p>
+                                    <div className="mt-6">
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Suggested Terms</h4>
+                                        <div className="flex flex-wrap justify-center gap-2">
+                                            {suggestedTerms.map(entry => (
+                                                <button 
+                                                    key={entry.term} 
+                                                    onClick={() => handleDefineTerm(entry.term)}
+                                                    className="px-3 py-1 bg-white border rounded-full text-sm hover:bg-accent hover:border-primary/50 transition-colors"
+                                                >
+                                                    {entry.term}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 );
@@ -133,7 +199,7 @@ const Resources: React.FC<ResourcesProps> = ({ resources, subjectTitle }) => {
         { id: 'textbooks', label: 'Textbooks', icon: <Book className="w-5 h-5"/> },
         { id: 'ebooks', label: 'E-Books', icon: <BookMarked className="w-5 h-5"/> },
         { id: 'journals', label: 'Journals', icon: <FileText className="w-5 h-5"/> },
-        { id: 'dictionary', label: 'Dictionary', icon: <Library className="w-5 h-5"/> },
+        { id: 'dictionary', label: 'AI Dictionary', icon: <Library className="w-5 h-5"/> },
     ];
 
     return (
