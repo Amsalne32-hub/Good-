@@ -6,9 +6,10 @@ import { BookOpen, Target, Film } from 'lucide-react';
 interface LandingPageProps {
   onEnterDashboard: () => void;
   onEnterTeacherDashboard: () => void;
+  onEnterGeneralKnowledge: () => void;
 }
 
-const HeroSection: React.FC<Pick<LandingPageProps, 'onEnterDashboard' | 'onEnterTeacherDashboard'>> = ({ onEnterDashboard, onEnterTeacherDashboard }) => {
+const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge }) => {
   return (
     <div className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-7xl">
@@ -22,10 +23,15 @@ const HeroSection: React.FC<Pick<LandingPageProps, 'onEnterDashboard' | 'onEnter
               <p className="mt-3 text-base text-gray-500 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
                 A comprehensive learning platform aligned with the Nigerian curriculum. Master subjects from JSS to SSS with interactive lessons, quizzes, and progress tracking.
               </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+              <div className="mt-5 sm:mt-8 sm:flex sm:flex-wrap sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
                   <Button onClick={onEnterDashboard} size="lg">
                     Student Portal
+                  </Button>
+                </div>
+                 <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <Button onClick={onEnterGeneralKnowledge} variant="secondary" size="lg">
+                    General Knowledge
                   </Button>
                 </div>
                 <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -90,10 +96,10 @@ const FeatureSection: React.FC = () => {
   );
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge }) => {
   return (
     <div className="bg-white">
-      <HeroSection onEnterDashboard={onEnterDashboard} onEnterTeacherDashboard={onEnterTeacherDashboard} />
+      <HeroSection onEnterDashboard={onEnterDashboard} onEnterTeacherDashboard={onEnterTeacherDashboard} onEnterGeneralKnowledge={onEnterGeneralKnowledge} />
       <FeatureSection />
       <section className="bg-primary text-primary-foreground py-20 text-center">
           <div className="container mx-auto px-6">

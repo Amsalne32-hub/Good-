@@ -1,36 +1,14 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/Button';
 import { Bot, X, Send, User, Loader } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
+import { useAi } from '../contexts/AiContext';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
-interface Message {
-  role: 'user' | 'model' | 'error';
-  text: string;
-}
-
-interface AiAssistantProps {
-  context: Record<string, string | undefined>;
-}
-
-const AiAssistant: React.FC<AiAssistantProps> = ({ context }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+const AiAssistant: React.FC = () => {
+  const { isOpen, messages, isLoading, toggleAi, sendMessage } = useAi();
   const [userInput, setUserInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
-
-  useEffect(() => {
-    if (isOpen) {
-      setMessages([
-        { role: 'model', text: "Hello! I'm Edu-AI. How can I help you today? Ask me anything about your current topic." }
-      ]);
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -39,49 +17,15 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ context }) => {
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userInput.trim() || isLoading) return;
-
-    const newUserMessage: Message = { role: 'user', text: userInput };
-    setMessages(prev => [...prev, newUserMessage]);
+    await sendMessage(userInput);
     setUserInput('');
-    setIsLoading(true);
-
-    const contextString = Object.entries(context)
-        .filter(([, value]) => value)
-        .map(([key, value]) => `- ${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`)
-        .join('\n');
-    
-    const prompt = `
-        Current learning context:
-        ${contextString}
-
-        Student's question: "${userInput}"
-    `;
-
-    try {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: {
-                systemInstruction: "You are 'Edu-AI', a friendly and encouraging tutor for Nigerian secondary school students (JSS/SSS). Your goal is to explain concepts clearly and simply. Always relate your answers to the Nigerian curriculum context when possible. Use simple language, provide examples, and keep responses concise and easy to read by using paragraphs and bullet points.",
-            },
-        });
-      
-      const aiResponse: Message = { role: 'model', text: response.text };
-      setMessages(prev => [...prev, aiResponse]);
-    } catch (error) {
-      console.error("AI Error:", error);
-      const errorMessage: Message = { role: 'error', text: 'Sorry, I encountered an error. Please try again.' };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
     <>
       <div className="fixed bottom-8 right-8 z-50">
         <Button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleAi}
           size="lg"
           className="rounded-full w-16 h-16 shadow-lg"
         >

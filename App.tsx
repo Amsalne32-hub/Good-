@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import type { Subject, Assessment, Coursework } from './types';
+import { subjects } from './data/subjects';
 import LandingPage from './components/LandingPage';
 import SubjectsDashboard from './components/Dashboard';
 import SubjectDetail from './components/SubjectDetail';
 import AssessmentComponent from './components/Assessment';
 import CourseworkComponent from './components/Coursework';
 import TeacherDashboard from './components/TeacherDashboard';
+import GeneralKnowledge from './components/GeneralKnowledge';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
+import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const [activeAssessment, setActiveAssessment] = useState<Assessment | null>(null);
   const [activeCoursework, setActiveCoursework] = useState<Coursework | null>(null);
+  const [generalKnowledgeSubject, setGeneralKnowledgeSubject] = useState<Subject | null>(null);
 
   const handleEnterStudentDashboard = () => {
     setView('studentDashboard');
@@ -26,16 +30,29 @@ const App: React.FC = () => {
       setView('teacherDashboard');
   }
 
+  const handleEnterGeneralKnowledge = () => {
+    const gkSubject = subjects.find(s => s.level === 'General');
+    if (gkSubject) {
+      setGeneralKnowledgeSubject(gkSubject);
+      setView('generalKnowledge');
+    }
+  };
+
   const handleSubjectSelect = (subject: Subject) => {
     setSelectedSubject(subject);
     setView('subject');
   };
   
-  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard') => {
-    setView(targetView);
+  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge') => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
+    if (targetView === 'generalKnowledge') {
+      handleEnterGeneralKnowledge();
+    } else {
+      setGeneralKnowledgeSubject(null);
+      setView(targetView);
+    }
   };
 
   const handleExitToLanding = () => {
@@ -43,6 +60,7 @@ const App: React.FC = () => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
+    setGeneralKnowledgeSubject(null);
   };
 
   const handleStartAssessment = (assessmentId: string) => {
@@ -88,6 +106,12 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (view) {
+      case 'generalKnowledge':
+        if (generalKnowledgeSubject) {
+            return <GeneralKnowledge subject={generalKnowledgeSubject} />;
+        }
+        return null;
+
       case 'coursework':
         if(activeCoursework) {
             return (
@@ -133,25 +157,31 @@ const App: React.FC = () => {
       
       case 'landing':
       default:
-        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} />;
+        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} />;
     }
   };
 
-  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject'].includes(view);
+  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge'].includes(view);
+  
+  let navType: 'student' | 'teacher' | 'general' = 'student';
+  if (view === 'teacherDashboard') navType = 'teacher';
+  if (view === 'generalKnowledge') navType = 'general';
 
-  if (!isNavigableView) {
-      return <div className="font-sans bg-background text-foreground">{renderContent()}</div>;
-  }
 
   return (
     <div className="font-sans bg-background text-foreground">
-      <Layout
-        navType={view === 'teacherDashboard' ? 'teacher' : 'student'}
-        onNavigate={handleNavigate}
-        onExit={handleExitToLanding}
-      >
-        {renderContent()}
-      </Layout>
+      {isNavigableView ? (
+        <Layout
+          navType={navType}
+          onNavigate={handleNavigate}
+          onExit={handleExitToLanding}
+        >
+          {renderContent()}
+        </Layout>
+      ) : (
+        renderContent()
+      )}
+      <AiAssistant />
     </div>
   );
 };

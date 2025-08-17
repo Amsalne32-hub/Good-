@@ -30,6 +30,7 @@ export interface Unit {
   title: string;
   description: string;
   modules: Module[];
+  suggestedChannels?: { name: string; link: string; description: string; icon?: React.ElementType; }[];
   get totalTopics(): number;
   get completedTopics(): number;
   get progress(): number;
@@ -77,7 +78,7 @@ export interface Subject {
   id: string;
   title: string;
   description: string;
-  level: 'JSS' | 'SSS';
+  level: 'JSS' | 'SSS' | 'General';
   icon: React.ElementType;
   units: Unit[];
   resources: SubjectResources;

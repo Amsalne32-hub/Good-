@@ -4,10 +4,195 @@ import type { Subject } from '../types';
 import { 
     BookOpen, Atom, Languages, FlaskConical, HardHat, Globe, Scale, 
     Briefcase, Leaf, Utensils, Palette, BookMarked, HeartPulse, Dna, 
-    LineChart, Landmark, BookHeart, Store, Calculator, Map, Sigma 
+    LineChart, Landmark, BookHeart, Store, Calculator, Map, Sigma, Sparkles
 } from 'lucide-react';
+import { Youtube } from 'lucide-react';
 
 export const subjects: Subject[] = [
+  // GENERAL KNOWLEDGE
+  {
+    id: 'general-knowledge',
+    title: 'General Knowledge',
+    description: 'Explore current affairs, digital skills, and creative technologies to expand your horizons.',
+    level: 'General',
+    icon: Sparkles,
+    units: [
+      {
+        id: 'gk-u1',
+        title: 'World Current Affairs',
+        description: 'Stay informed about major global events, international relations, and key political developments.',
+        modules: [
+          {
+            id: 'gk-u1-m1',
+            title: 'Major Global Events & Conflicts',
+            description: 'Understand the context and impact of significant ongoing global issues.',
+            topics: [
+              { id: 'gkt1', title: 'Understanding International News', description: 'How to read and analyze news from around the world.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+              { id: 'gkt2', title: 'Key Geopolitical Hotspots', description: 'An overview of regions with significant international focus.', contentType: 'video', duration: 30, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+          {
+            id: 'gk-u1-m2',
+            title: 'International Organizations',
+            description: 'Learn about the roles of major bodies like the UN, WHO, and World Bank.',
+            topics: [
+              { id: 'gkt3', title: 'The United Nations (UN)', description: 'Its structure, agencies, and purpose.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 'gkt4', title: 'Global Economic Institutions', description: 'The roles of the IMF and World Bank.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+        suggestedChannels: [
+          { name: 'Al Jazeera English', link: 'https://www.youtube.com/@aljazeeraenglish', description: 'In-depth analysis and news from a global perspective.', icon: Youtube },
+          { name: 'The Economist', link: 'https://www.youtube.com/@TheEconomist', description: 'Sharp reporting and explanation of world events and trends.', icon: Youtube },
+          { name: 'VOX', link: 'https://www.youtube.com/@Vox', description: 'Explainer videos that break down complex global issues.', icon: Youtube },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'gk-u2',
+        title: 'Nigeria Current Affairs',
+        description: 'Keep up-to-date with the latest political, economic, and social developments in Nigeria.',
+        modules: [
+          {
+            id: 'gk-u2-m1',
+            title: 'Nigerian Government & Politics',
+            description: 'Understanding the structure of government and recent political events.',
+            topics: [
+              { id: 'gkt5', title: 'The Three Tiers of Government', description: 'Federal, State, and Local government structures.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+              { id: 'gkt6', title: 'Major Political Issues', description: 'An overview of key topics in Nigerian politics today.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'gk-u2-m2',
+            title: 'The Nigerian Economy',
+            description: 'Key sectors, challenges, and opportunities in Nigeria\'s economy.',
+            topics: [
+              { id: 'gkt7', title: 'Beyond Oil: Diversification', description: 'Exploring growth in tech, agriculture, and entertainment.', contentType: 'reading', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 'gkt8', title: 'Social and Cultural Trends', description: 'Recent developments in Nigerian society.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+         suggestedChannels: [
+          { name: 'Channels Television', link: 'https://www.youtube.com/@ChannelsTelevision', description: 'Leading Nigerian news station with comprehensive coverage.', icon: Youtube },
+          { name: 'Arise News', link: 'https://www.youtube.com/@AriseNews', description: 'Global news channel with a strong focus on African and Nigerian affairs.', icon: Youtube },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+       {
+        id: 'gk-u3',
+        title: 'Digital Literacy',
+        description: 'Essential skills for navigating the digital world safely and effectively.',
+        modules: [
+          {
+            id: 'gk-u3-m1',
+            title: 'Internet Safety & Misinformation',
+            description: 'Protecting yourself online and identifying fake news.',
+            topics: [
+              { id: 'gkt9', title: 'Creating Strong Passwords', description: 'Best practices for securing your online accounts.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+              { id: 'gkt10', title: 'Spotting Fake News', description: 'Techniques to verify information and identify disinformation.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+              { id: 'gkt11', title: 'Understanding Your Digital Footprint', description: 'Managing your online presence and privacy.', contentType: 'reading', duration: 20, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          },
+           {
+            id: 'gk-u3-m2',
+            title: 'Essential Digital Tools',
+            description: 'Basics of using common software for productivity and creativity.',
+            topics: [
+              { id: 'gkt12', title: 'Introduction to Cloud Storage', description: 'Using services like Google Drive or OneDrive.', contentType: 'video', duration: 20, difficulty: 'beginner', completed: false },
+              { id: 'gkt13', title: 'Basics of Spreadsheets', description: 'Organizing data with tools like Excel or Google Sheets.', contentType: 'simulation', duration: 30, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+         suggestedChannels: [
+          { name: 'GCFLearnFree.org', link: 'https://www.youtube.com/@GCFLearnFree', description: 'High-quality, free tutorials on a vast range of technology skills.', icon: Youtube },
+          { name: 'Technology for Teachers and Students', link: 'https://www.youtube.com/@TechnologyforTeachersandStudents', description: 'Simple and practical tech tips for education.', icon: Youtube },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+       {
+        id: 'gk-u4',
+        title: 'Prompt Engineering',
+        description: 'Learn how to communicate effectively with AI to get the best results.',
+        modules: [
+          {
+            id: 'gk-u4-m1',
+            title: 'Fundamentals of Prompting',
+            description: 'The art and science of writing instructions for AI.',
+            topics: [
+              { id: 'gkt14', title: 'What is a Prompt?', description: 'Understanding how large language models (LLMs) work.', contentType: 'reading', duration: 15, difficulty: 'beginner', completed: false },
+              { id: 'gkt15', title: 'The Persona Pattern', description: 'Telling the AI to act in a specific role for better outputs.', contentType: 'video', duration: 20, difficulty: 'intermediate', completed: false },
+              { id: 'gkt16', title: 'Zero-shot vs. Few-shot Prompting', description: 'Providing examples to the AI to improve accuracy.', contentType: 'reading', duration: 25, difficulty: 'advanced', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+         suggestedChannels: [
+          { name: 'All About AI', link: 'https://www.youtube.com/@AllAboutAI', description: 'Covers the latest developments and tutorials in AI, including prompting.', icon: Youtube },
+          { name: 'Matt Wolfe', link: 'https://www.youtube.com/@mreflow', description: 'Explores various AI tools and techniques with practical examples.', icon: Youtube },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+      {
+        id: 'gk-u5',
+        title: 'Content Creation',
+        description: 'Develop skills to create engaging and effective digital content.',
+        modules: [
+          {
+            id: 'gk-u5-m1',
+            title: 'Basics of Digital Content',
+            description: 'Introduction to writing, graphics, and video for online platforms.',
+            topics: [
+              { id: 'gkt17', title: 'Writing for the Web', description: 'How to capture attention with clear and concise text.', contentType: 'reading', duration: 20, difficulty: 'beginner', completed: false },
+              { id: 'gkt18', title: 'Introduction to Graphic Design', description: 'Using free tools like Canva to create visuals.', contentType: 'video', duration: 30, difficulty: 'intermediate', completed: false },
+              { id: 'gkt19', title: 'Smartphone Videography Basics', description: 'Tips for shooting and editing quality videos with your phone.', contentType: 'video', duration: 25, difficulty: 'intermediate', completed: false },
+            ],
+            get completedTopics() { return this.topics.filter(t => t.completed).length; },
+            get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
+          }
+        ],
+         suggestedChannels: [
+          { name: 'Roberto Blake', link: 'https://www.youtube.com/@robertoblake', description: 'Excellent resource for building a creative career and brand.', icon: Youtube },
+          { name: 'Think Media', link: 'https://www.youtube.com/@ThinkMediaTV', description: 'Focuses on creating influential video content, especially for YouTube.', icon: Youtube },
+        ],
+        get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
+        get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
+        get progress() { return 0; }
+      },
+    ],
+    resources: { 
+      textbooks: [], 
+      ebooks: [
+        { id: 'gk-eb1', title: 'The Digital Citizen\'s Handbook', author: 'Dr. Ayo Adekunle', description: 'A guide to navigating the modern digital landscape safely and effectively.', coverUrl: 'https://picsum.photos/seed/gk-eb1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [
+         { id: 'gk-j1', title: 'Global Affairs Quarterly', publisher: 'Nigerian Institute of International Affairs', issue: 'Vol. 10, No. 4', link: '#' },
+      ] 
+    },
+    get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
+    get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
+    get progress() { return 0; }
+  },
   // JSS SUBJECTS
   {
     id: 'jss-math',
@@ -48,6 +233,10 @@ export const subjects: Subject[] = [
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
           },
+        ],
+        suggestedChannels: [
+          { name: 'Khan Academy', link: 'https://www.youtube.com/c/khanacademy', description: 'World-class tutorials on all aspects of mathematics.', icon: Youtube },
+          { name: 'Math Antics', link: 'https://www.youtube.com/c/mathantics', description: 'Fun, engaging videos that break down math concepts.', icon: Youtube },
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -223,11 +412,12 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb1', title: 'New General Mathematics for JSS 1', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm1/300/400', downloadUrl: '#' },
-        { id: 'tb2', title: 'MAN Mathematics for JSS 1 (3rd Edition)', author: 'Mathematical Association of Nigeria', coverUrl: 'https://picsum.photos/seed/man1/300/400', downloadUrl: '#' },
+        { id: 'tb1', title: 'New General Mathematics for JSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm1/300/400', downloadUrl: '#' },
+        { id: 'tb2', title: 'MAN Mathematics for JSS (3rd Edition)', author: 'Mathematical Association of Nigeria', coverUrl: 'https://picsum.photos/seed/man1/300/400', downloadUrl: '#' },
       ],
       ebooks: [
-        { id: 'eb1', title: 'Understanding Fractions', author: 'Jane Doe', description: 'A deep dive into fractions, decimals, and percentages.', coverUrl: 'https://picsum.photos/seed/ef1/300/400', downloadUrl: '#' },
+        { id: 'eb1', title: 'Understanding Fractions: A Visual Guide', author: 'Jane Doe', description: 'A deep dive into fractions, decimals, and percentages with helpful illustrations.', coverUrl: 'https://picsum.photos/seed/ef1/300/400', downloadUrl: '#' },
+        { id: 'eb-math-jss', title: 'JSS Mathematics Practice Questions (PDF)', author: 'EduNigeria Press', description: 'Over 200 practice questions covering the JSS curriculum.', coverUrl: 'https://picsum.photos/seed/eb-math1/300/400', downloadUrl: '#' },
       ],
       journals: [
         { id: 'j1', title: 'Nigerian Journal of Mathematical Education', publisher: 'NJME', issue: 'Vol. 15, No. 2', link: '#' },
@@ -342,6 +532,10 @@ export const subjects: Subject[] = [
                 get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
             },
         ],
+        suggestedChannels: [
+            { name: 'Learn English with EnglishClass101.com', link: 'https://www.youtube.com/@EnglishClass101', description: 'Comprehensive lessons for grammar, vocabulary, and pronunciation.', icon: Youtube },
+            { name: 'TED-Ed', link: 'https://www.youtube.com/@TEDEd', description: 'Engaging animated lessons on a wide range of topics, excellent for comprehension.', icon: Youtube },
+        ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -349,7 +543,8 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb3', title: 'New Oxford Secondary English Course for JSS 1', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec1/300/400', downloadUrl: '#' },
+        { id: 'tb3', title: 'New Oxford Secondary English Course for JSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec1/300/400', downloadUrl: '#' },
+        { id: 'tb-eng-jss', title: 'Intensive English for JSS', author: 'B. O. Elugbe', coverUrl: 'https://picsum.photos/seed/intensive-eng/300/400', downloadUrl: '#' },
       ],
       ebooks: [
         { id: 'eb2', title: 'Guide to Better Writing', author: 'John Smith', description: 'Practical tips for improving composition and grammar.', coverUrl: 'https://picsum.photos/seed/gbw1/300/400', downloadUrl: '#' },
@@ -400,6 +595,10 @@ export const subjects: Subject[] = [
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
           }
+        ],
+        suggestedChannels: [
+          { name: 'Peekaboo Kidz', link: 'https://www.youtube.com/@PeekabooKidz', description: 'Simple and fun animated science videos for beginners.', icon: Youtube },
+          { name: 'SciShow Kids', link: 'https://www.youtube.com/@SciShowKids', description: 'Explores science topics with experiments and humor.', icon: Youtube },
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -475,10 +674,15 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb-bs1', title: 'STAN Basic Science for JSS 1', author: 'Science Teachers Association of Nigeria', coverUrl: 'https://picsum.photos/seed/stanbs1/300/400', downloadUrl: '#' },
+        { id: 'tb-bs1', title: 'STAN Basic Science for JSS', author: 'Science Teachers Association of Nigeria', coverUrl: 'https://picsum.photos/seed/stanbs1/300/400', downloadUrl: '#' },
+        { id: 'tb-bs2', title: 'Pre-vocational Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdc-pvs/300/400', downloadUrl: '#' },
       ],
-      ebooks: [],
-      journals: []
+      ebooks: [
+        { id: 'eb-bs1', title: 'Everyday Science Experiments', author: 'Funke Adebayo', description: 'Simple and safe science experiments you can do at home.', coverUrl: 'https://picsum.photos/seed/eb-bs1/300/400', downloadUrl: '#' },
+      ],
+      journals: [
+        { id: 'j-bs1', title: 'Journal of the Science Teachers Association of Nigeria (JSTAN)', publisher: 'STAN', issue: 'Latest Edition', link: '#' },
+      ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
@@ -519,6 +723,9 @@ export const subjects: Subject[] = [
                     get completedTopics() { return this.topics.filter(t => t.completed).length; },
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 },
+            ],
+            suggestedChannels: [
+              { name: 'Practical Engineering', link: 'https://www.youtube.com/@PracticalEngineeringChannel', description: 'Real-world engineering concepts explained clearly.', icon: Youtube },
             ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -591,8 +798,13 @@ export const subjects: Subject[] = [
         },
     ],
     resources: {
-        textbooks: [{ id: 'tb-bt1', title: 'Basic Technology for JSS 1', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdcbt1/300/400', downloadUrl: '#' }],
-        ebooks: [],
+        textbooks: [
+          { id: 'tb-bt1', title: 'Basic Technology for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdcbt1/300/400', downloadUrl: '#' },
+          { id: 'tb-bt2', title: 'Introductory Technology for Nigerian Schools', author: 'S. A. Adebayo', coverUrl: 'https://picsum.photos/seed/adebayo-bt/300/400', downloadUrl: '#' },
+        ],
+        ebooks: [
+          { id: 'eb-bt1', title: 'Woodwork Joints (Illustrated Guide)', author: 'Tech Studies Press', description: 'A visual guide to common woodworking joints.', coverUrl: 'https://picsum.photos/seed/eb-bt1/300/400', downloadUrl: '#' },
+        ],
         journals: [],
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -707,8 +919,10 @@ export const subjects: Subject[] = [
         }
     ],
     resources: { 
-        textbooks: [{ id: 'tb-ss1', title: 'Social Studies for JSS 1', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/ss-jss1/300/400', downloadUrl: '#' }], 
-        ebooks: [], 
+        textbooks: [{ id: 'tb-ss1', title: 'Social Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/ss-jss1/300/400', downloadUrl: '#' }], 
+        ebooks: [
+          { id: 'eb-ss1', title: 'Cultures of Nigeria: A Brief Overview', author: 'Ngozi Okoro', description: 'An introductory guide to the major ethnic groups and cultures in Nigeria.', coverUrl: 'https://picsum.photos/seed/eb-ss1/300/400', downloadUrl: '#' },
+        ], 
         journals: [] 
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -812,8 +1026,10 @@ export const subjects: Subject[] = [
         }
     ],
     resources: { 
-        textbooks: [{ id: 'tb-ce1', title: 'Civic Education for JSS 1', author: 'Uche Okeke', coverUrl: 'https://picsum.photos/seed/ce-jss1/300/400', downloadUrl: '#' }], 
-        ebooks: [], 
+        textbooks: [{ id: 'tb-ce1', title: 'Civic Education for JSS', author: 'Uche Okeke', coverUrl: 'https://picsum.photos/seed/ce-jss1/300/400', downloadUrl: '#' }], 
+        ebooks: [
+           { id: 'eb-ce1', title: 'The Nigerian Constitution Explained for Young Citizens (PDF)', author: 'Civic Watch Nigeria', description: 'A simplified version of the 1999 Nigerian Constitution.', coverUrl: 'https://picsum.photos/seed/eb-ce1/300/400', downloadUrl: '#' },
+        ], 
         journals: [] 
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -925,7 +1141,17 @@ export const subjects: Subject[] = [
       get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
       get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
     }],
-    resources: { textbooks: [], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-ag1', title: 'Agricultural Science for JSS', author: 'A. A. Adegbola', coverUrl: 'https://picsum.photos/seed/ag-jss1/300/400', downloadUrl: '#' },
+      ],
+      ebooks: [
+        { id: 'eb-ag1', title: 'A Guide to Poultry Farming', author: 'IITA', description: 'A practical guide for small-scale poultry farmers.', coverUrl: 'https://picsum.photos/seed/eb-ag1/300/400', downloadUrl: '#' },
+      ],
+      journals: [
+        { id: 'j-ag1', title: 'Nigerian Journal of Agricultural Science', publisher: 'Faculty of Agriculture, UNN', issue: 'Vol. 5, No. 1', link: '#' },
+      ]
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1031,7 +1257,15 @@ export const subjects: Subject[] = [
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
     }],
-    resources: { textbooks: [], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-bus1', title: 'Business Studies for JSS', author: 'O. A. Lawal et al.', coverUrl: 'https://picsum.photos/seed/bus-jss1/300/400', downloadUrl: '#' },
+      ],
+      ebooks: [
+        { id: 'eb-bus1', title: 'My First Ledger Book (Practice PDF)', author: 'AccountWell', description: 'A workbook for practicing bookkeeping entries.', coverUrl: 'https://picsum.photos/seed/eb-bus1/300/400', downloadUrl: '#' },
+      ],
+      journals: [] 
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1136,7 +1370,15 @@ export const subjects: Subject[] = [
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
     }],
-    resources: { textbooks: [], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-he1', title: 'Home Economics for Nigerian JSS', author: 'Anyakoha E.U.', coverUrl: 'https://picsum.photos/seed/he-jss1/300/400', downloadUrl: '#' },
+      ],
+      ebooks: [
+        { id: 'eb-he1', title: 'Nigerian Healthy Recipes Cookbook', author: 'Sisi Yemmie', description: 'A collection of healthy and delicious Nigerian recipes.', coverUrl: 'https://picsum.photos/seed/eb-he1/300/400', downloadUrl: '#' },
+      ],
+      journals: [] 
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1270,15 +1512,26 @@ export const subjects: Subject[] = [
                     get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
                 }
             ],
+            suggestedChannels: [
+              { name: '3Blue1Brown', link: 'https://www.youtube.com/@3blue1brown', description: 'Intuitive and visual explanations of advanced math topics, especially calculus.', icon: Youtube },
+              { name: 'The Organic Chemistry Tutor', link: 'https://www.youtube.com/@TheOrganicChemistryTutor', description: 'In-depth tutorials on math, physics, and chemistry.', icon: Youtube },
+            ],
             get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
             get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
             get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
         }
     ],
     resources: {
-        textbooks: [{ id: 'tb-ssm1', title: 'New General Mathematics for SSS 1', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm-sss1/300/400', downloadUrl: '#' }],
-        ebooks: [],
-        journals: [],
+        textbooks: [
+          { id: 'tb-ssm1', title: 'New General Mathematics for SSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm-sss1/300/400', downloadUrl: '#' },
+          { id: 'tb-ssm2', title: 'Further Mathematics Project 1', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp1/300/400', downloadUrl: '#' },
+        ],
+        ebooks: [
+           { id: 'eb-ssm1', title: 'Calculus Made Easy', author: 'Silvanus P. Thompson', description: 'A classic, intuitive guide to the fundamentals of calculus.', coverUrl: 'https://picsum.photos/seed/eb-ssm1/300/400', downloadUrl: '#' },
+        ],
+        journals: [
+          { id: 'j-ssm1', title: 'ABACUS: Journal of the Mathematical Association of Nigeria', publisher: 'MAN', issue: 'Latest Volume', link: '#' },
+        ],
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
@@ -1393,7 +1646,18 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-sse1', title: 'New Oxford Secondary English Course for SSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec-sss1/300/400', downloadUrl: '#' },
+        { id: 'tb-sse2', title: 'A-Z of JAMB Use of English', author: 'Dele Ashade', coverUrl: 'https://picsum.photos/seed/jamb-eng/300/400', downloadUrl: '#' },
+      ],
+      ebooks: [
+        { id: 'eb-sse1', title: 'The Elements of Style', author: 'William Strunk Jr.', description: 'A classic guide to clear and effective writing.', coverUrl: 'https://picsum.photos/seed/eb-sse1/300/400', downloadUrl: '#' },
+      ],
+      journals: [
+        { id: 'j-sse1', title: 'Ibadan Journal of English Studies', publisher: 'University of Ibadan', issue: 'Vol. 12', link: '#' },
+      ]
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1468,6 +1732,10 @@ export const subjects: Subject[] = [
                 get completedTopics() { return this.topics.filter(t => t.completed).length; },
                 get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
             },
+        ],
+        suggestedChannels: [
+          { name: 'SmarterEveryDay', link: 'https://www.youtube.com/@smartereveryday', description: 'Explores the world through science with high-speed cameras and curiosity.', icon: Youtube },
+          { name: 'Veritasium', link: 'https://www.youtube.com/@veritasium', description: 'Videos about science, education, and anything else interesting.', icon: Youtube },
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -1634,7 +1902,17 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [{ id: 'tb-chem1', title: 'New School Chemistry for SSS', author: 'Osei Yaw Ababio', coverUrl: 'https://picsum.photos/seed/chem-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-chem1', title: 'New School Chemistry for SSS', author: 'Osei Yaw Ababio', coverUrl: 'https://picsum.photos/seed/chem-sss1/300/400', downloadUrl: '#' }
+      ], 
+      ebooks: [
+        { id: 'eb-chem1', title: 'Organic Chemistry Nomenclature (Practice PDF)', author: 'Chem Simplify', description: 'Practice worksheets for mastering IUPAC naming conventions.', coverUrl: 'https://picsum.photos/seed/eb-chem1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [
+        { id: 'j-chem1', title: 'Journal of the Chemical Society of Nigeria', publisher: 'CSN', issue: 'Vol. 48, No. 1', link: '#' },
+      ]
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1677,6 +1955,9 @@ export const subjects: Subject[] = [
             get completedTopics() { return this.topics.filter(t => t.completed).length; },
             get totalDuration() { return this.topics.reduce((sum, topic) => sum + topic.duration, 0); }
           }
+        ],
+        suggestedChannels: [
+          { name: 'Amoeba Sisters', link: 'https://www.youtube.com/@AmoebaSisters', description: 'Fun, animated videos that demystify complex biology topics.', icon: Youtube },
         ],
         get totalTopics() { return this.modules.reduce((sum, mod) => sum + mod.topics.length, 0); },
         get completedTopics() { return this.modules.reduce((sum, mod) => sum + mod.completedTopics, 0); },
@@ -1750,7 +2031,17 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [{ id: 'tb-bio1', title: 'Modern Biology for SSS', author: 'Ramalingam', coverUrl: 'https://picsum.photos/seed/bio-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-bio1', title: 'Modern Biology for SSS', author: 'Ramalingam', coverUrl: 'https://picsum.photos/seed/bio-sss1/300/400', downloadUrl: '#' }
+      ], 
+      ebooks: [
+        { id: 'eb-bio1', title: 'Diagrams of The Human Body', author: 'Med Illustrations', description: 'A collection of detailed diagrams of human anatomy and physiology.', coverUrl: 'https://picsum.photos/seed/eb-bio1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [
+        { id: 'j-bio1', title: 'Nigerian Journal of Ecology', publisher: 'Ecological Society of Nigeria', issue: 'Vol. 8', link: '#' },
+      ]
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1865,7 +2156,17 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [{ id: 'tb-econ1', title: 'Comprehensive Economics for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/econ-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-econ1', title: 'Comprehensive Economics for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/econ-sss1/300/400', downloadUrl: '#' }
+      ], 
+      ebooks: [
+        { id: 'eb-econ1', title: 'The Nigerian Economy: A Primer', author: 'NBS', description: 'An overview of the Nigerian economy published by the National Bureau of Statistics.', coverUrl: 'https://picsum.photos/seed/eb-econ1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [
+        { id: 'j-econ1', title: 'Nigerian Journal of Economic and Social Studies', publisher: 'Nigerian Economic Society', issue: 'Vol. 65, No. 1', link: '#' },
+      ]
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -1977,7 +2278,15 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [{ id: 'tb-gov1', title: 'Essential Government for SSS', author: 'C.C. Dibie', coverUrl: 'https://picsum.photos/seed/gov-sss1/300/400', downloadUrl: '#' }], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-gov1', title: 'Essential Government for SSS', author: 'C.C. Dibie', coverUrl: 'https://picsum.photos/seed/gov-sss1/300/400', downloadUrl: '#' }
+      ], 
+      ebooks: [
+        { id: 'eb-gov1', title: 'The Story of Nigeria', author: 'Lekan Agunbiade', description: 'A historical account of Nigeria\'s journey to democracy.', coverUrl: 'https://picsum.photos/seed/eb-gov1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [] 
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
@@ -2090,7 +2399,15 @@ export const subjects: Subject[] = [
         get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }
       }
     ],
-    resources: { textbooks: [], ebooks: [], journals: [] },
+    resources: { 
+      textbooks: [
+        { id: 'tb-fm1', title: 'Further Mathematics Project 1-3', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp-all/300/400', downloadUrl: '#' },
+      ], 
+      ebooks: [
+        { id: 'eb-fm1', title: 'Advanced Problems in Mathematics', author: 'S.T.C. Siklos', description: 'A collection of challenging problems for advanced students.', coverUrl: 'https://picsum.photos/seed/eb-fm1/300/400', downloadUrl: '#' },
+      ], 
+      journals: [] 
+    },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
     get completedTopics() { return this.units.reduce((sum, unit) => sum + unit.completedTopics, 0); },
     get progress() { return this.totalTopics > 0 ? Math.round((this.completedTopics / this.totalTopics) * 100) : 0; }

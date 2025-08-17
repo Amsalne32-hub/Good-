@@ -3,8 +3,8 @@ import type { Subject } from '../types';
 import { subjects } from '../data/subjects';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
 import ProgressBar from './ui/ProgressBar';
-import AiAssistant from './AiAssistant';
 import { ChevronRight } from 'lucide-react';
+import { useAi } from '../contexts/AiContext';
 
 interface SubjectsDashboardProps {
   onSubjectSelect: (subject: Subject) => void;
@@ -44,6 +44,11 @@ const SubjectListItem: React.FC<{ subject: Subject; onSelect: () => void }> = ({
 const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }) => {
   const [selectedLevel, setSelectedLevel] = useState<'JSS' | 'SSS'>('JSS');
   const [selectedClass, setSelectedClass] = useState<string>('JSS 1');
+  const { setAiContext } = useAi();
+
+  useEffect(() => {
+    setAiContext({ level: selectedLevel, class: selectedClass });
+  }, [selectedLevel, selectedClass, setAiContext]);
 
   useEffect(() => {
     if (selectedLevel === 'JSS') {
@@ -173,7 +178,6 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect }
             </CardContent>
         </Card>
       </div>
-      <AiAssistant context={{ level: selectedLevel, class: selectedClass }} />
     </div>
   );
 };
