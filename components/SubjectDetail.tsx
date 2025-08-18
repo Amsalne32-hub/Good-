@@ -1,13 +1,14 @@
 
 import React, { useState, useMemo } from 'react';
-import type { Subject, Unit, Module, Topic, GeneratedQuestion, StudyPlan, StudyPlanStep } from '../types';
+import type { Subject, Unit, Module, Topic, GeneratedQuestion, StudyPlan, StudyPlanStep, Flashcard } from '../types';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from './ui/Card';
 import ProgressBar from './ui/ProgressBar';
-import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote } from 'lucide-react';
+import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote, Brain } from 'lucide-react';
 import Resources from '../data/Resources';
 import { useAi } from '../contexts/AiContext';
 import { GoogleGenAI, Type } from '@google/genai';
+import Flashcards from './Flashcards';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
@@ -17,6 +18,8 @@ interface SubjectDetailProps {
   onStartAssessment: (assessmentId: string) => void;
   onStartCoursework: (courseworkId: string) => void;
   handleTopicComplete: (topicId: string) => void;
+  flashcards: Flashcard[];
+  onAddFlashcards: (flashcards: Flashcard[]) => void;
 }
 
 const difficultyColors: Record<Topic['difficulty'], string> = {
@@ -142,10 +145,10 @@ const TopicCard: React.FC<{
 };
 
 
-const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartAssessment, onStartCoursework, handleTopicComplete }) => {
+const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartAssessment, onStartCoursework, handleTopicComplete, flashcards, onAddFlashcards }) => {
   const [openUnitId, setOpenUnitId] = useState<string | null>(subject.units[0]?.id || null);
   const [openModuleId, setOpenModuleId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'curriculum' | 'resources' | 'ai-study-room'>('curriculum');
+  const [activeTab, setActiveTab] = useState<'curriculum' | 'resources' | 'ai-study-room' | 'flashcards'>('curriculum');
   const Icon = subject.icon;
 
   const subjectProgress = useMemo(() => {
@@ -643,6 +646,15 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
     );
   };
 
+  const renderFlashcards = () => (
+    <Flashcards
+        subjectId={subject.id}
+        units={subject.units}
+        existingFlashcards={flashcards.filter(f => f.subjectId === subject.id)}
+        onAddFlashcards={onAddFlashcards}
+    />
+  );
+
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -694,6 +706,17 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
           >
            <Wand2 className="w-5 h-5" /> AI Study Room
           </button>
+          <button
+            onClick={() => setActiveTab('flashcards')}
+             className={cn(
+                'py-4 px-1 border-b-2 font-medium text-lg flex items-center gap-2',
+                activeTab === 'flashcards' 
+                    ? 'border-primary text-primary' 
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+            )}
+          >
+           <Brain className="w-5 h-5" /> Flashcards
+          </button>
         </nav>
       </div>
       
@@ -701,6 +724,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
         {activeTab === 'curriculum' && renderCurriculum()}
         {activeTab === 'resources' && <Resources resources={subject.resources} subjectTitle={subject.title} />}
         {activeTab === 'ai-study-room' && renderAiStudyRoom()}
+        {activeTab === 'flashcards' && renderFlashcards()}
       </div>
     </div>
   );

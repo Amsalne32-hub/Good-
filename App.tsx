@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup } from './types';
+import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup, Flashcard } from './types';
 import { subjects as initialSubjects } from './data/subjects';
 import { storeItems, getItemById } from './data/storeItems';
 import { achievementsData } from './data/achievements';
@@ -33,6 +33,7 @@ const App: React.FC = () => {
   
   const [subjects, setSubjects] = useState<Subject[]>(initialSubjects);
   const [studyGroups, setStudyGroups] = useState<StudyGroup[]>(initialStudyGroups);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
   const [studentProfile, setStudentProfile] = useState<StudentProfile>({
     name: 'Bayo Adekunle',
@@ -189,6 +190,14 @@ const App: React.FC = () => {
     }
   };
   
+  const handleAddFlashcards = (newFlashcards: Flashcard[]) => {
+    setFlashcards(prev => {
+        const existingIds = new Set(prev.map(f => f.id));
+        const uniqueNewFlashcards = newFlashcards.filter(f => !existingIds.has(f.id));
+        return [...prev, ...uniqueNewFlashcards];
+    });
+  };
+
   const handleEnterStudentDashboard = () => setView('studentDashboard');
   const handleEnterTeacherDashboard = () => setView('teacherDashboard');
   const handleEnterGeneralKnowledge = () => setView('generalKnowledge');
@@ -291,7 +300,7 @@ const App: React.FC = () => {
         return null;
       case 'subject':
         if (selectedSubject) {
-          return <SubjectDetail subject={selectedSubject} onBack={() => handleNavigate('studentDashboard')} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} />;
+          return <SubjectDetail subject={selectedSubject} onBack={() => handleNavigate('studentDashboard')} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} flashcards={flashcards} onAddFlashcards={handleAddFlashcards} />;
         }
         return null;
       case 'studentDashboard':

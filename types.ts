@@ -293,3 +293,13 @@ export interface StudyGroup {
     members: string[]; // array of student names
     messages: GroupMessage[];
 }
+
+// For AI Flashcards
+export interface Flashcard {
+  id: string;
+  topicId: string;
+  subjectId: string;
+  frontText: string;
+  backText: string;
+  imageUrl: string;
+}
