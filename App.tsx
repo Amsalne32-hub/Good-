@@ -17,12 +17,13 @@ import StudyArena from './components/StudyArena';
 import CareerCompass from './components/CareerCompass';
 import StudyGroups from './components/StudyGroups';
 import GroupDetail from './components/GroupDetail';
+import ELibrary from './components/ELibrary';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
 import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
@@ -95,7 +96,7 @@ const App: React.FC = () => {
 
     for (const subject of updatedSubjects) {
         for (const unit of subject.units) {
-            for (const module of unit.modules) {
+            for (const module of subject.modules) {
                 const topic = module.topics.find(t => t.id === topicId);
                 if (topic && !topic.completed) {
                     topic.completed = true;
@@ -172,6 +173,13 @@ const App: React.FC = () => {
     });
   };
 
+  const handleQuestQuizComplete = (points: number) => {
+    setStudentProfile(prev => ({
+        ...prev,
+        questPoints: prev.questPoints + points,
+    }));
+  };
+
   const handlePurchaseItem = (item: StoreItem) => {
     if (studentProfile.questPoints >= item.price && !studentProfile.inventory.includes(item.id)) {
         setStudentProfile(prev => ({
@@ -212,7 +220,7 @@ const App: React.FC = () => {
     setView('groupDetail');
   };
   
-  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => {
+  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'eLibrary') => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
@@ -271,6 +279,8 @@ const App: React.FC = () => {
     const gkSubject = subjects.find(s => s.level === 'General');
 
     switch (view) {
+      case 'eLibrary':
+        return <ELibrary subjects={subjects.filter(s => s.level !== 'General')} onNavigate={handleNavigate} />;
       case 'groupDetail':
         return selectedGroup && <GroupDetail group={selectedGroup} studentProfile={studentProfile} onBack={() => handleNavigate('studyGroups')} />;
       case 'studyGroups':
@@ -285,7 +295,7 @@ const App: React.FC = () => {
         return <Store studentProfile={studentProfile} onPurchase={handlePurchaseItem} onEquip={handleEquipItem} />;
       case 'generalKnowledge':
         if (gkSubject) {
-            return <GeneralKnowledge subject={gkSubject} studentProfile={studentProfile} handleTopicComplete={handleTopicComplete} />;
+            return <GeneralKnowledge subject={gkSubject} studentProfile={studentProfile} handleTopicComplete={handleTopicComplete} onQuestQuizComplete={handleQuestQuizComplete} />;
         }
         return null;
       case 'coursework':
@@ -300,7 +310,7 @@ const App: React.FC = () => {
         return null;
       case 'subject':
         if (selectedSubject) {
-          return <SubjectDetail subject={selectedSubject} onBack={() => handleNavigate('studentDashboard')} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} flashcards={flashcards} onAddFlashcards={handleAddFlashcards} />;
+          return <SubjectDetail subject={selectedSubject} onBack={() => handleNavigate('studentDashboard')} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} flashcards={flashcards} onAddFlashcards={handleAddFlashcards} onNavigate={handleNavigate} />;
         }
         return null;
       case 'studentDashboard':
@@ -313,9 +323,9 @@ const App: React.FC = () => {
     }
   };
 
-  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass', 'studyGroups', 'groupDetail'].includes(view);
+  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass', 'studyGroups', 'groupDetail', 'eLibrary'].includes(view);
   
-  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' = 'student';
+  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' | 'eLibrary' = 'student';
   if (view === 'teacherDashboard') navType = 'teacher';
   if (view === 'generalKnowledge') navType = 'general';
   if (view === 'store') navType = 'store';
@@ -323,6 +333,7 @@ const App: React.FC = () => {
   if (view === 'studyArena') navType = 'arena';
   if (view === 'careerCompass') navType = 'compass';
   if (view === 'studyGroups' || view === 'groupDetail') navType = 'groups';
+  if (view === 'eLibrary') navType = 'eLibrary';
 
   return (
     <div className="font-sans bg-background text-foreground">

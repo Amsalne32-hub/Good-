@@ -13,6 +13,16 @@ export const schemesOfWork: SchemeOfWork[] = [
       { week: 5, topic: 'Mid-Term Test', objectives: ['Assess understanding of weeks 1-4'], activities: 'Written test.' },
       { week: 6, topic: 'Introduction to Algebra', objectives: ['Define variables', 'Simplify simple algebraic expressions'], activities: 'Think-aloud demonstration, guided practice.' },
     ]
+  },
+  {
+    id: 'sow-jss-english-t1',
+    subjectId: 'jss-english',
+    term: 1,
+    weeks: [
+        { week: 1, topic: 'Parts of Speech: Nouns & Pronouns', objectives: ['Define nouns and pronouns', 'Identify types of nouns (common, proper, collective)'], activities: 'Sentence building game, identifying nouns in a passage.' },
+        { week: 2, topic: 'Parts of Speech: Verbs & Tenses', objectives: ['Identify action and linking verbs', 'Use simple present, past, and future tenses'], activities: 'Role-playing actions, verb tense worksheet.' },
+        { week: 3, topic: 'Composition: Narrative Essay', objectives: ['Understand the elements of a story', 'Write a short narrative essay'], activities: 'Story brainstorming session, peer review of short paragraphs.' },
+    ]
   }
 ];
 
@@ -38,6 +48,27 @@ export const lessonPlans: LessonPlan[] = [
     evaluation: 'Teacher will ask students to write a given large number in words and identify the place value of specific digits.',
     summary: 'Teacher summarizes the key points of the lesson on the board.',
     assignment: 'Complete Exercise 2.1, questions 1-5, from the New General Mathematics textbook.'
+  },
+  {
+    id: 'lp-jss-english-w1',
+    schemeWeekId: 'sow-jss-english-t1-w1',
+    topic: 'Parts of Speech: Nouns & Pronouns',
+    duration: '40 minutes',
+    learningObjectives: [
+        'Define a noun and a pronoun.',
+        'Identify common, proper, and collective nouns in sentences.',
+        'Replace nouns with appropriate pronouns in a given passage.'
+    ],
+    instructionalMaterials: ['Whiteboard, markers', 'Chart showing types of nouns', 'Textbook'],
+    priorKnowledge: 'Students can identify words in a sentence.',
+    procedure: [
+        { step: 'Introduction (5 mins)', teacherActivity: 'Writes a simple sentence on the board and asks students to name the person, place, and thing.', studentActivity: 'Identify the words as requested.' },
+        { step: 'Presentation (15 mins)', teacherActivity: 'Explains the definition of nouns and pronouns using the chart and examples.', studentActivity: 'Listen, take notes, and provide their own examples.' },
+        { step: 'Activity (15 mins)', teacherActivity: 'Provides a short passage and asks students to work in pairs to underline nouns and circle pronouns.', studentActivity: 'Work in pairs to complete the task.' },
+    ],
+    evaluation: 'Students are asked to write five sentences, each containing a proper noun and a pronoun.',
+    summary: 'Teacher recaps the definitions and types of nouns and pronouns.',
+    assignment: 'Read the first chapter of their literature book and list 20 nouns found.'
   }
 ];
 
@@ -72,12 +103,45 @@ To read a large number, we group the digits in threes from the right, separated 
 **Example: 4,785,216**
 Is read as: "Four million, seven hundred and eighty-five thousand, two hundred and sixteen."
     `
+  },
+  {
+    id: 'ln-jss-english-w1',
+    lessonPlanId: 'lp-jss-english-w1',
+    topic: 'Detailed Note on Nouns & Pronouns',
+    content: `
+### Topic: Nouns and Pronouns
+
+**1. What is a Noun?**
+A noun is a word that names a person, an animal, a place, a thing, or an idea.
+
+**Types of Nouns:**
+*   **Proper Noun:** A name used for an individual person, place, or organization, spelled with an initial capital letter.
+    *   *Examples:* **Bayo**, **Lagos**, **Nigeria**, **Synapse**
+*   **Common Noun:** A name for something which is common for many things, persons, or places.
+    *   *Examples:* **boy**, **city**, **country**, **school**
+*   **Collective Noun:** A word used to represent a group of people, animals, or things.
+    *   *Examples:* a **flock** of sheep, a **team** of players, a **library** of books.
+
+**2. What is a Pronoun?**
+A pronoun is a word that is used instead of a noun or noun phrase. Pronouns are used to avoid repeating the same nouns over and over again.
+
+**Examples:**
+*   **I**, **you**, **he**, **she**, **it**, **we**, **they**
+*   *Sentence:* **Tunde** is a student. **He** is in JSS 1. (Here, "He" replaces "Tunde").
+    `
   }
 ];
 
 export const getTeacherResourcesBySubject = (subjectId: string) => {
     const relevantSchemes = schemesOfWork.filter(s => s.subjectId === subjectId);
-    const relevantPlans = lessonPlans.filter(p => relevantSchemes.some(s => s.weeks.some(w => `sow-${s.subjectId}-t${s.term}-w${w.week}`.includes(p.schemeWeekId)))); // Simplified matching
+    const relevantPlanIds = relevantSchemes.flatMap(s => s.weeks.map(w => `lp-${s.subjectId}-w${w.week}`));
+    
+    // A more robust way to link plans to schemes
+    const relevantPlans = lessonPlans.filter(p => {
+        const schemeIdPart = p.schemeWeekId.split('-w')[0]; // e.g., sow-jss-math-t1
+        return relevantSchemes.some(s => `sow-${s.subjectId}-t${s.term}` === schemeIdPart);
+    });
+
     const relevantNotes = lessonNotes.filter(n => relevantPlans.some(p => p.id === n.lessonPlanId));
 
     return {

@@ -20,6 +20,7 @@ interface SubjectDetailProps {
   handleTopicComplete: (topicId: string) => void;
   flashcards: Flashcard[];
   onAddFlashcards: (flashcards: Flashcard[]) => void;
+  onNavigate: (view: 'eLibrary') => void;
 }
 
 const difficultyColors: Record<Topic['difficulty'], string> = {
@@ -145,7 +146,7 @@ const TopicCard: React.FC<{
 };
 
 
-const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartAssessment, onStartCoursework, handleTopicComplete, flashcards, onAddFlashcards }) => {
+const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartAssessment, onStartCoursework, handleTopicComplete, flashcards, onAddFlashcards, onNavigate }) => {
   const [openUnitId, setOpenUnitId] = useState<string | null>(subject.units[0]?.id || null);
   const [openModuleId, setOpenModuleId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'curriculum' | 'resources' | 'ai-study-room' | 'flashcards'>('curriculum');
@@ -722,7 +723,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
       
       <div>
         {activeTab === 'curriculum' && renderCurriculum()}
-        {activeTab === 'resources' && <Resources resources={subject.resources} subjectTitle={subject.title} />}
+        {activeTab === 'resources' && <Resources resources={subject.resources} subjectTitle={subject.title} onNavigate={onNavigate} />}
         {activeTab === 'ai-study-room' && renderAiStudyRoom()}
         {activeTab === 'flashcards' && renderFlashcards()}
       </div>

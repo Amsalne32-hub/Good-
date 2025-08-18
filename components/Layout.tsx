@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { LogOut, User, Shield, BookOpen, Sparkles, Store, Star, Trophy, Compass, Users } from 'lucide-react';
+import { LogOut, User, Shield, BookOpen, Sparkles, Store, Star, Trophy, Compass, Users, Library } from 'lucide-react';
 import type { StudentProfile } from '../types';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
 interface NavbarProps {
-  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups';
-  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => void;
+  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' | 'eLibrary';
+  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'eLibrary') => void;
   onExit: () => void;
   studentProfile: StudentProfile;
 }
@@ -27,6 +27,10 @@ const Navbar: React.FC<NavbarProps> = ({ navType, onNavigate, onExit, studentPro
                <Button variant={navType === 'student' ? 'secondary' : 'ghost'} onClick={() => onNavigate('studentDashboard')}>
                  <BookOpen className="w-4 h-4 mr-0 sm:mr-2"/>
                  <span className="hidden sm:inline">Journey</span>
+               </Button>
+               <Button variant={navType === 'eLibrary' ? 'secondary' : 'ghost'} onClick={() => onNavigate('eLibrary')}>
+                 <Library className="w-4 h-4 mr-0 sm:mr-2"/>
+                 <span className="hidden sm:inline">E-Library</span>
                </Button>
                <Button variant={navType === 'profile' ? 'secondary' : 'ghost'} onClick={() => onNavigate('profile')}>
                  <User className="w-4 h-4 mr-0 sm:mr-2"/>
@@ -77,8 +81,8 @@ const Navbar: React.FC<NavbarProps> = ({ navType, onNavigate, onExit, studentPro
 
 interface LayoutProps {
   children: React.ReactNode;
-  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups';
-  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => void;
+  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' | 'eLibrary';
+  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'eLibrary') => void;
   onExit: () => void;
   studentProfile: StudentProfile;
 }
