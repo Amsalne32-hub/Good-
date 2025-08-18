@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit } from './types';
+import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup } from './types';
 import { subjects as initialSubjects } from './data/subjects';
 import { storeItems, getItemById } from './data/storeItems';
 import { achievementsData } from './data/achievements';
+import { studyGroups as initialStudyGroups } from './data/groups';
 import LandingPage from './components/LandingPage';
 import SubjectsDashboard from './components/Dashboard';
 import SubjectDetail from './components/SubjectDetail';
@@ -14,20 +15,24 @@ import Store from './components/Store';
 import Profile from './components/Profile';
 import StudyArena from './components/StudyArena';
 import CareerCompass from './components/CareerCompass';
+import StudyGroups from './components/StudyGroups';
+import GroupDetail from './components/GroupDetail';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
 import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const [activeAssessment, setActiveAssessment] = useState<Assessment | null>(null);
   const [activeCoursework, setActiveCoursework] = useState<Coursework | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<StudyGroup | null>(null);
   
   const [subjects, setSubjects] = useState<Subject[]>(initialSubjects);
+  const [studyGroups, setStudyGroups] = useState<StudyGroup[]>(initialStudyGroups);
 
   const [studentProfile, setStudentProfile] = useState<StudentProfile>({
     name: 'Bayo Adekunle',
@@ -192,11 +197,17 @@ const App: React.FC = () => {
     setSelectedSubject(subject);
     setView('subject');
   };
+
+  const handleSelectGroup = (group: StudyGroup) => {
+    setSelectedGroup(group);
+    setView('groupDetail');
+  };
   
-  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass') => {
+  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
+    setSelectedGroup(null);
     setView(targetView);
   };
 
@@ -205,6 +216,7 @@ const App: React.FC = () => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
+    setSelectedGroup(null);
   };
 
   const handleStartAssessment = (assessmentId: string) => {
@@ -250,6 +262,10 @@ const App: React.FC = () => {
     const gkSubject = subjects.find(s => s.level === 'General');
 
     switch (view) {
+      case 'groupDetail':
+        return selectedGroup && <GroupDetail group={selectedGroup} studentProfile={studentProfile} onBack={() => handleNavigate('studyGroups')} />;
+      case 'studyGroups':
+        return <StudyGroups groups={studyGroups.filter(g => g.members.includes(studentProfile.name))} onSelectGroup={handleSelectGroup} />;
       case 'careerCompass':
         return <CareerCompass subjects={subjects.filter(s => s.level !== 'General')} />;
       case 'studyArena':
@@ -288,15 +304,16 @@ const App: React.FC = () => {
     }
   };
 
-  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass'].includes(view);
+  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass', 'studyGroups', 'groupDetail'].includes(view);
   
-  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' = 'student';
+  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' = 'student';
   if (view === 'teacherDashboard') navType = 'teacher';
   if (view === 'generalKnowledge') navType = 'general';
   if (view === 'store') navType = 'store';
   if (view === 'profile') navType = 'profile';
   if (view === 'studyArena') navType = 'arena';
   if (view === 'careerCompass') navType = 'compass';
+  if (view === 'studyGroups' || view === 'groupDetail') navType = 'groups';
 
   return (
     <div className="font-sans bg-background text-foreground">

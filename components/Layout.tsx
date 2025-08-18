@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { LogOut, User, Shield, BookOpen, Sparkles, Store, Star, Trophy, Compass } from 'lucide-react';
+import { LogOut, User, Shield, BookOpen, Sparkles, Store, Star, Trophy, Compass, Users } from 'lucide-react';
 import type { StudentProfile } from '../types';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
 interface NavbarProps {
-  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass';
-  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass') => void;
+  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups';
+  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => void;
   onExit: () => void;
   studentProfile: StudentProfile;
 }
@@ -31,6 +31,10 @@ const Navbar: React.FC<NavbarProps> = ({ navType, onNavigate, onExit, studentPro
                <Button variant={navType === 'profile' ? 'secondary' : 'ghost'} onClick={() => onNavigate('profile')}>
                  <User className="w-4 h-4 mr-0 sm:mr-2"/>
                  <span className="hidden sm:inline">Profile</span>
+               </Button>
+               <Button variant={navType === 'groups' ? 'secondary' : 'ghost'} onClick={() => onNavigate('studyGroups')}>
+                 <Users className="w-4 h-4 mr-0 sm:mr-2"/>
+                 <span className="hidden sm:inline">Groups</span>
                </Button>
                 <Button variant={navType === 'arena' ? 'secondary' : 'ghost'} onClick={() => onNavigate('studyArena')}>
                  <Trophy className="w-4 h-4 mr-0 sm:mr-2"/>
@@ -73,8 +77,8 @@ const Navbar: React.FC<NavbarProps> = ({ navType, onNavigate, onExit, studentPro
 
 interface LayoutProps {
   children: React.ReactNode;
-  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass';
-  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass') => void;
+  navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups';
+  onNavigate: (view: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups') => void;
   onExit: () => void;
   studentProfile: StudentProfile;
 }
