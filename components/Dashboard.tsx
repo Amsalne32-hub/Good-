@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import type { Subject, Topic, StudentProfile } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
 import ProgressBar from './ui/ProgressBar';
-import { Award, Bot, ChevronRight, Compass, Star, Trophy, TrendingUp, BookMarked } from 'lucide-react';
+import { Award, Bot, ChevronRight, Compass, Star, Trophy, TrendingUp, BookMarked, ClipboardCheck } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';
 import { Button } from './ui/Button';
 
@@ -12,7 +12,7 @@ interface SubjectsDashboardProps {
   onSubjectSelect: (subject: Subject) => void;
   studentProfile: StudentProfile;
   subjects: Subject[];
-  onNavigate: (view: 'careerCompass') => void;
+  onNavigate: (view: 'careerCompass' | 'cbtCenter') => void;
 }
 
 const findNextTopic = (allSubjects: Subject[], currentClass: string): { subject: Subject, topic: Topic } | null => {
@@ -192,6 +192,17 @@ const SubjectsDashboard: React.FC<SubjectsDashboardProps> = ({ onSubjectSelect, 
                     <p className="text-sm text-muted-foreground mb-4">Discover career paths related to your favorite subjects.</p>
                     <Button variant="outline" className="w-full" onClick={() => onNavigate('careerCompass')}>
                         Explore Careers
+                    </Button>
+                </CardContent>
+            </Card>
+             <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><ClipboardCheck className="text-purple-500"/> CBT Center</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">Prepare for national exams like BECE, WAEC, and JAMB.</p>
+                    <Button variant="outline" className="w-full" onClick={() => onNavigate('cbtCenter')}>
+                        Start Practice Test
                     </Button>
                 </CardContent>
             </Card>

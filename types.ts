@@ -303,3 +303,57 @@ export interface Flashcard {
   backText: string;
   imageUrl: string;
 }
+
+// For CBT Center
+export type CBTSubjectCategory = 'Core' | 'Science' | 'Vocational' | 'Arts' | 'Commercial' | 'Technical' | 'Religious' | 'Languages' | 'History';
+
+export interface CBT_Subject {
+  id: string;
+  name: string;
+  category: CBTSubjectCategory;
+}
+
+export interface CBT_Category {
+    id: 'JUNIOR_SCHOOL' | 'SENIOR_SCHOOL' | 'JAMB';
+    name: string;
+    description: string;
+    standards: string[];
+    subjects: CBT_Subject[];
+}
+
+export interface CBT_Question {
+    id: string;
+    subjectId: string;
+    standard: string; // e.g. 'NECO_BECE', 'WAEC'
+    question: string;
+    options: string[];
+    correctAnswer: number; // index of correct option
+    explanation: string;
+}
+
+export interface CBT_TestConfig {
+    category: CBT_Category;
+    standard: string;
+    subjects: CBT_Subject[];
+    timeLimit: number; // in minutes
+    questionCount: number;
+}
+
+export interface CBT_Result {
+    score: number;
+    totalQuestions: number;
+    correctAnswers: number;
+    timeTaken: number; // in seconds
+    config: CBT_TestConfig;
+    questions: CBT_Question[];
+    userAnswers: { [questionId: string]: number | null };
+}
+
+export interface CBT_HistoryItem {
+    id: string;
+    date: string;
+    categoryName: string;
+    subjectNames: string[];
+    score: number;
+    totalQuestions: number;
+}

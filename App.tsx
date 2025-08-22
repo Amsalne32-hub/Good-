@@ -18,12 +18,13 @@ import CareerCompass from './components/CareerCompass';
 import StudyGroups from './components/StudyGroups';
 import GroupDetail from './components/GroupDetail';
 import ELibrary from './components/ELibrary';
+import CBT_Center from './components/CBT_Center';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
 import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary' | 'cbtCenter';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
@@ -209,6 +210,7 @@ const App: React.FC = () => {
   const handleEnterStudentDashboard = () => setView('studentDashboard');
   const handleEnterTeacherDashboard = () => setView('teacherDashboard');
   const handleEnterGeneralKnowledge = () => setView('generalKnowledge');
+  const handleEnterCbtCenter = () => setView('cbtCenter');
 
   const handleSubjectSelect = (subject: Subject) => {
     setSelectedSubject(subject);
@@ -220,7 +222,7 @@ const App: React.FC = () => {
     setView('groupDetail');
   };
   
-  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'eLibrary') => {
+  const handleNavigate = (targetView: 'studentDashboard' | 'teacherDashboard' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'eLibrary' | 'cbtCenter') => {
     setSelectedSubject(null);
     setActiveAssessment(null);
     setActiveCoursework(null);
@@ -279,6 +281,8 @@ const App: React.FC = () => {
     const gkSubject = subjects.find(s => s.level === 'General');
 
     switch (view) {
+      case 'cbtCenter':
+        return <CBT_Center />;
       case 'eLibrary':
         return <ELibrary subjects={subjects.filter(s => s.level !== 'General')} onNavigate={handleNavigate} />;
       case 'groupDetail':
@@ -319,13 +323,13 @@ const App: React.FC = () => {
           return <TeacherDashboard subjects={subjects} />;
       case 'landing':
       default:
-        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} />;
+        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} onEnterCbtCenter={handleEnterCbtCenter} />;
     }
   };
 
-  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass', 'studyGroups', 'groupDetail', 'eLibrary'].includes(view);
+  const isNavigableView = ['studentDashboard', 'teacherDashboard', 'subject', 'generalKnowledge', 'store', 'profile', 'studyArena', 'careerCompass', 'studyGroups', 'groupDetail', 'eLibrary', 'cbtCenter'].includes(view);
   
-  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' | 'eLibrary' = 'student';
+  let navType: 'student' | 'teacher' | 'general' | 'store' | 'profile' | 'arena' | 'compass' | 'groups' | 'eLibrary' | 'cbtCenter' = 'student';
   if (view === 'teacherDashboard') navType = 'teacher';
   if (view === 'generalKnowledge') navType = 'general';
   if (view === 'store') navType = 'store';
@@ -334,6 +338,7 @@ const App: React.FC = () => {
   if (view === 'careerCompass') navType = 'compass';
   if (view === 'studyGroups' || view === 'groupDetail') navType = 'groups';
   if (view === 'eLibrary') navType = 'eLibrary';
+  if (view === 'cbtCenter') navType = 'cbtCenter';
 
   return (
     <div className="font-sans bg-background text-foreground">

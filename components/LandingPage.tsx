@@ -7,9 +7,10 @@ interface LandingPageProps {
   onEnterDashboard: () => void;
   onEnterTeacherDashboard: () => void;
   onEnterGeneralKnowledge: () => void;
+  onEnterCbtCenter: () => void;
 }
 
-const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge }) => {
+const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter }) => {
   return (
     <div className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-7xl">
@@ -21,12 +22,17 @@ const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeac
                 <span className="block text-primary xl:inline">Synapse</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
-                A comprehensive learning platform aligned with the Nigerian curriculum. Master subjects from JSS to SSS with interactive lessons, quizzes, and progress tracking.
+                A comprehensive learning platform aligned with the Nigerian curriculum. Master subjects, practice for exams, and track your progress from JSS to SSS.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:flex-wrap sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
                   <Button onClick={onEnterDashboard} size="lg">
                     Student Portal
+                  </Button>
+                </div>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <Button onClick={onEnterCbtCenter} variant="outline" size="lg">
+                    CBT Center
                   </Button>
                 </div>
                  <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -96,10 +102,10 @@ const FeatureSection: React.FC = () => {
   );
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter }) => {
   return (
     <div className="bg-white">
-      <HeroSection onEnterDashboard={onEnterDashboard} onEnterTeacherDashboard={onEnterTeacherDashboard} onEnterGeneralKnowledge={onEnterGeneralKnowledge} />
+      <HeroSection onEnterDashboard={onEnterDashboard} onEnterTeacherDashboard={onEnterTeacherDashboard} onEnterGeneralKnowledge={onEnterGeneralKnowledge} onEnterCbtCenter={onEnterCbtCenter} />
       <FeatureSection />
       <section className="bg-primary text-primary-foreground py-20 text-center">
           <div className="container mx-auto px-6">
@@ -107,12 +113,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeac
             <p className="text-lg mb-8 max-w-3xl mx-auto">
               Join thousands of Nigerian students mastering their curriculum with Synapse's comprehensive platform.
             </p>
-            <Button
-              onClick={onEnterDashboard}
-              className="bg-white hover:bg-slate-100 text-primary font-semibold px-8 py-6 text-lg"
-            >
-              Access Learning Dashboard
-            </Button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                onClick={onEnterDashboard}
+                className="bg-white hover:bg-slate-100 text-primary font-semibold px-8 py-6 text-lg"
+              >
+                Access Learning Dashboard
+              </Button>
+               <Button
+                onClick={onEnterCbtCenter}
+                className="bg-transparent border-2 border-white hover:bg-white/20 text-white font-semibold px-8 py-6 text-lg"
+              >
+                Go to CBT Center
+              </Button>
+            </div>
           </div>
         </section>
     </div>
