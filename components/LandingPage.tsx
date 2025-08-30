@@ -2,15 +2,17 @@ import React from 'react';
 import { Button } from './ui/Button';
 import { Card, CardContent } from './ui/Card';
 import { BookOpen, Target, Film } from 'lucide-react';
+import Footer from './Footer';
 
 interface LandingPageProps {
   onEnterDashboard: () => void;
   onEnterTeacherDashboard: () => void;
   onEnterGeneralKnowledge: () => void;
   onEnterCbtCenter: () => void;
+  onNavigateToTerms: () => void;
 }
 
-const HeroSection: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter }) => {
+const HeroSection: React.FC<Omit<LandingPageProps, 'onNavigateToTerms'>> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter }) => {
   return (
     <div className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-7xl">
@@ -102,7 +104,7 @@ const FeatureSection: React.FC = () => {
   );
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeacherDashboard, onEnterGeneralKnowledge, onEnterCbtCenter, onNavigateToTerms }) => {
   return (
     <div className="bg-white">
       <HeroSection onEnterDashboard={onEnterDashboard} onEnterTeacherDashboard={onEnterTeacherDashboard} onEnterGeneralKnowledge={onEnterGeneralKnowledge} onEnterCbtCenter={onEnterCbtCenter} />
@@ -129,6 +131,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard, onEnterTeac
             </div>
           </div>
         </section>
+        <Footer onNavigateToTerms={onNavigateToTerms} />
     </div>
   );
 };

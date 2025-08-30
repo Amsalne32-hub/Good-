@@ -189,10 +189,10 @@ export const subjects: Subject[] = [
     resources: { 
       textbooks: [], 
       ebooks: [
-        { id: 'gk-eb1', title: 'The Digital Citizen\'s Handbook', author: 'Dr. Ayo Adekunle', description: 'A guide to navigating the modern digital landscape safely and effectively.', coverUrl: 'https://picsum.photos/seed/gk-eb1/300/400', downloadUrl: '#' },
+        { id: 'gk-eb1', title: 'The Digital Citizen\'s Handbook', author: 'Dr. Ayo Adekunle', description: 'A guide to navigating the modern digital landscape safely and effectively.', coverUrl: 'https://picsum.photos/seed/gk-eb1/300/400', downloadUrl: 'https://www.un.org/en/civil-society/page/resources-digital-citizenship-education' },
       ], 
       journals: [
-         { id: 'gk-j1', title: 'Global Affairs Quarterly', publisher: 'Nigerian Institute of International Affairs', issue: 'Vol. 10, No. 4', link: '#' },
+         { id: 'gk-j1', title: 'Global Affairs Quarterly', publisher: 'Nigerian Institute of International Affairs', issue: 'Vol. 10, No. 4', link: 'https://niia.gov.ng/publications/nigerian-journal-of-international-affairs/' },
       ] 
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -418,15 +418,15 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb1', title: 'New General Mathematics for JSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm1/300/400', downloadUrl: '#' },
-        { id: 'tb2', title: 'MAN Mathematics for JSS (3rd Edition)', author: 'Mathematical Association of Nigeria', coverUrl: 'https://picsum.photos/seed/man1/300/400', downloadUrl: '#' },
+        { id: 'tb1', title: 'New General Mathematics for JSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=mathematics&standard=jss' },
+        { id: 'tb2', title: 'MAN Mathematics for JSS (3rd Edition)', author: 'Mathematical Association of Nigeria', coverUrl: 'https://picsum.photos/seed/man1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=mathematics&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb1', title: 'Understanding Fractions: A Visual Guide', author: 'Jane Doe', description: 'A deep dive into fractions, decimals, and percentages with helpful illustrations.', coverUrl: 'https://picsum.photos/seed/ef1/300/400', downloadUrl: '#' },
-        { id: 'eb-math-jss', title: 'JSS Mathematics Practice Questions (PDF)', author: 'Synapse Press', description: 'Over 200 practice questions covering the JSS curriculum.', coverUrl: 'https://picsum.photos/seed/eb-math1/300/400', downloadUrl: '#' },
+        { id: 'eb1', title: 'Understanding Fractions: A Visual Guide', author: 'Jane Doe', description: 'A deep dive into fractions, decimals, and percentages with helpful illustrations.', coverUrl: 'https://picsum.photos/seed/ef1/300/400', downloadUrl: 'https://www.khanacademy.org/math/arithmetic/fraction-arithmetic' },
+        { id: 'eb-math-jss', title: 'JSS Mathematics Practice Questions (PDF)', author: 'Synapse Press', description: 'Over 200 practice questions covering the JSS curriculum.', coverUrl: 'https://picsum.photos/seed/eb-math1/300/400', downloadUrl: 'https://passnownow.com/classnotes/mathematics-jss1/' },
       ],
       journals: [
-        { id: 'j1', title: 'Nigerian Journal of Mathematical Education', publisher: 'NJME', issue: 'Vol. 15, No. 2', link: '#' },
+        { id: 'j1', title: 'Nigerian Journal of Mathematical Education', publisher: 'NJME', issue: 'Vol. 15, No. 2', link: 'https://scholar.google.com/scholar?q=%22Nigerian+Journal+of+Mathematical+Education%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -549,15 +549,15 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb3', title: 'New Oxford Secondary English Course for JSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec1/300/400', downloadUrl: '#' },
-        { id: 'tb-eng-jss', title: 'Intensive English for JSS', author: 'B. O. Elugbe', coverUrl: 'https://picsum.photos/seed/intensive-eng/300/400', downloadUrl: '#' },
+        { id: 'tb3', title: 'New Oxford Secondary English Course for JSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=english&standard=jss' },
+        { id: 'tb-eng-jss', title: 'Intensive English for JSS', author: 'B. O. Elugbe', coverUrl: 'https://picsum.photos/seed/intensive-eng/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=english&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb2', title: 'Guide to Better Writing', author: 'John Smith', description: 'Practical tips for improving composition and grammar.', coverUrl: 'https://picsum.photos/seed/gbw1/300/400', downloadUrl: '#' },
-        { id: 'eb3', title: 'Common Errors in English', author: 'Mary Jones', description: 'Learn to avoid common grammatical mistakes.', coverUrl: 'https://picsum.photos/seed/cee1/300/400', downloadUrl: '#' },
+        { id: 'eb2', title: 'Guide to Better Writing', author: 'John Smith', description: 'Practical tips for improving composition and grammar.', coverUrl: 'https://picsum.photos/seed/gbw1/300/400', downloadUrl: 'https://owl.purdue.edu/owl/purdue_owl.html' },
+        { id: 'eb3', title: 'Common Errors in English', author: 'Mary Jones', description: 'Learn to avoid common grammatical mistakes.', coverUrl: 'https://picsum.photos/seed/cee1/300/400', downloadUrl: 'https://www.grammarly.com/blog/common-grammar-mistakes/' },
       ],
       journals: [
-        { id: 'j2', title: 'Journal of English Language Teachers Association of Nigeria', publisher: 'JELTAN', issue: '2023 Edition', link: '#' },
+        { id: 'j2', title: 'Journal of English Language Teachers Association of Nigeria', publisher: 'JELTAN', issue: '2023 Edition', link: 'https://scholar.google.com/scholar?q=%22Journal+of+English+Language+Teachers+Association+of+Nigeria%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -680,14 +680,14 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb-bs1', title: 'STAN Basic Science for JSS', author: 'Science Teachers Association of Nigeria', coverUrl: 'https://picsum.photos/seed/stanbs1/300/400', downloadUrl: '#' },
-        { id: 'tb-bs2', title: 'Pre-vocational Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdc-pvs/300/400', downloadUrl: '#' },
+        { id: 'tb-bs1', title: 'STAN Basic Science for JSS', author: 'Science Teachers Association of Nigeria', coverUrl: 'https://picsum.photos/seed/stanbs1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=basic+science&standard=jss' },
+        { id: 'tb-bs2', title: 'Pre-vocational Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdc-pvs/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=pre-vocational+studies&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb-bs1', title: 'Everyday Science Experiments', author: 'Funke Adebayo', description: 'Simple and safe science experiments you can do at home.', coverUrl: 'https://picsum.photos/seed/eb-bs1/300/400', downloadUrl: '#' },
+        { id: 'eb-bs1', title: 'Everyday Science Experiments', author: 'Funke Adebayo', description: 'Simple and safe science experiments you can do at home.', coverUrl: 'https://picsum.photos/seed/eb-bs1/300/400', downloadUrl: 'https://www.sciencefun.org/kidszone/experiments/' },
       ],
       journals: [
-        { id: 'j-bs1', title: 'Journal of the Science Teachers Association of Nigeria (JSTAN)', publisher: 'STAN', issue: 'Latest Edition', link: '#' },
+        { id: 'j-bs1', title: 'Journal of the Science Teachers Association of Nigeria (JSTAN)', publisher: 'STAN', issue: 'Latest Edition', link: 'https://scholar.google.com/scholar?q=%22Journal+of+the+Science+Teachers+Association+of+Nigeria%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -805,11 +805,11 @@ export const subjects: Subject[] = [
     ],
     resources: {
         textbooks: [
-          { id: 'tb-bt1', title: 'Basic Technology for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdcbt1/300/400', downloadUrl: '#' },
-          { id: 'tb-bt2', title: 'Introductory Technology for Nigerian Schools', author: 'S. A. Adebayo', coverUrl: 'https://picsum.photos/seed/adebayo-bt/300/400', downloadUrl: '#' },
+          { id: 'tb-bt1', title: 'Basic Technology for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/nerdcbt1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=basic+technology&standard=jss' },
+          { id: 'tb-bt2', title: 'Introductory Technology for Nigerian Schools', author: 'S. A. Adebayo', coverUrl: 'https://picsum.photos/seed/adebayo-bt/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=basic+technology&standard=jss' },
         ],
         ebooks: [
-          { id: 'eb-bt1', title: 'Woodwork Joints (Illustrated Guide)', author: 'Tech Studies Press', description: 'A visual guide to common woodworking joints.', coverUrl: 'https://picsum.photos/seed/eb-bt1/300/400', downloadUrl: '#' },
+          { id: 'eb-bt1', title: 'Woodwork Joints (Illustrated Guide)', author: 'Tech Studies Press', description: 'A visual guide to common woodworking joints.', coverUrl: 'https://picsum.photos/seed/eb-bt1/300/400', downloadUrl: 'https://www.woodworkingsource.com/woodworking-joints/' },
         ],
         journals: [],
     },
@@ -925,9 +925,9 @@ export const subjects: Subject[] = [
         }
     ],
     resources: { 
-        textbooks: [{ id: 'tb-ss1', title: 'Social Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/ss-jss1/300/400', downloadUrl: '#' }], 
+        textbooks: [{ id: 'tb-ss1', title: 'Social Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/ss-jss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=social+studies&standard=jss' }], 
         ebooks: [
-          { id: 'eb-ss1', title: 'Cultures of Nigeria: A Brief Overview', author: 'Ngozi Okoro', description: 'An introductory guide to the major ethnic groups and cultures in Nigeria.', coverUrl: 'https://picsum.photos/seed/eb-ss1/300/400', downloadUrl: '#' },
+          { id: 'eb-ss1', title: 'Cultures of Nigeria: A Brief Overview', author: 'Ngozi Okoro', description: 'An introductory guide to the major ethnic groups and cultures in Nigeria.', coverUrl: 'https://picsum.photos/seed/eb-ss1/300/400', downloadUrl: 'https://www.britannica.com/place/Nigeria/Ethnic-groups' },
         ], 
         journals: [] 
     },
@@ -1032,9 +1032,9 @@ export const subjects: Subject[] = [
         }
     ],
     resources: { 
-        textbooks: [{ id: 'tb-ce1', title: 'Civic Education for JSS', author: 'Uche Okeke', coverUrl: 'https://picsum.photos/seed/ce-jss1/300/400', downloadUrl: '#' }], 
+        textbooks: [{ id: 'tb-ce1', title: 'Civic Education for JSS', author: 'Uche Okeke', coverUrl: 'https://picsum.photos/seed/ce-jss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=civic+education&standard=jss' }], 
         ebooks: [
-           { id: 'eb-ce1', title: 'The Nigerian Constitution Explained for Young Citizens (PDF)', author: 'Civic Watch Nigeria', description: 'A simplified version of the 1999 Nigerian Constitution.', coverUrl: 'https://picsum.photos/seed/eb-ce1/300/400', downloadUrl: '#' },
+           { id: 'eb-ce1', title: 'The Nigerian Constitution Explained for Young Citizens (PDF)', author: 'Civic Watch Nigeria', description: 'A simplified version of the 1999 Nigerian Constitution.', coverUrl: 'https://picsum.photos/seed/eb-ce1/300/400', downloadUrl: 'https://www.constituteproject.org/constitution/Nigeria_2011.pdf' },
         ], 
         journals: [] 
     },
@@ -1149,13 +1149,13 @@ export const subjects: Subject[] = [
     }],
     resources: { 
       textbooks: [
-        { id: 'tb-ag1', title: 'Agricultural Science for JSS', author: 'A. A. Adegbola', coverUrl: 'https://picsum.photos/seed/ag-jss1/300/400', downloadUrl: '#' },
+        { id: 'tb-ag1', title: 'Agricultural Science for JSS', author: 'A. A. Adegbola', coverUrl: 'https://picsum.photos/seed/ag-jss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=agricultural+science&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb-ag1', title: 'A Guide to Poultry Farming', author: 'IITA', description: 'A practical guide for small-scale poultry farmers.', coverUrl: 'https://picsum.photos/seed/eb-ag1/300/400', downloadUrl: '#' },
+        { id: 'eb-ag1', title: 'A Guide to Poultry Farming', author: 'IITA', description: 'A practical guide for small-scale poultry farmers.', coverUrl: 'https://picsum.photos/seed/eb-ag1/300/400', downloadUrl: 'https://www.fao.org/poultry-production-and-products/en/' },
       ],
       journals: [
-        { id: 'j-ag1', title: 'Nigerian Journal of Agricultural Science', publisher: 'Faculty of Agriculture, UNN', issue: 'Vol. 5, No. 1', link: '#' },
+        { id: 'j-ag1', title: 'Nigerian Journal of Agricultural Science', publisher: 'Faculty of Agriculture, UNN', issue: 'Vol. 5, No. 1', link: 'https://scholar.google.com/scholar?q=%22Nigerian+Journal+of+Agricultural+Science%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -1265,10 +1265,10 @@ export const subjects: Subject[] = [
     }],
     resources: { 
       textbooks: [
-        { id: 'tb-bus1', title: 'Business Studies for JSS', author: 'O. A. Lawal et al.', coverUrl: 'https://picsum.photos/seed/bus-jss1/300/400', downloadUrl: '#' },
+        { id: 'tb-bus1', title: 'Business Studies for JSS', author: 'O. A. Lawal et al.', coverUrl: 'https://picsum.photos/seed/bus-jss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=business+studies&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb-bus1', title: 'My First Ledger Book (Practice PDF)', author: 'AccountWell', description: 'A workbook for practicing bookkeeping entries.', coverUrl: 'https://picsum.photos/seed/eb-bus1/300/400', downloadUrl: '#' },
+        { id: 'eb-bus1', title: 'My First Ledger Book (Practice PDF)', author: 'AccountWell', description: 'A workbook for practicing bookkeeping entries.', coverUrl: 'https://picsum.photos/seed/eb-bus1/300/400', downloadUrl: 'https://www.accountingcoach.com/bookkeeping-basics/explanation' },
       ],
       journals: [] 
     },
@@ -1378,10 +1378,10 @@ export const subjects: Subject[] = [
     }],
     resources: { 
       textbooks: [
-        { id: 'tb-he1', title: 'Home Economics for Nigerian JSS', author: 'Anyakoha E.U.', coverUrl: 'https://picsum.photos/seed/he-jss1/300/400', downloadUrl: '#' },
+        { id: 'tb-he1', title: 'Home Economics for Nigerian JSS', author: 'Anyakoha E.U.', coverUrl: 'https://picsum.photos/seed/he-jss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=home+economics&standard=jss' },
       ],
       ebooks: [
-        { id: 'eb-he1', title: 'Nigerian Healthy Recipes Cookbook', author: 'Sisi Yemmie', description: 'A collection of healthy and delicious Nigerian recipes.', coverUrl: 'https://picsum.photos/seed/eb-he1/300/400', downloadUrl: '#' },
+        { id: 'eb-he1', title: 'Nigerian Healthy Recipes Cookbook', author: 'Sisi Yemmie', description: 'A collection of healthy and delicious Nigerian recipes.', coverUrl: 'https://picsum.photos/seed/eb-he1/300/400', downloadUrl: 'https://www.sisiyemmie.com/' },
       ],
       journals: [] 
     },
@@ -1461,7 +1461,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-jcs1', title: 'Computer Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/jss-cs/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-jcs1', title: 'Computer Studies for JSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/jss-cs/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=computer+studies&standard=jss' }],
       ebooks: [],
       journals: []
     },
@@ -1541,7 +1541,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-jphe1', title: 'Physical and Health Education for JSS', author: 'Evans Brothers', coverUrl: 'https://picsum.photos/seed/jss-phe/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-jphe1', title: 'Physical and Health Education for JSS', author: 'Evans Brothers', coverUrl: 'https://picsum.photos/seed/jss-phe/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=physical+health+education&standard=jss' }],
       ebooks: [],
       journals: []
     },
@@ -1621,7 +1621,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-jar1', title: 'Lughatul Arabiyyah for JSS', author: 'Dr. Abdulfattah El-Okene', coverUrl: 'https://picsum.photos/seed/jss-ar/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-jar1', title: 'Lughatul Arabiyyah for JSS', author: 'Dr. Abdulfattah El-Okene', coverUrl: 'https://picsum.photos/seed/jss-ar/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=arabic&standard=jss' }],
       ebooks: [],
       journals: []
     },
@@ -1769,14 +1769,14 @@ export const subjects: Subject[] = [
     ],
     resources: {
         textbooks: [
-          { id: 'tb-ssm1', title: 'New General Mathematics for SSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm-sss1/300/400', downloadUrl: '#' },
-          { id: 'tb-ssm2', title: 'Further Mathematics Project 1', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp1/300/400', downloadUrl: '#' },
+          { id: 'tb-ssm1', title: 'New General Mathematics for SSS', author: 'M.F. Macrae et al.', coverUrl: 'https://picsum.photos/seed/ngm-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=mathematics&standard=sss' },
+          { id: 'tb-ssm2', title: 'Further Mathematics Project 1', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=further+mathematics&standard=sss' },
         ],
         ebooks: [
-           { id: 'eb-ssm1', title: 'Calculus Made Easy', author: 'Silvanus P. Thompson', description: 'A classic, intuitive guide to the fundamentals of calculus.', coverUrl: 'https://picsum.photos/seed/eb-ssm1/300/400', downloadUrl: '#' },
+           { id: 'eb-ssm1', title: 'Calculus Made Easy', author: 'Silvanus P. Thompson', description: 'A classic, intuitive guide to the fundamentals of calculus.', coverUrl: 'https://picsum.photos/seed/eb-ssm1/300/400', downloadUrl: 'https://www.gutenberg.org/ebooks/33283' },
         ],
         journals: [
-          { id: 'j-ssm1', title: 'ABACUS: Journal of the Mathematical Association of Nigeria', publisher: 'MAN', issue: 'Latest Volume', link: '#' },
+          { id: 'j-ssm1', title: 'ABACUS: Journal of the Mathematical Association of Nigeria', publisher: 'MAN', issue: 'Latest Volume', link: 'https://scholar.google.com/scholar?q=%22ABACUS%3A+Journal+of+the+Mathematical+Association+of+Nigeria%22' },
         ],
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -1894,14 +1894,14 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-sse1', title: 'New Oxford Secondary English Course for SSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec-sss1/300/400', downloadUrl: '#' },
-        { id: 'tb-sse2', title: 'A-Z of JAMB Use of English', author: 'Dele Ashade', coverUrl: 'https://picsum.photos/seed/jamb-eng/300/400', downloadUrl: '#' },
+        { id: 'tb-sse1', title: 'New Oxford Secondary English Course for SSS', author: 'Ayo Banjo et al.', coverUrl: 'https://picsum.photos/seed/nosec-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=english&standard=sss' },
+        { id: 'tb-sse2', title: 'A-Z of JAMB Use of English', author: 'Dele Ashade', coverUrl: 'https://picsum.photos/seed/jamb-eng/300/400', downloadUrl: 'https://www.myschoolgist.com/ng/jamb-past-questions-and-answers/' },
       ],
       ebooks: [
-        { id: 'eb-sse1', title: 'The Elements of Style', author: 'William Strunk Jr.', description: 'A classic guide to clear and effective writing.', coverUrl: 'https://picsum.photos/seed/eb-sse1/300/400', downloadUrl: '#' },
+        { id: 'eb-sse1', title: 'The Elements of Style', author: 'William Strunk Jr.', description: 'A classic guide to clear and effective writing.', coverUrl: 'https://picsum.photos/seed/eb-sse1/300/400', downloadUrl: 'https://www.gutenberg.org/ebooks/37134' },
       ],
       journals: [
-        { id: 'j-sse1', title: 'Ibadan Journal of English Studies', publisher: 'University of Ibadan', issue: 'Vol. 12', link: '#' },
+        { id: 'j-sse1', title: 'Ibadan Journal of English Studies', publisher: 'University of Ibadan', issue: 'Vol. 12', link: 'https://scholar.google.com/scholar?q=%22Ibadan+Journal+of+English+Studies%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -2024,13 +2024,13 @@ export const subjects: Subject[] = [
     ],
     resources: {
       textbooks: [
-        { id: 'tb4', title: 'Senior Secondary Physics by Nelkon & Parker', author: 'P.N. Okeke', coverUrl: 'https://picsum.photos/seed/ssp1/300/400', downloadUrl: '#' },
+        { id: 'tb4', title: 'Senior Secondary Physics by Nelkon & Parker', author: 'P.N. Okeke', coverUrl: 'https://picsum.photos/seed/ssp1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=physics&standard=sss' },
       ],
       ebooks: [
-        { id: 'eb4', title: 'The Physics of Everyday Things', author: 'Dr. Alex F.', description: 'Connecting physics principles to real-world phenomena.', coverUrl: 'https://picsum.photos/seed/pet1/300/400', downloadUrl: '#' },
+        { id: 'eb4', title: 'The Physics of Everyday Things', author: 'Dr. Alex F.', description: 'Connecting physics principles to real-world phenomena.', coverUrl: 'https://picsum.photos/seed/pet1/300/400', downloadUrl: 'https://www.howstuffworks.com/science' },
       ],
       journals: [
-        { id: 'j3', title: 'Nigerian Journal of Physics', publisher: 'NIP', issue: 'Volume 30', link: '#' },
+        { id: 'j3', title: 'Nigerian Journal of Physics', publisher: 'NIP', issue: 'Volume 30', link: 'https://scholar.google.com/scholar?q=%22Nigerian+Journal+of+Physics%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -2150,13 +2150,13 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-chem1', title: 'New School Chemistry for SSS', author: 'Osei Yaw Ababio', coverUrl: 'https://picsum.photos/seed/chem-sss1/300/400', downloadUrl: '#' }
+        { id: 'tb-chem1', title: 'New School Chemistry for SSS', author: 'Osei Yaw Ababio', coverUrl: 'https://picsum.photos/seed/chem-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=chemistry&standard=sss' }
       ], 
       ebooks: [
-        { id: 'eb-chem1', title: 'Organic Chemistry Nomenclature (Practice PDF)', author: 'Chem Simplify', description: 'Practice worksheets for mastering IUPAC naming conventions.', coverUrl: 'https://picsum.photos/seed/eb-chem1/300/400', downloadUrl: '#' },
+        { id: 'eb-chem1', title: 'Organic Chemistry Nomenclature (Practice PDF)', author: 'Chem Simplify', description: 'Practice worksheets for mastering IUPAC naming conventions.', coverUrl: 'https://picsum.photos/seed/eb-chem1/300/400', downloadUrl: 'https://www.khanacademy.org/science/organic-chemistry/naming-alkanes' },
       ], 
       journals: [
-        { id: 'j-chem1', title: 'Journal of the Chemical Society of Nigeria', publisher: 'CSN', issue: 'Vol. 48, No. 1', link: '#' },
+        { id: 'j-chem1', title: 'Journal of the Chemical Society of Nigeria', publisher: 'CSN', issue: 'Vol. 48, No. 1', link: 'https://scholar.google.com/scholar?q=%22Journal+of+the+Chemical+Society+of+Nigeria%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -2279,13 +2279,13 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-bio1', title: 'Modern Biology for SSS', author: 'Ramalingam', coverUrl: 'https://picsum.photos/seed/bio-sss1/300/400', downloadUrl: '#' }
+        { id: 'tb-bio1', title: 'Modern Biology for SSS', author: 'Ramalingam', coverUrl: 'https://picsum.photos/seed/bio-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=biology&standard=sss' }
       ], 
       ebooks: [
-        { id: 'eb-bio1', title: 'Diagrams of The Human Body', author: 'Med Illustrations', description: 'A collection of detailed diagrams of human anatomy and physiology.', coverUrl: 'https://picsum.photos/seed/eb-bio1/300/400', downloadUrl: '#' },
+        { id: 'eb-bio1', title: 'Diagrams of The Human Body', author: 'Med Illustrations', description: 'A collection of detailed diagrams of human anatomy and physiology.', coverUrl: 'https://picsum.photos/seed/eb-bio1/300/400', downloadUrl: 'https://www.visiblebody.com/learn/biology' },
       ], 
       journals: [
-        { id: 'j-bio1', title: 'Nigerian Journal of Ecology', publisher: 'Ecological Society of Nigeria', issue: 'Vol. 8', link: '#' },
+        { id: 'j-bio1', title: 'Nigerian Journal of Ecology', publisher: 'Ecological Society of Nigeria', issue: 'Vol. 8', link: 'https://scholar.google.com/scholar?q=%22Nigerian+Journal+of+Ecology%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -2404,13 +2404,13 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-econ1', title: 'Comprehensive Economics for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/econ-sss1/300/400', downloadUrl: '#' }
+        { id: 'tb-econ1', title: 'Comprehensive Economics for SSS', author: 'J.U. Anyaele', coverUrl: 'https://picsum.photos/seed/econ-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=economics&standard=sss' }
       ], 
       ebooks: [
-        { id: 'eb-econ1', title: 'The Nigerian Economy: A Primer', author: 'NBS', description: 'An overview of the Nigerian economy published by the National Bureau of Statistics.', coverUrl: 'https://picsum.photos/seed/eb-econ1/300/400', downloadUrl: '#' },
+        { id: 'eb-econ1', title: 'The Nigerian Economy: A Primer', author: 'NBS', description: 'An overview of the Nigerian economy published by the National Bureau of Statistics.', coverUrl: 'https://picsum.photos/seed/eb-econ1/300/400', downloadUrl: 'https://www.nigerianstat.gov.ng/' },
       ], 
       journals: [
-        { id: 'j-econ1', title: 'Nigerian Journal of Economic and Social Studies', publisher: 'Nigerian Economic Society', issue: 'Vol. 65, No. 1', link: '#' },
+        { id: 'j-econ1', title: 'Nigerian Journal of Economic and Social Studies', publisher: 'Nigerian Economic Society', issue: 'Vol. 65, No. 1', link: 'https://scholar.google.com/scholar?q=%22Nigerian+Journal+of+Economic+and+Social+Studies%22' },
       ]
     },
     get totalTopics() { return this.units.reduce((sum, unit) => sum + unit.totalTopics, 0); },
@@ -2526,10 +2526,10 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-gov1', title: 'Essential Government for SSS', author: 'C.C. Dibie', coverUrl: 'https://picsum.photos/seed/gov-sss1/300/400', downloadUrl: '#' }
+        { id: 'tb-gov1', title: 'Essential Government for SSS', author: 'C.C. Dibie', coverUrl: 'https://picsum.photos/seed/gov-sss1/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=government&standard=sss' }
       ], 
       ebooks: [
-        { id: 'eb-gov1', title: 'The Story of Nigeria', author: 'Lekan Agunbiade', description: 'A historical account of Nigeria\'s journey to democracy.', coverUrl: 'https://picsum.photos/seed/eb-gov1/300/400', downloadUrl: '#' },
+        { id: 'eb-gov1', title: 'The Story of Nigeria', author: 'Lekan Agunbiade', description: 'A historical account of Nigeria\'s journey to democracy.', coverUrl: 'https://picsum.photos/seed/eb-gov1/300/400', downloadUrl: 'https://www.bbc.com/news/world-africa-13982161' },
       ], 
       journals: [] 
     },
@@ -2647,10 +2647,10 @@ export const subjects: Subject[] = [
     ],
     resources: { 
       textbooks: [
-        { id: 'tb-fm1', title: 'Further Mathematics Project 1-3', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp-all/300/400', downloadUrl: '#' },
+        { id: 'tb-fm1', title: 'Further Mathematics Project 1-3', author: 'L. Harwood Clarke', coverUrl: 'https://picsum.photos/seed/fmp-all/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=further+mathematics&standard=sss' },
       ], 
       ebooks: [
-        { id: 'eb-fm1', title: 'Advanced Problems in Mathematics', author: 'S.T.C. Siklos', description: 'A collection of challenging problems for advanced students.', coverUrl: 'https://picsum.photos/seed/eb-fm1/300/400', downloadUrl: '#' },
+        { id: 'eb-fm1', title: 'Advanced Problems in Mathematics', author: 'S.T.C. Siklos', description: 'A collection of challenging problems for advanced students.', coverUrl: 'https://picsum.photos/seed/eb-fm1/300/400', downloadUrl: 'https://ocw.mit.edu/courses/mathematics/18-01sc-single-variable-calculus-fall-2010/index.htm' },
       ], 
       journals: [] 
     },
@@ -2730,7 +2730,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-scs1', title: 'Computer Studies for SSS', author: 'IT Publishers', coverUrl: 'https://picsum.photos/seed/sss-cs/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-scs1', title: 'Computer Studies for SSS', author: 'IT Publishers', coverUrl: 'https://picsum.photos/seed/sss-cs/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=computer+studies&standard=sss' }],
       ebooks: [],
       journals: []
     },
@@ -2810,7 +2810,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-sce1', title: 'Civic Education for SSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/sss-ce/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-sce1', title: 'Civic Education for SSS', author: 'NERDC', coverUrl: 'https://picsum.photos/seed/sss-ce/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=civic+education&standard=sss' }],
       ebooks: [],
       journals: []
     },
@@ -2848,7 +2848,7 @@ export const subjects: Subject[] = [
       }
     ],
     resources: {
-      textbooks: [{ id: 'tb-sha1', title: 'Zaman Hausa: Littafin Karatu', author: 'NNPC', coverUrl: 'https://picsum.photos/seed/sss-hausa/300/400', downloadUrl: '#' }],
+      textbooks: [{ id: 'tb-sha1', title: 'Zaman Hausa: Littafin Karatu', author: 'NNPC', coverUrl: 'https://picsum.photos/seed/sss-hausa/300/400', downloadUrl: 'https://oer.gov.ng/resource/search/?q=hausa&standard=sss' }],
       ebooks: [],
       journals: []
     },

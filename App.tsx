@@ -19,12 +19,13 @@ import StudyGroups from './components/StudyGroups';
 import GroupDetail from './components/GroupDetail';
 import ELibrary from './components/ELibrary';
 import CBT_Center from './components/CBT_Center';
+import TermsAndConditions from './components/TermsAndConditions';
 import { getAssessmentById } from './data/assessments';
 import { getCourseworkById } from './coursework';
 import Layout from './components/Layout';
 import AiAssistant from './components/AiAssistant';
 
-type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary' | 'cbtCenter';
+type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary' | 'cbtCenter' | 'terms';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('landing');
@@ -211,6 +212,7 @@ const App: React.FC = () => {
   const handleEnterTeacherDashboard = () => setView('teacherDashboard');
   const handleEnterGeneralKnowledge = () => setView('generalKnowledge');
   const handleEnterCbtCenter = () => setView('cbtCenter');
+  const handleNavigateToTerms = () => setView('terms');
 
   const handleSubjectSelect = (subject: Subject) => {
     setSelectedSubject(subject);
@@ -281,6 +283,8 @@ const App: React.FC = () => {
     const gkSubject = subjects.find(s => s.level === 'General');
 
     switch (view) {
+      case 'terms':
+        return <TermsAndConditions onBack={() => setView('landing')} />;
       case 'cbtCenter':
         return <CBT_Center />;
       case 'eLibrary':
@@ -323,7 +327,7 @@ const App: React.FC = () => {
           return <TeacherDashboard subjects={subjects} />;
       case 'landing':
       default:
-        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} onEnterCbtCenter={handleEnterCbtCenter} />;
+        return <LandingPage onEnterDashboard={handleEnterStudentDashboard} onEnterTeacherDashboard={handleEnterTeacherDashboard} onEnterGeneralKnowledge={handleEnterGeneralKnowledge} onEnterCbtCenter={handleEnterCbtCenter} onNavigateToTerms={handleNavigateToTerms} />;
     }
   };
 

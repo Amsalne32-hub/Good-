@@ -5,7 +5,7 @@ export const cbtQuestionBank: CBT_Question[] = [
     // JUNIOR SCHOOL (NECO BECE)
     // ===================================
 
-    // JSS Mathematics (Over 100 questions)
+    // JSS Mathematics (200 questions)
     {
         id: 'jss-math-q1',
         subjectId: 'jss-math',
@@ -186,7 +186,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 3,
         explanation: '5² means 5 multiplied by itself (5 × 5), which equals 25.'
     },
-    ...Array.from({ length: 85 }, (_, i) => ({
+    ...Array.from({ length: 180 }, (_, i) => ({
         id: `jss-math-q${21 + i}`,
         subjectId: 'jss-math',
         standard: 'NECO_BECE',
@@ -197,7 +197,7 @@ export const cbtQuestionBank: CBT_Question[] = [
     })),
 
 
-    // JSS English (Over 100 questions)
+    // JSS English (200 questions)
     {
         id: 'jss-eng-q1',
         subjectId: 'jss-english',
@@ -315,7 +315,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 0,
         explanation: 'The infinitive of purpose "to" is used to explain why we do something.'
     },
-    ...Array.from({ length: 90 }, (_, i) => ({
+    ...Array.from({ length: 187 }, (_, i) => ({
         id: `jss-eng-q${14 + i}`,
         subjectId: 'jss-english',
         standard: 'NECO_BECE',
@@ -325,7 +325,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated english question.'
     })),
 
-    // JSS Basic Science & Technology (BST) (Over 100 questions)
+    // JSS Basic Science & Technology (BST) (200 questions)
     {
         id: 'jss-bst-q1',
         subjectId: 'jss-bst',
@@ -434,7 +434,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: 'The keyboard is the primary input device used to type text and commands into a computer.'
     },
-     ...Array.from({ length: 90 }, (_, i) => ({
+     ...Array.from({ length: 188 }, (_, i) => ({
         id: `jss-bst-q${13 + i}`,
         subjectId: 'jss-bst',
         standard: 'NECO_BECE',
@@ -443,12 +443,133 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 0,
         explanation: 'This is a placeholder explanation for a generated BST question.'
     })),
+
+    // JSS National Values Education (NVE) (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-nve-q${1 + i}`,
+        subjectId: 'jss-nve',
+        standard: 'NECO_BECE',
+        question: `Generated NVE Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated NVE question.'
+    })),
+
+    // JSS Pre-Vocational Studies (PVS) (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-pvs-q${1 + i}`,
+        subjectId: 'jss-pvs',
+        standard: 'NECO_BECE',
+        question: `Generated PVS Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated PVS question.'
+    })),
+
+    // JSS Business Studies (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-business-q${1 + i}`,
+        subjectId: 'jss-business',
+        standard: 'NECO_BECE',
+        question: `Generated Business Studies Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Business Studies question.'
+    })),
+
+    // JSS Cultural & Creative Arts (CCA) (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-cca-q${1 + i}`,
+        subjectId: 'jss-cca',
+        standard: 'NECO_BECE',
+        question: `Generated CCA Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated CCA question.'
+    })),
+
+    // JSS Christian Religious Studies (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-crs-q${1 + i}`,
+        subjectId: 'jss-crs',
+        standard: 'NECO_BECE',
+        question: `Generated CRS Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated CRS question.'
+    })),
+
+    // JSS Islamic Religious Studies (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-irs-q${1 + i}`,
+        subjectId: 'jss-irs',
+        standard: 'NECO_BECE',
+        question: `Generated IRS Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated IRS question.'
+    })),
+
+    // JSS Hausa Language (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-hausa-q${1 + i}`,
+        subjectId: 'jss-hausa',
+        standard: 'NECO_BECE',
+        question: `Generated Hausa Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Hausa question.'
+    })),
+
+    // JSS Igbo Language (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-igbo-q${1 + i}`,
+        subjectId: 'jss-igbo',
+        standard: 'NECO_BECE',
+        question: `Generated Igbo Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Igbo question.'
+    })),
+
+    // JSS Yoruba Language (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-yoruba-q${1 + i}`,
+        subjectId: 'jss-yoruba',
+        standard: 'NECO_BECE',
+        question: `Generated Yoruba Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Yoruba question.'
+    })),
+
+    // JSS French Language (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-french-q${1 + i}`,
+        subjectId: 'jss-french',
+        standard: 'NECO_BECE',
+        question: `Generated French Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated French question.'
+    })),
+
+    // JSS Arabic Language (105 questions)
+    ...Array.from({ length: 105 }, (_, i) => ({
+        id: `jss-arabic-q${1 + i}`,
+        subjectId: 'jss-arabic',
+        standard: 'NECO_BECE',
+        question: `Generated Arabic Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Arabic question.'
+    })),
     
     // ===================================
     // SENIOR SCHOOL (WAEC / NECO)
     // ===================================
 
-    // SSS Physics (Over 100 questions)
+    // SSS Physics (250 questions)
     {
         id: 'sss-phy-q1',
         subjectId: 'sss-physics',
@@ -467,7 +588,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Acceleration (a) = (Final velocity (v) - Initial velocity (u)) / time (t). a = (20 - 0) / 5 = 4 m/s²."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 248 }, (_, i) => ({
         id: `sss-phy-q${3 + i}`,
         subjectId: 'sss-physics',
         standard: 'WAEC',
@@ -477,7 +598,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated physics question.'
     })),
 
-    // SSS Chemistry (Over 100 questions)
+    // SSS Chemistry (250 questions)
     {
         id: 'sss-chem-q1',
         subjectId: 'sss-chemistry',
@@ -496,7 +617,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: "Methane (CH₄) is the simplest alkane, a saturated hydrocarbon with the general formula CnH2n+2."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 248 }, (_, i) => ({
         id: `sss-chem-q${3 + i}`,
         subjectId: 'sss-chemistry',
         standard: 'WAEC',
@@ -506,7 +627,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated chemistry question.'
     })),
 
-    // SSS Biology (Over 100 questions)
+    // SSS Biology (250 questions)
     {
         id: 'sss-bio-q1',
         subjectId: 'sss-biology',
@@ -525,7 +646,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: "The leaf contains chlorophyll, the pigment that captures light energy, making it the primary site of photosynthesis."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 248 }, (_, i) => ({
         id: `sss-bio-q${3 + i}`,
         subjectId: 'sss-biology',
         standard: 'WAEC',
@@ -535,7 +656,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated biology question.'
     })),
 
-    // SSS English (Over 100 questions)
+    // SSS English (300 questions)
     {
         id: 'sss-eng-q1',
         subjectId: 'sss-english',
@@ -554,7 +675,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "The idiom 'turn over a new leaf' means to start behaving in a better way."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 298 }, (_, i) => ({
         id: `sss-eng-q${3 + i}`,
         subjectId: 'sss-english',
         standard: 'WAEC',
@@ -564,7 +685,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated SSS English question.'
     })),
 
-    // SSS Economics (Over 100 questions)
+    // SSS Economics (200 questions)
     {
         id: 'sss-econ-q1',
         subjectId: 'sss-economics',
@@ -574,7 +695,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Effective demand in economics requires not only the desire for a product but also the purchasing power to acquire it."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 199 }, (_, i) => ({
         id: `sss-econ-q${2 + i}`,
         subjectId: 'sss-economics',
         standard: 'WAEC',
@@ -584,7 +705,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated economics question.'
     })),
 
-    // SSS Government (Over 100 questions)
+    // SSS Government (200 questions)
     {
         id: 'sss-gov-q1',
         subjectId: 'sss-government',
@@ -594,7 +715,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: "In a Parliamentary system (like the UK), the Prime Minister is the Head of Government, while the Monarch or a ceremonial President is the Head of State."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 199 }, (_, i) => ({
         id: `sss-gov-q${2 + i}`,
         subjectId: 'sss-government',
         standard: 'WAEC',
@@ -604,11 +725,132 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated government question.'
     })),
     
+    // SSS Mathematics (300 questions)
+    ...Array.from({ length: 300 }, (_, i) => ({
+        id: `sss-math-q${1 + i}`,
+        subjectId: 'sss-math',
+        standard: 'WAEC',
+        question: `Generated SSS Math Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated SSS Math question.'
+    })),
+
+    // SSS Civic Education (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-civic-q${1 + i}`,
+        subjectId: 'sss-civic',
+        standard: 'WAEC',
+        question: `Generated Civic Education Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Civic Education question.'
+    })),
+
+    // SSS Marketing (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-marketing-q${1 + i}`,
+        subjectId: 'sss-marketing',
+        standard: 'WAEC',
+        question: `Generated Marketing Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Marketing question.'
+    })),
+
+    // SSS Further Mathematics (200 questions)
+    ...Array.from({ length: 200 }, (_, i) => ({
+        id: `sss-further-maths-q${1 + i}`,
+        subjectId: 'sss-further-maths',
+        standard: 'WAEC',
+        question: `Generated Further Maths Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Further Maths question.'
+    })),
+
+    // SSS Agricultural Science (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-agric-q${1 + i}`,
+        subjectId: 'sss-agric',
+        standard: 'WAEC',
+        question: `Generated Agric Science Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Agric Science question.'
+    })),
+
+    // SSS Literature in English (200 questions)
+    ...Array.from({ length: 200 }, (_, i) => ({
+        id: `sss-literature-q${1 + i}`,
+        subjectId: 'sss-literature',
+        standard: 'WAEC',
+        question: `Generated Literature Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Literature question.'
+    })),
+
+    // SSS Financial Accounting (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-accounting-q${1 + i}`,
+        subjectId: 'sss-accounting',
+        standard: 'WAEC',
+        question: `Generated Accounting Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Accounting question.'
+    })),
+
+    // SSS Commerce (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-commerce-q${1 + i}`,
+        subjectId: 'sss-commerce',
+        standard: 'WAEC',
+        question: `Generated Commerce Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Commerce question.'
+    })),
+
+    // SSS Technical Drawing (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-tech-drawing-q${1 + i}`,
+        subjectId: 'sss-tech-drawing',
+        standard: 'WAEC',
+        question: `Generated Tech Drawing Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated Tech Drawing question.'
+    })),
+
+    // SSS Christian Religious Studies (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-crs-q${1 + i}`,
+        subjectId: 'sss-crs',
+        standard: 'WAEC',
+        question: `Generated CRS Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated CRS question.'
+    })),
+
+    // SSS Islamic Religious Studies (150 questions)
+    ...Array.from({ length: 150 }, (_, i) => ({
+        id: `sss-irs-q${1 + i}`,
+        subjectId: 'sss-irs',
+        standard: 'WAEC',
+        question: `Generated IRS Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated IRS question.'
+    })),
+
     // ===================================
     // JAMB UTME
     // ===================================
 
-    // JAMB Use of English (Over 300 questions)
+    // JAMB Use of English (500 questions)
     {
         id: 'jamb-eng-q1',
         subjectId: 'jamb-english',
@@ -690,7 +932,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: 'A deputy is a person appointed to undertake the duties of a superior in the superior\'s absence.'
     },
-    ...Array.from({ length: 300 }, (_, i) => ({
+    ...Array.from({ length: 491 }, (_, i) => ({
         id: `jamb-eng-q${10 + i}`,
         subjectId: 'jamb-english',
         standard: 'JAMB_UTME',
@@ -700,7 +942,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated Use of English question.'
     })),
 
-    // JAMB Mathematics (Over 100 questions)
+    // JAMB Mathematics (400 questions)
     {
         id: 'jamb-math-q1',
         subjectId: 'jamb-math',
@@ -710,7 +952,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Using the power rule for differentiation (d/dx(xⁿ) = nxⁿ⁻¹), the derivative is 2(3x²) + 4(2x) - 2(1) + 0 = 6x² + 8x - 2."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 399 }, (_, i) => ({
         id: `jamb-math-q${2 + i}`,
         subjectId: 'jamb-math',
         standard: 'JAMB_UTME',
@@ -720,7 +962,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Math question.'
     })),
 
-    // JAMB Physics (Over 100 questions)
+    // JAMB Physics (350 questions)
     {
         id: 'jamb-phy-q1',
         subjectId: 'jamb-physics',
@@ -730,7 +972,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: "Kinetic Energy (KE) = ½ * mass * velocity². KE = 0.5 * 5 * (10)² = 0.5 * 5 * 100 = 250 Joules."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 349 }, (_, i) => ({
         id: `jamb-phy-q${2 + i}`,
         subjectId: 'jamb-physics',
         standard: 'JAMB_UTME',
@@ -740,7 +982,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Physics question.'
     })),
 
-    // JAMB Chemistry (Over 100 questions)
+    // JAMB Chemistry (350 questions)
     {
         id: 'jamb-chem-q1',
         subjectId: 'jamb-chemistry',
@@ -750,7 +992,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Molar mass of NaOH = 23 + 16 + 1 = 40 g/mol. Moles = Mass / Molar mass = 40g / 40 g/mol = 1.0 mole."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 349 }, (_, i) => ({
         id: `jamb-chem-q${2 + i}`,
         subjectId: 'jamb-chemistry',
         standard: 'JAMB_UTME',
@@ -760,7 +1002,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Chemistry question.'
     })),
     
-    // JAMB Biology (Over 100 questions)
+    // JAMB Biology (350 questions)
     {
         id: 'jamb-bio-q1',
         subjectId: 'jamb-biology',
@@ -770,7 +1012,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Charles Darwin outlined his theory of evolution by natural selection in his 1859 book 'On the Origin of Species'."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 349 }, (_, i) => ({
         id: `jamb-bio-q${2 + i}`,
         subjectId: 'jamb-biology',
         standard: 'JAMB_UTME',
@@ -780,7 +1022,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Biology question.'
     })),
 
-    // JAMB Government (Over 100 questions)
+    // JAMB Government (300 questions)
     {
         id: 'jamb-gov-q1',
         subjectId: 'jamb-government',
@@ -790,7 +1032,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 3,
         explanation: "Africa has been the centrepiece of Nigeria's foreign policy since independence, focusing on peace, stability, and economic development on the continent."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-gov-q${2 + i}`,
         subjectId: 'jamb-government',
         standard: 'JAMB_UTME',
@@ -800,7 +1042,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Government question.'
     })),
 
-    // JAMB CRK (Over 100 questions)
+    // JAMB CRK (300 questions)
     {
         id: 'jamb-crk-q1',
         subjectId: 'jamb-crk',
@@ -810,7 +1052,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Golgotha, also known as Calvary, is the site immediately outside Jerusalem's walls where Jesus was crucified."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-crk-q${2 + i}`,
         subjectId: 'jamb-crk',
         standard: 'JAMB_UTME',
@@ -820,7 +1062,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB CRK question.'
     })),
 
-    // JAMB Geography (Over 100 questions)
+    // JAMB Geography (300 questions)
     {
         id: 'jamb-geo-q1',
         subjectId: 'jamb-geography',
@@ -830,7 +1072,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "The River Niger is the principal river of West Africa and the longest and largest river in Nigeria."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-geo-q${2 + i}`,
         subjectId: 'jamb-geography',
         standard: 'JAMB_UTME',
@@ -840,7 +1082,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Geography question.'
     })),
 
-    // JAMB History (Over 100 questions)
+    // JAMB History (300 questions)
     {
         id: 'jamb-hist-q1',
         subjectId: 'jamb-history',
@@ -850,7 +1092,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Lord Frederick Lugard amalgamated the two protectorates in 1914 to form the single colony of Nigeria."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-hist-q${2 + i}`,
         subjectId: 'jamb-history',
         standard: 'JAMB_UTME',
@@ -860,7 +1102,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB History question.'
     })),
 
-    // JAMB Economics (Over 100 questions)
+    // JAMB Economics (300 questions)
     {
         id: 'jamb-econ-q1',
         subjectId: 'jamb-economics',
@@ -870,7 +1112,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 1,
         explanation: "Macroeconomics studies the behavior and performance of an economy as a whole."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-econ-q${2 + i}`,
         subjectId: 'jamb-economics',
         standard: 'JAMB_UTME',
@@ -880,7 +1122,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         explanation: 'This is a placeholder explanation for a generated JAMB Economics question.'
     })),
     
-    // JAMB Literature (Over 100 questions)
+    // JAMB Literature (300 questions)
     {
         id: 'jamb-lit-q1',
         subjectId: 'jamb-literature',
@@ -890,7 +1132,7 @@ export const cbtQuestionBank: CBT_Question[] = [
         correctAnswer: 2,
         explanation: "A monologue is a speech delivered by one person to an audience, while a soliloquy is when a character speaks their thoughts aloud, usually alone."
     },
-    ...Array.from({ length: 100 }, (_, i) => ({
+    ...Array.from({ length: 299 }, (_, i) => ({
         id: `jamb-lit-q${2 + i}`,
         subjectId: 'jamb-literature',
         standard: 'JAMB_UTME',
@@ -898,5 +1140,16 @@ export const cbtQuestionBank: CBT_Question[] = [
         options: ['Option A', 'Option B', 'Option C', 'Option D'],
         correctAnswer: 0,
         explanation: 'This is a placeholder explanation for a generated JAMB Literature question.'
+    })),
+
+    // JAMB Islamic Religious Knowledge (300 questions)
+    ...Array.from({ length: 300 }, (_, i) => ({
+        id: `jamb-irk-q${1 + i}`,
+        subjectId: 'jamb-irk',
+        standard: 'JAMB_UTME',
+        question: `Generated JAMB IRK Question ${i + 1}`,
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        correctAnswer: 0,
+        explanation: 'This is a placeholder explanation for a generated JAMB IRK question.'
     }))
 ];
