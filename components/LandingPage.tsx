@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Button } from './ui/Button';
-import { Card, CardContent } from './ui/Card';
+import { Card, CardContent } from '../data/Card';
 import { BookOpen, Target, Film } from 'lucide-react';
 import Footer from './Footer';
 

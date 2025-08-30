@@ -1,13 +1,14 @@
+
 import React, { useState, useMemo } from 'react';
 import { subjects as initialSubjects } from '../data/subjects';
 import { classData } from '../data/classData';
 import { getTeacherResourcesBySubject } from '../data/teacherResources';
 import type { Subject, GeneratedQuestion, SchemeOfWork, LessonPlan, LessonNote } from '../types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
-import { Button } from './ui/Button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './Card';
+import { Button } from '../components/ui/Button';
 import { Wand2, Loader, Lightbulb, BookCopy, FileText, ClipboardCheck, Edit, User, BarChart, AlertTriangle, Trophy, ChevronDown, Calendar, Users as UsersIcon } from 'lucide-react';
 import { GoogleGenAI, Type } from '@google/genai';
-import ProgressBar from './ui/ProgressBar';
+import ProgressBar from '../components/ui/ProgressBar';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 

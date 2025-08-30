@@ -1,7 +1,8 @@
+
 import React, { useState, useCallback } from 'react';
 import type { Coursework } from '../types';
 import { Button } from './ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../data/Card';
 import { ChevronLeft, UploadCloud, CheckCircle } from 'lucide-react';
 
 interface CourseworkProps {

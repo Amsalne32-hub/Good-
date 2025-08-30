@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Subject, Topic, StudentProfile } from '../types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../data/Card';
 import ProgressBar from './ui/ProgressBar';
 import { Award, Bot, ChevronRight, Compass, Star, Trophy, TrendingUp, BookMarked, ClipboardCheck } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';

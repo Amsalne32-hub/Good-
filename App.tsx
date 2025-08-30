@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup, Flashcard } from './types';
 import { subjects as initialSubjects } from './data/subjects';
@@ -9,7 +10,7 @@ import SubjectsDashboard from './components/Dashboard';
 import SubjectDetail from './components/SubjectDetail';
 import AssessmentComponent from './components/Assessment';
 import CourseworkComponent from './components/Coursework';
-import TeacherDashboard from './components/TeacherDashboard';
+import TeacherDashboard from './data/TeacherDashboard';
 import GeneralKnowledge from './components/GeneralKnowledge';
 import Store from './components/Store';
 import Profile from './components/Profile';

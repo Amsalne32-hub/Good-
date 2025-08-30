@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Assessment, Question } from '../types';
 import { Button } from './ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../data/Card';
 import ProgressBar from './ui/ProgressBar';
 import { CheckCircle, XCircle, Clock, ChevronLeft } from 'lucide-react';
 

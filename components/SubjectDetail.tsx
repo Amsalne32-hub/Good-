@@ -1,11 +1,10 @@
 
 import React, { useState, useMemo } from 'react';
-import type { Subject, Unit, Module, Topic, GeneratedQuestion, StudyPlan, StudyPlanStep, Flashcard } from '../types';
+import type { Subject, Unit, Module, Topic, GeneratedQuestion, StudyPlan, StudyPlanStep, Flashcard, Textbook, Ebook, Journal } from '../types';
 import { Button } from './ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from './ui/Card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '../data/Card';
 import ProgressBar from './ui/ProgressBar';
-import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote, Brain } from 'lucide-react';
-import Resources from '../data/Resources';
+import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote, Brain, Book, BookMarked, Download, ArrowRight } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';
 import { GoogleGenAI, Type } from '@google/genai';
 import Flashcards from './Flashcards';
@@ -152,10 +151,17 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
   const [activeTab, setActiveTab] = useState<'curriculum' | 'resources' | 'ai-study-room' | 'flashcards'>('curriculum');
   const Icon = subject.icon;
 
-  const subjectProgress = useMemo(() => {
-      const totalTopics = subject.units.reduce((sum, unit) => sum + unit.totalTopics, 0);
-      const completedTopics = subject.units.reduce((sum, unit) => sum + unit.completedTopics, 0);
-      return totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+  const { totalTopics: subjectTotalTopics, completedTopics: subjectCompletedTopics, progress: subjectProgress } = useMemo(() => {
+      let completed = 0;
+      let total = 0;
+      subject.units.forEach(unit => {
+          unit.modules.forEach(module => {
+              total += module.topics.length;
+              completed += module.topics.filter(t => t.completed).length;
+          });
+      });
+      const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+      return { totalTopics: total, completedTopics: completed, progress: progress };
   }, [subject]);
 
 
@@ -347,7 +353,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
             <CardContent className="space-y-4">
                 <div className="flex justify-between items-baseline">
                     <span className="text-5xl font-bold text-primary">{subjectProgress}%</span>
-                    <span className="font-medium text-muted-foreground">{subject.completedTopics} of {subject.totalTopics} topics completed</span>
+                    <span className="font-medium text-muted-foreground">{subjectCompletedTopics} of {subjectTotalTopics} topics completed</span>
                 </div>
                 <ProgressBar value={subjectProgress} className="h-3" />
             </CardContent>
@@ -357,7 +363,10 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
             <h3 className="text-2xl font-bold mb-4">Curriculum Units</h3>
             <div className="space-y-3">
             {subject.units.map((unit) => {
-                const unitProgress = unit.totalTopics > 0 ? Math.round((unit.completedTopics / unit.totalTopics) * 100) : 0;
+                const unitTotalTopics = unit.modules.reduce((sum, mod) => sum + mod.topics.length, 0);
+                const unitCompletedTopics = unit.modules.reduce((sum, mod) => sum + mod.topics.filter(t => t.completed).length, 0);
+                const unitProgress = unitTotalTopics > 0 ? Math.round((unitCompletedTopics / unitTotalTopics) * 100) : 0;
+                
                 return (
                     <Card key={unit.id} className="overflow-hidden">
                         <button onClick={() => toggleUnit(unit.id)} className="w-full text-left">
@@ -369,7 +378,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                             <div className="flex items-center gap-4">
                                 <div className="text-right">
                                     <p className="font-bold text-primary">{unitProgress}%</p>
-                                    <p className="text-xs text-muted-foreground">{unit.completedTopics}/{unit.totalTopics} topics</p>
+                                    <p className="text-xs text-muted-foreground">{unitCompletedTopics}/{unitTotalTopics} topics</p>
                                 </div>
                                 <ChevronDown className={cn("w-6 h-6 text-muted-foreground transition-transform", openUnitId === unit.id && "rotate-180")} />
                             </div>
@@ -377,12 +386,14 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                         </button>
                         {openUnitId === unit.id && (
                             <CardContent className="border-t pt-4 space-y-3">
-                            {unit.modules.map(module => (
+                            {unit.modules.map(module => {
+                                const moduleCompletedTopics = module.topics.filter(t => t.completed).length;
+                                return (
                                 <div key={module.id} className="border rounded-lg overflow-hidden">
                                     <button onClick={() => toggleModule(module.id)} className="w-full text-left p-4 flex items-center justify-between hover:bg-slate-50">
                                         <div>
                                             <h4 className="font-semibold">{module.title}</h4>
-                                            <p className="text-xs text-muted-foreground">{module.completedTopics}/{module.topics.length} topics done</p>
+                                            <p className="text-xs text-muted-foreground">{moduleCompletedTopics}/{module.topics.length} topics done</p>
                                         </div>
                                         <ChevronDown className={cn("w-5 h-5 text-muted-foreground transition-transform", openModuleId === module.id && "rotate-180")} />
                                     </button>
@@ -406,7 +417,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                                         </div>
                                     )}
                                 </div>
-                            ))}
+                            )})}
                             {unit.suggestedChannels && unit.suggestedChannels.length > 0 && (
                                 <div className="mt-6">
                                     <h4 className="font-semibold text-lg mb-3">Recommended Channels</h4>
@@ -440,6 +451,123 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
         </div>
     </div>
   );
+  
+  const renderResources = () => {
+    const [activeResourceTab, setActiveResourceTab] = useState<'textbooks' | 'ebooks' | 'journals'>('textbooks');
+    const { resources } = subject;
+    
+    const tabs = [
+        { id: 'textbooks', label: 'Textbooks', icon: <Book className="w-5 h-5"/> },
+        { id: 'ebooks', label: 'E-Books', icon: <BookMarked className="w-5 h-5"/> },
+        { id: 'journals', label: 'Journals', icon: <FileText className="w-5 h-5"/> },
+    ];
+    
+    const renderResourceContent = () => {
+        switch (activeResourceTab) {
+            case 'textbooks':
+                return resources.textbooks.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {resources.textbooks.map((book: Textbook) => (
+                            <Card key={book.id}>
+                                <img src={book.coverUrl || 'https://picsum.photos/seed/placeholder/300/400'} alt={book.title} className="rounded-t-xl object-cover h-64 w-full bg-slate-200" />
+                                <CardHeader>
+                                    <CardTitle className="text-lg">{book.title}</CardTitle>
+                                    <CardDescription>{book.author}</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "bg-primary text-primary-foreground hover:bg-primary/90", "h-10 px-4 py-2", "w-full")}>
+                                        <Download className="w-4 h-4 mr-2"/> Download
+                                    </a>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                ) : <p className="text-sm text-muted-foreground text-center py-8">No recommended textbooks for this subject.</p>;
+            case 'ebooks':
+                return resources.ebooks.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {resources.ebooks.map((book: Ebook) => (
+                             <Card key={book.id} className="flex">
+                                <img src={book.coverUrl || 'https://picsum.photos/seed/placeholder-ebook/300/400'} alt={book.title} className="rounded-l-xl object-cover h-full w-[33.33%] bg-slate-200" />
+                                <div className="flex flex-col justify-between w-[66.67%]">
+                                    <CardHeader>
+                                        <CardTitle>{book.title}</CardTitle>
+                                        <CardDescription>by {book.author}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-sm text-muted-foreground mb-4">{book.description}</p>
+                                        <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "bg-primary text-primary-foreground hover:bg-primary/90", "h-9 rounded-md px-3")}>
+                                            <Download className="w-4 h-4 mr-2"/> View E-book
+                                        </a>
+                                    </CardContent>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                ) : <p className="text-sm text-muted-foreground text-center py-8">No recommended e-books for this subject.</p>;
+            case 'journals':
+                return resources.journals.length > 0 ? (
+                     <div className="space-y-4">
+                        {resources.journals.map((journal: Journal) => (
+                            <Card key={journal.id} className="flex items-center justify-between p-4">
+                                <div>
+                                    <h3 className="font-semibold">{journal.title}</h3>
+                                    <p className="text-sm text-muted-foreground">{journal.publisher} - {journal.issue}</p>
+                                </div>
+                                <a href={journal.link} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "border border-input bg-background hover:bg-accent hover:text-accent-foreground", "h-10 px-4 py-2")}>
+                                    Read Journal
+                                </a>
+                            </Card>
+                        ))}
+                    </div>
+                ) : <p className="text-sm text-muted-foreground text-center py-8">No recommended journals for this subject.</p>;
+            default: return null;
+        }
+    }
+    
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="text-2xl">Learning Resources</CardTitle>
+                <CardDescription>Supplementary materials to enhance your understanding.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="border-b border-gray-200 mb-6">
+                    <nav className="-mb-px flex space-x-6">
+                        {tabs.map(tab => (
+                             <button
+                                key={tab.id}
+                                onClick={() => setActiveResourceTab(tab.id as any)}
+                                className={cn(
+                                    'py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2',
+                                    activeResourceTab === tab.id
+                                        ? 'border-primary text-primary'
+                                        : 'border-transparent text-muted-foreground hover:text-gray-700 hover:border-gray-300'
+                                )}
+                            >
+                                {tab.icon} {tab.label}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+                
+                <Card className="my-6 bg-primary/10 border-primary/20 text-center sm:text-left">
+                    <div className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <CardTitle className="flex items-center gap-2"><Library className="text-primary"/> Explore the Full E-Library</CardTitle>
+                            <CardDescription className="mt-1">Discover thousands of additional textbooks, e-books, and academic journals.</CardDescription>
+                        </div>
+                        <Button onClick={() => onNavigate('eLibrary')}>
+                            Go to E-Library <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                    </div>
+                </Card>
+                
+                <div>{renderResourceContent()}</div>
+            </CardContent>
+        </Card>
+    );
+};
   
   const renderAiStudyRoom = () => {
     
@@ -723,7 +851,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
       
       <div>
         {activeTab === 'curriculum' && renderCurriculum()}
-        {activeTab === 'resources' && <Resources resources={subject.resources} subjectTitle={subject.title} onNavigate={onNavigate} />}
+        {activeTab === 'resources' && renderResources()}
         {activeTab === 'ai-study-room' && renderAiStudyRoom()}
         {activeTab === 'flashcards' && renderFlashcards()}
       </div>

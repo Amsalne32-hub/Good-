@@ -1,8 +1,9 @@
+
 import React from 'react';
 import type { StudentProfile } from '../types';
 import { getAchievementById, achievementsData } from '../data/achievements';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import ProgressBar from '../data/ProgressBar'; // Corrected path
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../data/Card';
+import ProgressBar from './ui/ProgressBar';
 import { Award, Star } from 'lucide-react';
 
 interface ProfileProps {
