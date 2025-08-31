@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
-import type { Unit, Flashcard } from '../types';
-import { Button } from './ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
+import type { Unit, Flashcard } from '../../types';
+import { Button } from './Button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../data/Card';
 import { Wand2, Loader, ArrowLeft, ArrowRight, Shuffle, Brain } from 'lucide-react';
 import { GoogleGenAI, Type } from '@google/genai';
 

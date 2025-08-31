@@ -1,15 +1,17 @@
+
 import React, { useState, useMemo } from 'react';
 import type { Subject, CareerPathway } from '../types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
-import { Button } from './ui/Button';
-import { Compass, Loader, Wand2, Briefcase, Wrench, GraduationCap, UserCheck } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './Card';
+import { Button } from '../components/ui/Button';
+import { Compass, Loader, Wand2, Briefcase, Wrench, GraduationCap, UserCheck, ChevronLeft } from 'lucide-react';
 import { GoogleGenAI, Type } from '@google/genai';
 
 interface CareerCompassProps {
   subjects: Subject[];
+  onBack: () => void;
 }
 
-const CareerCompass: React.FC<CareerCompassProps> = ({ subjects }) => {
+const CareerCompass: React.FC<CareerCompassProps> = ({ subjects, onBack }) => {
     const [selectedSubjectId, setSelectedSubjectId] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -89,10 +91,17 @@ Ensure all text uses simple language and contains no special formatting characte
 
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <header className="mb-8 text-center">
-                <Compass className="w-16 h-16 mx-auto text-primary" />
-                <h1 className="text-4xl font-bold text-gray-800 mt-4">Career Compass</h1>
-                <p className="text-muted-foreground mt-1 max-w-2xl mx-auto">Discover your future! Select a subject you're passionate about to explore related career opportunities in Nigeria.</p>
+            <header className="mb-8 relative">
+                <div className="absolute top-0 left-0">
+                    <Button variant="ghost" onClick={onBack}>
+                        <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+                    </Button>
+                </div>
+                <div className="text-center">
+                    <Compass className="w-16 h-16 mx-auto text-primary" />
+                    <h1 className="text-4xl font-bold text-gray-800 mt-4">Career Compass</h1>
+                    <p className="text-muted-foreground mt-1 max-w-2xl mx-auto">Discover your future! Select a subject you're passionate about to explore related career opportunities in Nigeria.</p>
+                </div>
             </header>
 
             <Card className="max-w-2xl mx-auto">

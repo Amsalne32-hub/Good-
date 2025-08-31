@@ -1,9 +1,10 @@
+
 import React from 'react';
 import type { StudentProfile, StoreItem } from '../types';
-import { storeItems } from '../data/storeItems';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { Button } from './ui/Button';
-import { Star, CheckCircle, Palette } from 'lucide-react';
+import { storeItems } from './storeItems';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './Card';
+import { Button } from '../components/ui/Button';
+import { Star, CheckCircle, Palette, ChevronLeft } from 'lucide-react';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
@@ -55,13 +56,19 @@ interface StoreProps {
     studentProfile: StudentProfile;
     onPurchase: (item: StoreItem) => void;
     onEquip: (item: StoreItem) => void;
+    onBack: () => void;
 }
 
-const Store: React.FC<StoreProps> = ({ studentProfile, onPurchase, onEquip }) => {
+const Store: React.FC<StoreProps> = ({ studentProfile, onPurchase, onEquip, onBack }) => {
     const themes = storeItems.filter(item => item.type === 'theme');
 
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-left">
+                <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4">
+                    <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+                </Button>
+            </div>
             <header className="mb-8 flex justify-between items-center">
                 <div>
                     <h1 className="text-4xl font-bold text-gray-800">Student Store</h1>

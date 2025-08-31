@@ -1,9 +1,8 @@
 
-
 import React, { useState } from 'react';
-import type { SubjectResources } from '../types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { Button, buttonVariants } from '../components/ui/Button';
+import type { SubjectResources } from './types';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './data/Card';
+import { Button, buttonVariants } from './components/ui/Button';
 import { Book, Download, Library, FileText, BookMarked, ArrowRight } from 'lucide-react';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');

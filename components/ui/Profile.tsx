@@ -1,13 +1,15 @@
 
 import React from 'react';
-import type { StudentProfile } from '../types';
-import { getAchievementById, achievementsData } from '../data/achievements';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../data/Card';
-import ProgressBar from './ui/ProgressBar';
-import { Award, Star } from 'lucide-react';
+import type { StudentProfile } from '../../types';
+import { getAchievementById, achievementsData } from '../../data/achievements';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../data/Card';
+import ProgressBar from './ProgressBar';
+import { Award, Star, ChevronLeft } from 'lucide-react';
+import { Button } from './Button';
 
 interface ProfileProps {
   profile: StudentProfile;
+  onBack: () => void;
 }
 
 const levelTitles: { [key: number]: string } = {
@@ -18,7 +20,7 @@ const levelTitles: { [key: number]: string } = {
     5: "Level 5 Sage",
 };
 
-const Profile: React.FC<ProfileProps> = ({ profile }) => {
+const Profile: React.FC<ProfileProps> = ({ profile, onBack }) => {
     const xpForNextLevel = profile.level * 100;
     const currentLevelTitle = levelTitles[profile.level] || `Level ${profile.level} Master`;
 
@@ -28,6 +30,9 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <header className="mb-8">
+                <Button variant="ghost" onClick={onBack} className="mb-2 -ml-4">
+                    <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+                </Button>
                 <h1 className="text-4xl font-bold text-gray-800">{profile.name}</h1>
                 <p className="text-xl text-primary font-semibold">{currentLevelTitle}</p>
             </header>

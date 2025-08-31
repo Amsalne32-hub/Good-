@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../data/Card';
 import { Button } from './ui/Button';
 import { ChevronLeft } from 'lucide-react';
 

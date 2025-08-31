@@ -1,8 +1,9 @@
+
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import type { CBT_Category, CBT_Subject, CBT_Question, CBT_TestConfig, CBT_Result, CBT_HistoryItem } from '../types';
 import { cbtCategories } from '../data/cbtSubjects';
 import { cbtQuestionBank } from '../data/cbtQuestions';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../data/Card';
 import { Button } from './ui/Button';
 import { ChevronLeft, Check, X, Clock, CheckCircle, Trophy, School, Book, GraduationCap, BarChart, History, XCircle } from 'lucide-react';
 import ProgressBar from './ui/ProgressBar';
@@ -263,7 +264,13 @@ const CBT_Test: React.FC<{ config: CBT_TestConfig; questions: CBT_Question[]; on
                             {questions.map((q, index) => (
                                 <Button
                                     key={q.id}
-                                    variant={currentQIndex === index ? 'default' : answers.hasOwnProperty(q.id) ? 'secondary' : 'outline'}
+                                    variant={
+                                        currentQIndex === index
+                                            ? 'default'
+                                            : answers[q.id] !== undefined && answers[q.id] !== null
+                                            ? 'secondary'
+                                            : 'outline'
+                                    }
                                     size="icon"
                                     onClick={() => setCurrentQIndex(index)}
                                     className="h-10 w-10"
@@ -275,75 +282,82 @@ const CBT_Test: React.FC<{ config: CBT_TestConfig; questions: CBT_Question[]; on
                     </Card>
                 </div>
             </main>
-            <footer className="mt-6 flex justify-between">
+            <footer className="mt-8 flex justify-between items-center">
                 <Button variant="outline" onClick={() => setCurrentQIndex(p => Math.max(0, p - 1))} disabled={currentQIndex === 0}>Previous</Button>
-                {currentQIndex === questions.length - 1 ? <Button onClick={handleSubmit} className="bg-green-600 hover:bg-green-700">Submit Test</Button> : <Button onClick={() => setCurrentQIndex(p => Math.min(questions.length - 1, p + 1))}>Next</Button>}
+                {currentQIndex === questions.length - 1 ? (
+                    <Button onClick={handleSubmit} size="lg" className="bg-success hover:bg-success/90">Submit Test</Button>
+                ) : (
+                    <Button onClick={() => setCurrentQIndex(p => Math.min(questions.length - 1, p + 1))}>Next</Button>
+                )}
             </footer>
         </div>
     );
 };
 
-const CBT_Result: React.FC<{ result: CBT_Result; onRestart: () => void; }> = ({ result, onRestart }) => {
+const CBT_Results: React.FC<{ result: CBT_Result; onRestart: () => void; onBack: () => void; }> = ({ result, onRestart, onBack }) => {
+    const passed = result.score >= 50;
     return (
-        <div>
-            <div className="text-center">
-                <CheckCircle className="w-20 h-20 mx-auto text-success" />
-                <h1 className="text-4xl font-bold mt-4">Test Complete!</h1>
-                <p className="text-muted-foreground">Here's how you performed.</p>
-            </div>
-            <Card className="mt-8">
-                <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 text-center">
-                    <div><p className="text-3xl font-bold text-primary">{result.score}%</p><p className="text-sm text-muted-foreground">Score</p></div>
-                    <div><p className="text-3xl font-bold">{result.correctAnswers}/{result.totalQuestions}</p><p className="text-sm text-muted-foreground">Correct</p></div>
-                    <div><p className="text-3xl font-bold">{result.totalQuestions - result.correctAnswers}</p><p className="text-sm text-muted-foreground">Incorrect</p></div>
-                    <div><p className="text-3xl font-bold">{Math.floor(result.timeTaken / 60)}m {result.timeTaken % 60}s</p><p className="text-sm text-muted-foreground">Time Taken</p></div>
+       <div>
+            <Button variant="ghost" onClick={onBack} className="mb-4"><ChevronLeft className="w-4 h-4 mr-2" /> Back to Dashboard</Button>
+            <Card className="text-center">
+                 <CardHeader>
+                    <div className={cn("mx-auto flex h-20 w-20 items-center justify-center rounded-full", passed ? "bg-success/20" : "bg-destructive/20")}>
+                        {passed ? <CheckCircle className="h-12 w-12 text-success" /> : <XCircle className="h-12 w-12 text-destructive" />}
+                    </div>
+                    <CardTitle className="text-3xl mt-4">Test Complete!</CardTitle>
+                    <CardDescription>Here's your performance breakdown.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+                        <div><p className={cn("text-4xl font-bold", passed ? "text-success" : "text-destructive")}>{result.score}%</p><p className="text-sm text-muted-foreground">Your Score</p></div>
+                        <div><p className="text-4xl font-bold">{result.correctAnswers}/{result.totalQuestions}</p><p className="text-sm text-muted-foreground">Correct</p></div>
+                        <div><p className="text-4xl font-bold">{result.totalQuestions - result.correctAnswers}</p><p className="text-sm text-muted-foreground">Incorrect</p></div>
+                        <div><p className="text-4xl font-bold">{Math.floor(result.timeTaken / 60)}m {result.timeTaken % 60}s</p><p className="text-sm text-muted-foreground">Time Taken</p></div>
+                    </div>
+                     <div className="flex justify-center gap-4 mb-8">
+                        <Button variant="outline" onClick={onBack}>Dashboard</Button>
+                        <Button onClick={onRestart}>Take Another Test</Button>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Review Your Answers</h3>
+                        <div className="space-y-4 text-left max-h-96 overflow-y-auto pr-2">
+                            {result.questions.map((q, index) => {
+                                const userAnswerIndex = result.userAnswers[q.id];
+                                const isCorrect = userAnswerIndex === q.correctAnswer;
+                                return (
+                                    <div key={q.id} className="p-4 border rounded-lg bg-slate-50">
+                                        <div className="flex justify-between items-start">
+                                            <p className="font-semibold">{index + 1}. {q.question}</p>
+                                            {isCorrect ? <Check className="w-5 h-5 text-success flex-shrink-0 ml-2"/> : <X className="w-5 h-5 text-destructive flex-shrink-0 ml-2"/>}
+                                        </div>
+                                        <div className="mt-2 space-y-1 text-sm">
+                                            {q.options.map((opt, i) => (
+                                                <p key={i} className={cn(
+                                                    "p-1 rounded",
+                                                    i === q.correctAnswer && "bg-success/20 text-success-foreground font-semibold",
+                                                    i === userAnswerIndex && !isCorrect && "bg-destructive/20 text-destructive-foreground line-through"
+                                                )}>{opt}</p>
+                                            ))}
+                                        </div>
+                                        {!isCorrect && <p className="text-xs mt-2 p-2 bg-slate-100 rounded"><strong>Explanation:</strong> {q.explanation}</p>}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
                 </CardContent>
             </Card>
-             <div className="mt-6">
-                <h3 className="text-2xl font-semibold mb-4">Results Checker</h3>
-                <Card>
-                    <CardContent className="p-4 max-h-[40rem] overflow-y-auto space-y-4">
-                        {result.questions.map((q, i) => {
-                            const userAnswer = result.userAnswers[q.id];
-                            const isCorrect = userAnswer === q.correctAnswer;
-                            return (
-                                <div key={q.id} className="p-4 border rounded-lg bg-white">
-                                    <div className="flex justify-between items-start">
-                                        <p className="font-semibold">{i + 1}. {q.question}</p>
-                                        {isCorrect ? <CheckCircle className="w-6 h-6 text-success flex-shrink-0 ml-4"/> : <XCircle className="w-6 h-6 text-destructive flex-shrink-0 ml-4"/>}
-                                    </div>
-                                    <div className="mt-3 space-y-2 text-sm">
-                                        {q.options.map((opt, optIndex) => {
-                                            const isUserAnswer = userAnswer === optIndex;
-                                            const isCorrectAnswer = q.correctAnswer === optIndex;
-                                            return (
-                                                <div key={optIndex} className={cn(
-                                                    "p-2 rounded-md border flex items-center gap-2",
-                                                    isCorrectAnswer ? 'bg-green-100 border-green-300' :
-                                                    isUserAnswer ? 'bg-red-100 border-red-300' : 'bg-slate-50'
-                                                )}>
-                                                 {isCorrectAnswer ? <Check className="w-4 h-4 text-success"/> : isUserAnswer ? <X className="w-4 h-4 text-destructive"/> : <div className="w-4 h-4"></div>}
-                                                 <span>{opt}</span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                    <div className="mt-3 p-3 bg-slate-100 rounded-md text-sm">
-                                        <p><strong>Explanation:</strong> {q.explanation}</p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </CardContent>
-                </Card>
-            </div>
-            <div className="mt-8 text-center"><Button onClick={onRestart} size="lg">Back to Dashboard</Button></div>
-        </div>
-    );
+       </div>
+    )
 };
 
-const CBT_Center: React.FC = () => {
-    const [stage, setStage] = useState<'dashboard' | 'config' | 'test' | 'results'>('dashboard');
+
+interface CBT_CenterProps {
+    onBack: () => void;
+}
+
+const CBT_Center: React.FC<CBT_CenterProps> = ({ onBack }) => {
+    const [view, setView] = useState<'dashboard' | 'config' | 'test' | 'results'>('dashboard');
     const [selectedCategory, setSelectedCategory] = useState<CBT_Category | null>(null);
     const [testConfig, setTestConfig] = useState<CBT_TestConfig | null>(null);
     const [testQuestions, setTestQuestions] = useState<CBT_Question[]>([]);
@@ -352,37 +366,33 @@ const CBT_Center: React.FC = () => {
 
     const handleSelectCategory = (category: CBT_Category) => {
         setSelectedCategory(category);
-        setStage('config');
-    };
-
-    const handleStartTest = (config: CBT_TestConfig) => {
-        const subjectIds = config.subjects.map(s => s.id);
-        const availableQuestions = cbtQuestionBank.filter(q => subjectIds.includes(q.subjectId) && q.standard === config.standard);
-        const questions = shuffleArray(availableQuestions).slice(0, config.questionCount);
-        
-        setTestConfig(config);
-        setTestQuestions(questions);
-        setStage('test');
+        setView('config');
     };
     
-    const handleFinishTest = (userAnswers: { [key: string]: number | null }, timeTaken: number) => {
-        if (!testConfig || !testQuestions) return;
+    const handleStartTest = (config: CBT_TestConfig) => {
+        const questionsForTest = cbtQuestionBank.filter(q =>
+            config.subjects.some(s => s.id === q.subjectId) &&
+            q.standard === config.standard
+        );
+        const selectedQuestions = shuffleArray(questionsForTest).slice(0, config.questionCount);
+        
+        setTestConfig(config);
+        setTestQuestions(selectedQuestions);
+        setView('test');
+    };
+
+    const handleFinishTest = (answers: { [key: string]: number | null }, timeTaken: number) => {
+        if (!testConfig) return;
         let correctAnswers = 0;
         testQuestions.forEach(q => {
-            if (userAnswers[q.id] === q.correctAnswer) {
+            if (answers[q.id] === q.correctAnswer) {
                 correctAnswers++;
             }
         });
-        const score = Math.round((correctAnswers / (testQuestions.length || 1)) * 100);
-        
+        const score = Math.round((correctAnswers / testQuestions.length) * 100);
         const result: CBT_Result = {
-            score,
-            totalQuestions: testQuestions.length,
-            correctAnswers,
-            timeTaken,
-            config: testConfig,
-            questions: testQuestions,
-            userAnswers
+            score, totalQuestions: testQuestions.length, correctAnswers, timeTaken,
+            config: testConfig, questions: testQuestions, userAnswers: answers
         };
         setTestResult(result);
 
@@ -396,30 +406,32 @@ const CBT_Center: React.FC = () => {
         };
         setHistory(prev => [newHistoryItem, ...prev]);
 
-        setStage('results');
+        setView('results');
     };
-
+    
     const handleRestart = () => {
-        setStage('dashboard');
+        setView('dashboard');
         setSelectedCategory(null);
         setTestConfig(null);
         setTestQuestions([]);
         setTestResult(null);
-    }
-    
-    const renderStage = () => {
-        switch (stage) {
-            case 'config': return selectedCategory && <CBT_Config category={selectedCategory} onStartTest={handleStartTest} onBack={handleRestart} />;
-            case 'test': return testConfig && testQuestions.length > 0 && <CBT_Test config={testConfig} questions={testQuestions} onFinishTest={handleFinishTest} />;
-            case 'results': return testResult && <CBT_Result result={testResult} onRestart={handleRestart} />;
+    };
+
+    const renderView = () => {
+        switch (view) {
+            case 'config': return <CBT_Config category={selectedCategory!} onStartTest={handleStartTest} onBack={handleRestart} />;
+            case 'test': return <CBT_Test config={testConfig!} questions={testQuestions} onFinishTest={handleFinishTest} />;
+            case 'results': return <CBT_Results result={testResult!} onRestart={handleRestart} onBack={handleRestart} />;
             case 'dashboard':
             default: return <CBT_Dashboard onSelectCategory={handleSelectCategory} history={history} />;
         }
-    }
+    };
 
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {renderStage()}
+             {view !== 'test' && view !== 'dashboard' && <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4"><ChevronLeft className="w-4 h-4 mr-2"/> Back to Main Dashboard</Button>}
+             {view === 'dashboard' && <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4"><ChevronLeft className="w-4 h-4 mr-2"/> Back to Main Dashboard</Button>}
+            {renderView()}
         </div>
     );
 };

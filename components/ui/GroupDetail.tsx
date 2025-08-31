@@ -1,7 +1,8 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import type { StudyGroup, GroupMessage, StudentProfile } from '../types';
-import { Button } from './ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import type { StudyGroup, GroupMessage, StudentProfile } from '../../types';
+import { Button } from './Button';
+import { Card, CardContent, CardHeader, CardTitle } from '../../data/Card';
 import { ChevronLeft, Send, Users } from 'lucide-react';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { arenaGames as initialGames } from '../data/arenaGames';
-import { assessments } from '../data/assessments';
+import { assessments } from './assessments';
 import type { QuizGame, Player, Question, StudentProfile } from '../types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../data/Card';
 import { Button } from './ui/Button';
 import { Users, Play, Clock, Trophy, BarChart, Award, Star, ChevronLeft, Check, X } from 'lucide-react';
 import ProgressBar from './ui/ProgressBar';
@@ -18,8 +18,13 @@ assessments.forEach(assessment => {
     });
 });
 
-const Lobby: React.FC<{ games: QuizGame[]; onJoin: (game: QuizGame) => void; }> = ({ games, onJoin }) => (
+const Lobby: React.FC<{ games: QuizGame[]; onJoin: (game: QuizGame) => void; onBack: () => void; }> = ({ games, onJoin, onBack }) => (
     <div>
+        <div className="text-left">
+             <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4">
+                <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+            </Button>
+        </div>
         <h1 className="text-4xl font-bold text-gray-800">Study Arena</h1>
         <p className="text-muted-foreground mt-1">Challenge your peers in live quiz battles!</p>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -191,9 +196,10 @@ const Game: React.FC<{ game: QuizGame; onGameEnd: (finalPlayers: Player[]) => vo
 interface StudyArenaProps {
     onGameComplete: (rank: number) => void;
     studentProfile: StudentProfile;
+    onBack: () => void;
 }
 
-const StudyArena: React.FC<StudyArenaProps> = ({ onGameComplete, studentProfile }) => {
+const StudyArena: React.FC<StudyArenaProps> = ({ onGameComplete, studentProfile, onBack }) => {
     const [view, setView] = useState<'lobby' | 'game' | 'results'>('lobby');
     const [activeGame, setActiveGame] = useState<QuizGame | null>(null);
     const [finalPlayers, setFinalPlayers] = useState<Player[]>([]);
@@ -226,7 +232,7 @@ const StudyArena: React.FC<StudyArenaProps> = ({ onGameComplete, studentProfile 
                 return <Results players={finalPlayers} onBackToLobby={handleBackToLobby}/>;
             case 'lobby':
             default:
-                return <Lobby games={games} onJoin={handleJoin} />;
+                return <Lobby games={games} onJoin={handleJoin} onBack={onBack} />;
         }
     };
 

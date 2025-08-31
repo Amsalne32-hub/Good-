@@ -1,30 +1,30 @@
 
 import React, { useState, useEffect } from 'react';
-import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup, Flashcard } from './types';
-import { subjects as initialSubjects } from './data/subjects';
-import { storeItems, getItemById } from './data/storeItems';
-import { achievementsData } from './data/achievements';
-import { studyGroups as initialStudyGroups } from './data/groups';
-import LandingPage from './components/LandingPage';
-import SubjectsDashboard from './components/Dashboard';
-import SubjectDetail from './components/SubjectDetail';
-import AssessmentComponent from './components/Assessment';
-import CourseworkComponent from './components/Coursework';
-import TeacherDashboard from './data/TeacherDashboard';
-import GeneralKnowledge from './components/GeneralKnowledge';
-import Store from './components/Store';
-import Profile from './components/Profile';
-import StudyArena from './components/StudyArena';
-import CareerCompass from './components/CareerCompass';
-import StudyGroups from './components/StudyGroups';
-import GroupDetail from './components/GroupDetail';
-import ELibrary from './components/ELibrary';
-import CBT_Center from './components/CBT_Center';
-import TermsAndConditions from './components/TermsAndConditions';
-import { getAssessmentById } from './data/assessments';
-import { getCourseworkById } from './coursework';
-import Layout from './components/Layout';
-import AiAssistant from './components/AiAssistant';
+import type { Subject, Assessment, Coursework, StudentProfile, StoreItem, Topic, Module, Unit, StudyGroup, Flashcard } from '../types';
+import { subjects as initialSubjects } from '../data/subjects';
+import { storeItems, getItemById } from '../data/storeItems';
+import { achievementsData } from '../data/achievements';
+import { studyGroups as initialStudyGroups } from '../data/groups';
+import LandingPage from './LandingPage';
+import SubjectsDashboard from './Dashboard';
+import SubjectDetail from '../data/SubjectDetail';
+import AssessmentComponent from './Assessment';
+import CourseworkComponent from './Coursework';
+import TeacherDashboard from '../data/TeacherDashboard';
+import GeneralKnowledge from './GeneralKnowledge';
+import Store from '../data/Store';
+import Profile from './ui/Profile';
+import StudyArena from './StudyArena';
+import CareerCompass from '../data/CareerCompass';
+import StudyGroups from './ui/StudyGroups';
+import GroupDetail from './ui/GroupDetail';
+import ELibrary from './ELibrary';
+import CBT_Center from './CBT_Center';
+import TermsAndConditions from './TermsAndConditions';
+import { getAssessmentById } from './assessments';
+import { getCourseworkById } from '../coursework';
+import Layout from './Layout';
+import AiAssistant from './AiAssistant';
 
 type View = 'landing' | 'studentDashboard' | 'teacherDashboard' | 'subject' | 'assessment' | 'coursework' | 'generalKnowledge' | 'store' | 'profile' | 'studyArena' | 'careerCompass' | 'studyGroups' | 'groupDetail' | 'eLibrary' | 'cbtCenter' | 'terms';
 
@@ -241,6 +241,8 @@ const App: React.FC = () => {
     setSelectedGroup(null);
   };
 
+  const handleBackToDashboard = () => setView('studentDashboard');
+
   const handleStartAssessment = (assessmentId: string) => {
     const assessment = getAssessmentById(assessmentId);
     if (assessment) {
@@ -287,21 +289,21 @@ const App: React.FC = () => {
       case 'terms':
         return <TermsAndConditions onBack={() => setView('landing')} />;
       case 'cbtCenter':
-        return <CBT_Center />;
+        return <CBT_Center onBack={handleBackToDashboard} />;
       case 'eLibrary':
-        return <ELibrary subjects={subjects.filter(s => s.level !== 'General')} onNavigate={handleNavigate} />;
+        return <ELibrary subjects={subjects.filter(s => s.level !== 'General')} onBack={handleBackToDashboard} />;
       case 'groupDetail':
         return selectedGroup && <GroupDetail group={selectedGroup} studentProfile={studentProfile} onBack={() => handleNavigate('studyGroups')} />;
       case 'studyGroups':
-        return <StudyGroups groups={studyGroups.filter(g => g.members.includes(studentProfile.name))} onSelectGroup={handleSelectGroup} />;
+        return <StudyGroups groups={studyGroups.filter(g => g.members.includes(studentProfile.name))} onSelectGroup={handleSelectGroup} onBack={handleBackToDashboard} />;
       case 'careerCompass':
-        return <CareerCompass subjects={subjects.filter(s => s.level !== 'General')} />;
+        return <CareerCompass subjects={subjects.filter(s => s.level !== 'General')} onBack={handleBackToDashboard} />;
       case 'studyArena':
-        return <StudyArena onGameComplete={handleGameComplete} studentProfile={studentProfile} />;
+        return <StudyArena onGameComplete={handleGameComplete} studentProfile={studentProfile} onBack={handleBackToDashboard} />;
       case 'profile':
-        return <Profile profile={studentProfile} />;
+        return <Profile profile={studentProfile} onBack={handleBackToDashboard} />;
       case 'store':
-        return <Store studentProfile={studentProfile} onPurchase={handlePurchaseItem} onEquip={handleEquipItem} />;
+        return <Store studentProfile={studentProfile} onPurchase={handlePurchaseItem} onEquip={handleEquipItem} onBack={handleBackToDashboard} />;
       case 'generalKnowledge':
         if (gkSubject) {
             return <GeneralKnowledge subject={gkSubject} studentProfile={studentProfile} handleTopicComplete={handleTopicComplete} onQuestQuizComplete={handleQuestQuizComplete} />;
@@ -319,7 +321,7 @@ const App: React.FC = () => {
         return null;
       case 'subject':
         if (selectedSubject) {
-          return <SubjectDetail subject={selectedSubject} onBack={() => handleNavigate('studentDashboard')} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} flashcards={flashcards} onAddFlashcards={handleAddFlashcards} onNavigate={handleNavigate} />;
+          return <SubjectDetail subject={selectedSubject} onBack={handleBackToDashboard} onStartAssessment={handleStartAssessment} onStartCoursework={handleStartCoursework} handleTopicComplete={handleTopicComplete} flashcards={flashcards} onAddFlashcards={handleAddFlashcards} onNavigate={handleNavigate} />;
         }
         return null;
       case 'studentDashboard':

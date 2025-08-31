@@ -1,9 +1,10 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Subject, Textbook, Ebook, Journal } from '../types';
 import { libraryTextbooks, libraryEbooks, libraryJournals } from '../data/library';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../data/Card';
 import { Button, buttonVariants } from './ui/Button';
-import { Search, Library, Book, Download, FileText, BookMarked, Wand2, Loader, MessageSquare } from 'lucide-react';
+import { Search, Library, Book, Download, FileText, BookMarked, Wand2, Loader, MessageSquare, ChevronLeft } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
@@ -69,10 +70,10 @@ const AIFeatureCard: React.FC<{
 
 interface ELibraryProps {
   subjects: Subject[];
-  onNavigate: (view: 'eLibrary') => void;
+  onBack: () => void;
 }
 
-const ELibrary: React.FC<ELibraryProps> = ({ subjects, onNavigate }) => {
+const ELibrary: React.FC<ELibraryProps> = ({ subjects, onBack }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [levelFilter, setLevelFilter] = useState<'all' | 'JSS' | 'SSS'>('all');
     
@@ -110,53 +111,45 @@ const ELibrary: React.FC<ELibraryProps> = ({ subjects, onNavigate }) => {
             setDefinition({ term: termToDefine, definition: response.text });
         } catch (err) { setDefineError("Sorry, I couldn't fetch a definition."); } finally { setIsDefining(false); }
     };
-    
+
     const handleResearchTopic = async (topic: string) => {
         if (!topic.trim()) return;
         setIsResearching(true); setResearchResult(null); setResearchError(null);
         try {
-            const prompt = `Provide a concise summary on the topic "${topic}" for a Nigerian secondary school student. The summary should be a few paragraphs long, highlighting the key points. Do not use any special formatting characters.`;
+            const prompt = `Provide a brief, one-paragraph summary of the topic "${topic}" for a secondary school student. Focus on the key points. Do not use special formatting characters.`;
             const response = await ai.models.generateContent({ model: "gemini-2.5-flash", contents: prompt });
             setResearchResult({ term: topic, definition: response.text });
         } catch (err) { setResearchError("Sorry, I couldn't research that topic."); } finally { setIsResearching(false); }
     };
-
+    
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+             <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4">
+                <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+            </Button>
             <header className="mb-8 text-center">
                 <Library className="w-16 h-16 mx-auto text-primary" />
                 <h1 className="text-4xl font-bold text-gray-800 mt-4">E-Library</h1>
-                <p className="text-muted-foreground mt-1 max-w-2xl mx-auto">Your central hub for textbooks, literature, journals, and AI-powered research tools.</p>
+                <p className="text-muted-foreground mt-1 max-w-2xl mx-auto">Access a vast collection of textbooks, e-books, and academic journals to support your learning.</p>
             </header>
-
-            <div className="relative mb-8 max-w-3xl mx-auto">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <input
-                    type="text"
-                    placeholder="Search for books, authors, or topics..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border rounded-full text-lg shadow-sm"
-                />
-            </div>
-
+            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                 <AIFeatureCard 
-                    icon={<BookMarked />}
+                    icon={<BookMarked className="text-blue-500"/>}
                     title="AI Dictionary"
-                    description="Look up any term and get a simple, clear definition."
-                    placeholder="e.g., 'Photosynthesis'"
+                    description="Get simple, clear definitions for any term or concept you encounter."
+                    placeholder="e.g., Photosynthesis, Alliteration"
                     buttonText="Define"
                     onGenerate={handleDefineTerm}
                     isLoading={isDefining}
                     result={definition}
                     error={defineError}
                 />
-                <AIFeatureCard 
-                    icon={<MessageSquare />}
+                 <AIFeatureCard 
+                    icon={<MessageSquare className="text-green-500"/>}
                     title="AI Research Assistant"
-                    description="Get a quick summary on any topic to kickstart your learning."
-                    placeholder="e.g., 'The Nigerian Civil War'"
+                    description="Get quick summaries and overviews of any topic to kickstart your research."
+                    placeholder="e.g., The Nigerian Civil War, Pythagoras' Theorem"
                     buttonText="Summarize"
                     onGenerate={handleResearchTopic}
                     isLoading={isResearching}
@@ -165,65 +158,79 @@ const ELibrary: React.FC<ELibraryProps> = ({ subjects, onNavigate }) => {
                 />
             </div>
 
-            <div>
-                <h2 className="text-2xl font-bold mb-4">Library Collections</h2>
-                <div className="space-y-10">
-                    <section>
-                        <h3 className="text-xl font-semibold flex items-center gap-2 mb-3"><Book className="text-primary"/> Textbooks</h3>
-                        {filteredResources.textbooks.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                {filteredResources.textbooks.map(book => (
-                                    <div key={book.id} className="group">
-                                        <img src={book.coverUrl} alt={book.title} className="rounded-lg object-cover w-full aspect-[2/3] shadow-md group-hover:shadow-xl transition-shadow" />
-                                        <h4 className="text-sm font-semibold mt-2 truncate">{book.title}</h4>
-                                        <p className="text-xs text-muted-foreground truncate">{book.author}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : <p className="text-sm text-muted-foreground">No textbooks match your search.</p>}
-                    </section>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Browse the Collection</CardTitle>
+                    <div className="relative mt-2">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                        <input
+                            type="text"
+                            placeholder="Search by title, author, or keyword..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border rounded-lg"
+                        />
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Book/> Textbooks</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {filteredResources.textbooks.map(book => (
+                             <Card key={book.id}>
+                                <img src={book.coverUrl} alt={book.title} className="rounded-t-xl object-cover h-56 w-full" />
+                                <CardHeader className="p-4">
+                                    <CardTitle className="text-md leading-tight h-10">{book.title}</CardTitle>
+                                    <CardDescription className="text-xs">{book.author}</CardDescription>
+                                </CardHeader>
+                                <CardContent className="p-4 pt-0">
+                                    {/* FIX: The 'buttonVariants' is an object, not a function. Manually apply classes for 'a' tag to look like a button. */}
+                                    <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", buttonVariants.variant.default, buttonVariants.size.sm, "w-full")}>
+                                        <Download className="w-4 h-4 mr-2"/> Download
+                                    </a>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
                     
-                    <section>
-                        <h3 className="text-xl font-semibold flex items-center gap-2 mb-3"><BookMarked className="text-primary"/> E-Books & Literature</h3>
-                         {filteredResources.ebooks.length > 0 ? (
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {filteredResources.ebooks.map(book => (
-                                     <Card key={book.id} className="flex hover:shadow-md transition-shadow">
-                                        <img src={book.coverUrl} alt={book.title} className="rounded-l-xl object-cover h-full w-32" />
-                                        <div className="flex flex-col p-4">
-                                            <h4 className="font-bold">{book.title}</h4>
-                                            <p className="text-xs text-muted-foreground mb-1">by {book.author}</p>
-                                            <p className="text-sm text-muted-foreground flex-grow">{book.description}</p>
-                                            <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants.variant.outline, buttonVariants.size.sm, "mt-2 w-fit")}>
-                                                Read Online
-                                            </a>
-                                        </div>
-                                    </Card>
-                                ))}
-                            </div>
-                         ) : <p className="text-sm text-muted-foreground">No e-books match your search.</p>}
-                    </section>
-
-                    <section>
-                        <h3 className="text-xl font-semibold flex items-center gap-2 mb-3"><FileText className="text-primary"/> Academic Journals</h3>
-                         {filteredResources.journals.length > 0 ? (
-                            <div className="space-y-3">
-                                {filteredResources.journals.map(journal => (
-                                    <Card key={journal.id} className="flex items-center justify-between p-3">
-                                        <div>
-                                            <h4 className="font-semibold text-sm">{journal.title}</h4>
-                                            <p className="text-xs text-muted-foreground">{journal.publisher} - {journal.issue}</p>
-                                        </div>
-                                        <a href={journal.link} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants.variant.outline, buttonVariants.size.sm)}>
-                                            Read Journal
+                     <h3 className="text-xl font-semibold my-6 flex items-center gap-2"><BookMarked/> E-Books & Literature</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {filteredResources.ebooks.map(book => (
+                             <Card key={book.id} className="flex">
+                                <img src={book.coverUrl} alt={book.title} className="rounded-l-xl object-cover h-full w-1/3" />
+                                <div className="flex flex-col justify-between w-2/3">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg">{book.title}</CardTitle>
+                                        <CardDescription>by {book.author}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{book.description}</p>
+                                        {/* FIX: The 'buttonVariants' is an object, not a function. Manually apply classes for 'a' tag to look like a button. */}
+                                        <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", buttonVariants.variant.default, buttonVariants.size.sm)}>
+                                            <Download className="w-4 h-4 mr-2"/> View E-book
                                         </a>
-                                    </Card>
-                                ))}
-                            </div>
-                        ) : <p className="text-sm text-muted-foreground">No journals match your search.</p>}
-                    </section>
-                </div>
-            </div>
+                                    </CardContent>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold my-6 flex items-center gap-2"><FileText/> Journals & Publications</h3>
+                    <div className="space-y-4">
+                        {filteredResources.journals.map(journal => (
+                            <Card key={journal.id} className="flex items-center justify-between p-4">
+                                <div>
+                                    <h3 className="font-semibold">{journal.title}</h3>
+                                    <p className="text-sm text-muted-foreground">{journal.publisher} - {journal.issue}</p>
+                                </div>
+                                {/* FIX: The 'buttonVariants' is an object, not a function. Manually apply classes for 'a' tag to look like a button. */}
+                                <a href={journal.link} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", buttonVariants.variant.outline, buttonVariants.size.default)}>
+                                    Read Journal
+                                </a>
+                            </Card>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 };

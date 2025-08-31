@@ -1,8 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
-import { subjects as initialSubjects } from '../data/subjects';
-import { classData } from '../data/classData';
-import { getTeacherResourcesBySubject } from '../data/teacherResources';
+import { classData } from './classData';
+import { getTeacherResourcesBySubject } from './teacherResources';
 import type { Subject, GeneratedQuestion, SchemeOfWork, LessonPlan, LessonNote } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './Card';
 import { Button } from '../components/ui/Button';

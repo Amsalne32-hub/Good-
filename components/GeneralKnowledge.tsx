@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import type { Subject, Unit, Module, Topic, StudentProfile, GroundingChunk, GeneratedQuestion } from '../types';
 import { Button } from './ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../data/Card';
 import ProgressBar from './ui/ProgressBar';
 import { Beaker, BookOpen, Film, Music, Video, Lightbulb, HelpCircle, Star, Check, ChevronLeft, Newspaper, Wand2, Loader, Link as LinkIcon, Trophy } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';

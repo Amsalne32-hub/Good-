@@ -1,13 +1,13 @@
 
 import React, { useState, useMemo } from 'react';
 import type { Subject, Unit, Module, Topic, GeneratedQuestion, StudyPlan, StudyPlanStep, Flashcard, Textbook, Ebook, Journal } from '../types';
-import { Button } from './ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '../data/Card';
-import ProgressBar from './ui/ProgressBar';
-import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote, Brain, Book, BookMarked, Download, ArrowRight } from 'lucide-react';
+import { Button, buttonVariants } from '../components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from './Card';
+import ProgressBar from '../components/ui/ProgressBar';
+import { ChevronDown, Check, Play, BookOpen, Film, Beaker, Music, Video, Star, LayoutDashboard, Library, ClipboardCheck, ClipboardList, PenSquare, FileText, ExternalLink, Lightbulb, HelpCircle, Wand2, Loader, BookCopy, Edit, GraduationCap, CheckSquare, BrainCircuit, Quote, Brain, Book, BookMarked, Download, ArrowRight, ChevronLeft } from 'lucide-react';
 import { useAi } from '../contexts/AiContext';
 import { GoogleGenAI, Type } from '@google/genai';
-import Flashcards from './Flashcards';
+import Flashcards from '../components/ui/Flashcards';
 
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
@@ -149,6 +149,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
   const [openUnitId, setOpenUnitId] = useState<string | null>(subject.units[0]?.id || null);
   const [openModuleId, setOpenModuleId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'curriculum' | 'resources' | 'ai-study-room' | 'flashcards'>('curriculum');
+  const [activeResourceTab, setActiveResourceTab] = useState<'textbooks' | 'ebooks' | 'journals'>('textbooks');
   const Icon = subject.icon;
 
   const { totalTopics: subjectTotalTopics, completedTopics: subjectCompletedTopics, progress: subjectProgress } = useMemo(() => {
@@ -183,6 +184,9 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
   const [generatedExplanation, setGeneratedExplanation] = useState<string>('');
   const [explanationPrompt, setExplanationPrompt] = useState('');
   
+  const [isGeneratingFlashcards, setIsGeneratingFlashcards] = useState(false);
+  const [generatedFlashcardsResult, setGeneratedFlashcardsResult] = useState<Flashcard[] | null>(null);
+
   const ai = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY as string }), []);
 
   const studyRoomSelectedUnit = useMemo(() => subject.units.find(u => u.id === studyRoomUnitId), [studyRoomUnitId, subject.units]);
@@ -194,6 +198,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
     setGeneratedQuiz(null);
     setGeneratedAnalogy('');
     setGeneratedExplanation('');
+    setGeneratedFlashcardsResult(null);
   };
 
   const handleUnitChangeForAi = (unitId: string) => {
@@ -336,6 +341,58 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
       }
   };
 
+  const handleGenerateFlashcards = async () => {
+    if (!subject || !studyRoomSelectedModule) return;
+    setIsGeneratingFlashcards(true);
+    setGeneratedFlashcardsResult(null);
+    try {
+        const prompt = `Generate 5 key flashcards for the topic "${studyRoomSelectedModule.title}" from the subject "${subject.title}". Each flashcard should have a 'frontText' (a key term or question) and a 'backText' (a clear, concise definition or answer suitable for a Nigerian secondary school student). For each card, also provide a simple, descriptive 'imageQuery' that could be used to find a relevant image (e.g., 'diagram of a plant cell', 'map of Nigeria'). Do not include an actual image URL.`;
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.OBJECT,
+                    properties: {
+                        flashcards: {
+                            type: Type.ARRAY,
+                            items: {
+                                type: Type.OBJECT,
+                                properties: {
+                                    frontText: { type: Type.STRING },
+                                    backText: { type: Type.STRING },
+                                    imageQuery: { type: Type.STRING },
+                                },
+                                required: ['frontText', 'backText', 'imageQuery']
+                            }
+                        }
+                    },
+                    required: ['flashcards']
+                }
+            }
+        });
+
+        const newFlashcardsData = JSON.parse(response.text).flashcards;
+        const newFlashcards: Flashcard[] = newFlashcardsData.map((card: any, index: number) => ({
+            id: `${studyRoomSelectedModule!.id}-flashcard-${Date.now()}-${index}`,
+            topicId: studyRoomSelectedModule!.id,
+            subjectId: subject.id,
+            frontText: card.frontText,
+            backText: card.backText,
+            imageUrl: `https://picsum.photos/seed/${encodeURIComponent(card.imageQuery)}/400/200`
+        }));
+        
+        onAddFlashcards(newFlashcards);
+        setGeneratedFlashcardsResult(newFlashcards);
+    } catch (error) {
+        console.error("Flashcard generation failed:", error);
+    } finally {
+        setIsGeneratingFlashcards(false);
+    }
+  };
+
 
   const toggleUnit = (unitId: string) => {
     setOpenUnitId(prevId => (prevId === unitId ? null : unitId));
@@ -453,7 +510,6 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
   );
   
   const renderResources = () => {
-    const [activeResourceTab, setActiveResourceTab] = useState<'textbooks' | 'ebooks' | 'journals'>('textbooks');
     const { resources } = subject;
     
     const tabs = [
@@ -475,7 +531,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                                     <CardDescription>{book.author}</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "bg-primary text-primary-foreground hover:bg-primary/90", "h-10 px-4 py-2", "w-full")}>
+                                    <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants.variant.default, buttonVariants.size.default, "w-full", "inline-flex items-center justify-center")}>
                                         <Download className="w-4 h-4 mr-2"/> Download
                                     </a>
                                 </CardContent>
@@ -496,7 +552,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                                     </CardHeader>
                                     <CardContent>
                                         <p className="text-sm text-muted-foreground mb-4">{book.description}</p>
-                                        <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "bg-primary text-primary-foreground hover:bg-primary/90", "h-9 rounded-md px-3")}>
+                                        <a href={book.downloadUrl} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants.variant.default, buttonVariants.size.sm, "inline-flex items-center justify-center")}>
                                             <Download className="w-4 h-4 mr-2"/> View E-book
                                         </a>
                                     </CardContent>
@@ -514,7 +570,7 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                                     <h3 className="font-semibold">{journal.title}</h3>
                                     <p className="text-sm text-muted-foreground">{journal.publisher} - {journal.issue}</p>
                                 </div>
-                                <a href={journal.link} target="_blank" rel="noopener noreferrer" className={cn("inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "border border-input bg-background hover:bg-accent hover:text-accent-foreground", "h-10 px-4 py-2")}>
+                                <a href={journal.link} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants.variant.outline, buttonVariants.size.default, "inline-flex items-center justify-center")}>
                                     Read Journal
                                 </a>
                             </Card>
@@ -767,6 +823,32 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
                             )}
                           </CardContent>
                       </Card>
+                      <Card className="lg:col-span-2">
+                          <CardHeader>
+                             <CardTitle className="flex items-center gap-2"><Brain className="text-primary"/> Generate Flashcards</CardTitle>
+                             <CardDescription>Create a set of flashcards for this module to help you study.</CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                              <Button onClick={handleGenerateFlashcards} disabled={isGeneratingFlashcards}>
+                                  {isGeneratingFlashcards ? <Loader className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4 mr-2" />}
+                                  Generate Flashcards for '{studyRoomSelectedModule?.title || '...'}'
+                              </Button>
+                              {isGeneratingFlashcards && <p className="text-sm text-muted-foreground mt-2 flex items-center"><Loader className="w-4 h-4 animate-spin mr-2"/>Generating your flashcards...</p>}
+                              {generatedFlashcardsResult && (
+                                  <div className="mt-4">
+                                      <p className="text-sm font-semibold text-green-700 mb-2">Success! {generatedFlashcardsResult.length} flashcards were created and added to the 'Flashcards' tab.</p>
+                                      <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                                          {generatedFlashcardsResult.map((card) => (
+                                              <div key={card.id} className="p-2 border rounded-md bg-white text-xs">
+                                                  <p><strong>Front:</strong> {card.frontText}</p>
+                                                  <p><strong>Back:</strong> {card.backText}</p>
+                                              </div>
+                                          ))}
+                                      </div>
+                                  </div>
+                              )}
+                          </CardContent>
+                      </Card>
                   </div>
                 </div>
               </>
@@ -788,14 +870,23 @@ const SubjectDetail: React.FC<SubjectDetailProps> = ({ subject, onBack, onStartA
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <header className="mb-8">
+        <Button variant="ghost" onClick={onBack} className="mb-4 -ml-4">
+          <ChevronLeft className="w-4 h-4 mr-2" /> Back to Journey
+        </Button>
         <div className="flex items-center gap-6">
-            <div className="p-4 rounded-xl bg-primary/10 text-primary">
+            <div className="p-4 rounded-xl bg-primary/10 text-primary flex-shrink-0">
                 <Icon className="w-12 h-12" />
             </div>
-            <div>
-                <button onClick={onBack} className="text-sm font-medium text-primary hover:underline mb-1">Back to Journey</button>
+            <div className="w-full">
                 <h1 className="text-5xl font-bold">{subject.title}</h1>
                 <p className="text-xl text-muted-foreground mt-2">{subject.description}</p>
+                <div className="mt-4">
+                    <div className="flex justify-between items-center mb-1">
+                        <span className="text-sm font-medium text-muted-foreground">Subject Progress ({subjectCompletedTopics}/{subjectTotalTopics} topics)</span>
+                        <span className="text-sm font-bold text-primary">{subjectProgress}%</span>
+                    </div>
+                    <ProgressBar value={subjectProgress} className="h-2.5" />
+                </div>
             </div>
         </div>
       </header>
